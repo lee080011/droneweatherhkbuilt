@@ -175,7 +175,7 @@
     <div id="itinerary-page" class="tab-content placeholder-page">
         <div id="planner-console" style="margin: 0 auto 15px auto; max-width: 1200px; padding: 15px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
             <div style="font-weight: bold; color: #007aff; font-size: 15px; margin-right: 10px;">🗓️ 未來行程規劃：</div>
-            <input type="text" id="iti-search-input" placeholder="入想去嘅地方 (例如: 西貢、大澳、尖沙咀)" style="flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+            <input type="text" id="iti-search-input" placeholder="輸入想去嘅地方 (例如: 西貢、大澳、尖沙咀)" style="flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
             <input type="date" id="iti-date-input" style="padding: 7px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
             <button onclick="addItineraryBySearch()" style="background: #007aff; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🔍 搜尋並加入行程</button>
             <button onclick="refreshAllForecasts()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🔄 更新天氣</button>
@@ -210,7 +210,7 @@
                     </thead>
                     <tbody id="itinerary-list">
                         <tr>
-                            <td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">💡 請於上方輸入來緊去嘅地方與日子（或直接點擊上方地圖），系統將動態追蹤當日天氣預報。</td>
+                            <td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">💡 請於上方輸入將會去的地方與日子（或直接點擊上方地圖），系統將動態追蹤當日天氣預報。</td>
                         </tr>
                     </tbody>
                 </table>
@@ -610,7 +610,7 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             }
 
             let content = "========================================\n";
-            content += "🚁 Drone Weather 航拍行程與天氣預報清單\n";
+            content += " Drone Weather 航拍行程與天氣預報清單\n";
             content += `匯出時間：${new Date().toLocaleString('zh-HK')}\n`;
             content += "========================================\n\n";
 
