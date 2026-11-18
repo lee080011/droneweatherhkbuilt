@@ -1,9 +1,12 @@
-const CACHE_NAME = 'drone-app-v1';
+const CACHE_NAME = 'drone-app-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './GeoJSON/map.geojson',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  'https://unpkg.com/@turf/turf@6/turf.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js'
 ];
 
 // 安裝階段：快取靜態資源
