@@ -19,6 +19,22 @@ self.addEventListener('install', event => {
   );
 });
 
+// 啟動階段：強制清理所有舊版本的快取
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('🗑️ 正在清除舊快取:', cacheName);
+                        return caches.delete(cacheName); // 刪除舊快取
+                    }
+                })
+            );
+        }).then(() => self.clients.claim()) // 立即取得控制權
+    );
+});
+
 // 攔截請求
 self.addEventListener('fetch', event => {
   if (event.request.url.includes('api.open-meteo.com') || 
