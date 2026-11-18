@@ -2,8 +2,8 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drone weather - 航拍天氣</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Drone weather - 航拍天氣與法例指南</title>
     
     <!-- PWA / Favicon 設置 -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
@@ -17,11 +17,17 @@
     <meta name="apple-mobile-web-app-title" content="Drone weather">
     <meta name="theme-color" content="#007aff">
 
-    <!-- Leaflet  CSS & JS -->
+    <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Turf.js 用於判斷坐標是否位於禁飛區多邊形內 -->
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
 
-    <!--  CSS  -->
+    <!-- html2pdf.js 用於匯出中文 PDF 報告 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- CSS -->
     <style>
         * { box-sizing: border-box; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -54,77 +60,74 @@
         #map-page { overflow: hidden; }
         #map { height: 100%; width: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1; }
 
+        .search-container { 
+            position: absolute; 
+            top: 20px; 
+            left: 15px; 
+            z-index: 1000; 
+            display: flex; 
+            background: white; 
+            padding: 6px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            max-width: 240px;
+        }
 
-.search-container { 
-    position: absolute; 
-    top: 20px; 
-    left: 15px; 
-    z-index: 1000; 
-    display: flex; 
-    background: white; 
-    padding: 6px; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-    max-width: 240px; 
-}
+        .search-input { 
+            border: 1px solid #ccc; 
+            padding: 8px 10px; 
+            border-radius: 4px; 
+            width: 130px; 
+            font-size: 16px; 
+            outline: none; 
+        }
 
-.search-input { 
-    border: 1px solid #ccc; 
-    padding: 8px 10px; 
-    border-radius: 4px; 
-    width: 130px; 
-    font-size: 14px; 
-    outline: none; 
-}
+        .search-btn { 
+            background: #007aff; 
+            color: white; 
+            border: none; 
+            padding: 8px 12px; 
+            margin-left: 4px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            flex-shrink: 0;
+        }
 
-.search-btn { 
-    background: #007aff; 
-    color: white; 
-    border: none; 
-    padding: 8px 12px; 
-    margin-left: 4px; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    font-weight: bold; 
-    flex-shrink: 0;
-}
+        .locate-btn {
+            position: absolute;
+            top: 20px;
+            right: 15px; 
+            z-index: 1000;
+            background: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            cursor: pointer;
+            font-weight: bold;
+            color: #1c1c1e;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .locate-btn:hover { background: #f0f0f0; }
 
-/* 2. 「我的位置」按鈕
-.locate-btn {
-    position: absolute;
-    top: 20px;
-    right: 15px; 
-    z-index: 1000;
-    background: white;
-    padding: 10px 14px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    cursor: pointer;
-    font-weight: bold;
-    color: #1c1c1e;
-    font-size: 14px;
-    white-space: nowrap;
-}
-.locate-btn:hover { background: #f0f0f0; }
-
-/* 3. 手機等細螢幕專屬自動適配 */
-@media (max-width: 480px) {
-    .search-container {
-        top: 15px;
-        left: 10px;
-        max-width: calc(100% - 110px); /* 自動留位畀右上角個掣 */
-    }
-    .search-input {
-        width: 100%;
-        min-width: 80px;
-    }
-    .locate-btn {
-        top: 15px;
-        right: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
-    }
-}
+        @media (max-width: 480px) {
+            .search-container {
+                top: 15px;
+                left: 10px;
+                max-width: calc(100% - 110px);
+            }
+            .search-input {
+                width: 100%;
+                min-width: 80px;
+            }
+            .locate-btn {
+                top: 15px;
+                right: 10px;
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
 
         /* 2. 法例頁面選單 */
         #country-select { padding: 12px; font-size: 15px; border-radius: 8px; width: 100%; max-width: 320px; margin-bottom: 20px; outline: none; border: 1px solid #ccc; font-weight: bold; background: #fff; cursor: pointer; }
@@ -146,7 +149,7 @@
     <!-- 1. 航拍地圖分頁 -->
     <div id="map-page" class="tab-content active">
         <div class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="輸入地名搜尋...">
+            <input type="text" id="search-input" class="search-input" placeholder="(國家/地區)地名...">
             <button class="search-btn" onclick="searchLocation()">搜尋</button>
         </div>
         <div id="map"></div>
@@ -175,9 +178,9 @@
     <div id="itinerary-page" class="tab-content placeholder-page">
         <div id="planner-console" style="margin: 0 auto 15px auto; max-width: 1200px; padding: 15px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
             <div style="font-weight: bold; color: #007aff; font-size: 15px; margin-right: 10px;">🗓️ 未來行程規劃：</div>
-            <input type="text" id="iti-search-input" placeholder="輸入想去嘅地方 (例如: 西貢、大澳、尖沙咀)" style="flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+            <input type="text" id="iti-search-input" placeholder="輸入以國家/地區+地名 (例如: 香港西貢、香港大澳、香港尖沙咀)" style="flex: 1; min-width: 200px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px;">
             <input type="date" id="iti-date-input" style="padding: 7px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
-            <button onclick="addItineraryBySearch()" style="background: #007aff; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🔍 搜尋並加入行程</button>
+            <button id="iti-add-btn" onclick="addItineraryBySearch()" style="background: #007aff; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🔍 搜尋並加入行程</button>
             <button onclick="refreshAllForecasts()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🔄 更新天氣</button>
         </div>
 
@@ -191,7 +194,7 @@
                 </div>
                 <div style="display: flex; gap: 8px;">
                     <button onclick="saveItineraryManual()" style="background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer;">💾 手動儲存</button>
-                    <button onclick="exportItineraryTxt()" style="background: #8b5cf6; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer;">📥 匯出行程 (.txt)</button>
+                    <button id="export-pdf-btn" onclick="exportItineraryPdf()" style="background: #8b5cf6; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer;">📥 匯出行程 (.pdf)</button>
                     <button onclick="clearItinerary()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer;">🧹 清空行程</button>
                 </div>
             </div>
@@ -210,7 +213,7 @@
                     </thead>
                     <tbody id="itinerary-list">
                         <tr>
-                            <td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">💡 請於上方輸入將會去的地方與日子（或直接點擊上方地圖），系統將動態追蹤當日天氣預報。</td>
+                            <td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">💡 請於上方輸入未來去的地方與日子（或直接點擊上方地圖），系統將追蹤當日天氣預報。</td>
                         </tr>
                     </tbody>
                 </table>
@@ -220,41 +223,124 @@
 
     <!-- JavaScript 邏輯 -->
     <script>
-        // ==========================================
-        //  分頁一：主航拍地圖邏輯
-        // ==========================================
-// 將預設左上角的加減掣移去右下角 (bottomright)
-const map = L.map('map', { zoomControl: false }).setView([22.3193, 114.1694], 11);
-L.control.zoom({ position: 'bottomright' }).addTo(map);
+        let esuaGeoJsonData = null;
 
+        // ==========================================
+        //  1. 先初始化兩個地圖實例，避免非同步載入報錯
+        // ==========================================
+        const map = L.map('map', { zoomControl: false }).setView([22.3193, 114.1694], 11);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
+        const itineraryMap = L.map('itinerary-map').setView([22.3193, 114.1694], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(itineraryMap);
+
         let userMarker = null;
 
-        // 載入 eSUA 禁飛區 GeoJSON
+        // ==========================================
+        //  2. 載入 eSUA 禁飛區 GeoJSON 與空間檢測
+        // ==========================================
         function loadESUANoFlyZones() {
             const esuaGeoJsonUrl = 'GeoJSON/map.geojson'; 
             fetch(esuaGeoJsonUrl)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error("GeoJSON 載入失敗");
+                    return response.json();
+                })
                 .then(geojsonData => {
+                    esuaGeoJsonData = geojsonData;
+
                     L.geoJSON(geojsonData, {
                         style: () => ({ color: "#ff0000", weight: 2, fillColor: "#ff0000", fillOpacity: 0.50 }),
                         onEachFeature: (feature, layer) => {
-                            const name = feature.properties.name || "eSUA 限制飛行區域";
+                            const name = (feature.properties && feature.properties.name) || "eSUA 限制飛行區域";
                             layer.bindPopup(`<b>禁飛區提示：</b><br>${name}`);
                         }
                     }).addTo(map);
+
+                    L.geoJSON(geojsonData, {
+                        style: () => ({ color: "#ff0000", weight: 2, fillColor: "#ff0000", fillOpacity: 0.40 }),
+                        onEachFeature: (feature, layer) => {
+                            const name = (feature.properties && feature.properties.name) || "eSUA 限制飛行區域";
+                            layer.bindPopup(`<b>🚫 禁飛區範圍：</b><br>${name}<br><small style="color:#ef4444;">此區域未經許可嚴禁放飛無人機</small>`);
+                        }
+                    }).addTo(itineraryMap);
                 })
                 .catch(() => {
-                    console.log("提示：未能讀取 eSUA 網址，請確保本地有 GeoJSON/map.geojson 檔案。");
+                    console.log("提示：未能讀取本地 GeoJSON/map.geojson 檔案。");
                 });
         }
         loadESUANoFlyZones();
 
-        // 即時安全評估函數
+        function checkNoFlyZone(lat, lon) {
+            if (!esuaGeoJsonData || typeof turf === 'undefined') {
+                return { inNoFlyZone: false, zoneName: null };
+            }
+
+            const pt = turf.point([lon, lat]);
+            const features = esuaGeoJsonData.type === 'FeatureCollection' 
+                ? esuaGeoJsonData.features 
+                : [esuaGeoJsonData];
+
+            for (let i = 0; i < features.length; i++) {
+                const feature = features[i];
+                if (!feature.geometry) continue;
+                
+                const geomType = feature.geometry.type;
+                if (geomType === 'Polygon' || geomType === 'MultiPolygon') {
+                    try {
+                        if (turf.booleanPointInPolygon(pt, feature)) {
+                            const zoneName = (feature.properties && (feature.properties.name || feature.properties.Name || feature.properties.TITLE)) || "eSUA 法定限制飛行區";
+                            return { inNoFlyZone: true, zoneName: zoneName };
+                        }
+                    } catch (e) {
+                        console.warn("幾何判斷略過異常圖徵:", e);
+                    }
+                }
+            }
+            return { inNoFlyZone: false, zoneName: null };
+        }
+
+        // 統一地理搜尋輔助函數（Photon 為主，Nominatim 作備援）
+        async function geocodePlace(query) {
+            try {
+                // 優先使用 Photon API（對香港地名及中文支援極佳且無 CORS 限制）
+                const photonRes = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=1`);
+                if (photonRes.ok) {
+                    const photonData = await photonRes.json();
+                    if (photonData.features && photonData.features.length > 0) {
+                        const feat = photonData.features[0];
+                        const [lon, lat] = feat.geometry.coordinates;
+                        const name = feat.properties.name || feat.properties.district || feat.properties.city || query;
+                        return { lat, lon, name };
+                    }
+                }
+            } catch (e) {
+                console.warn("Photon 搜尋切換至備援:", e);
+            }
+
+            // 備援：Nominatim API
+            const nomRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`);
+            const nomData = await nomRes.json();
+            if (nomData && nomData.length > 0) {
+                return {
+                    lat: parseFloat(nomData[0].lat),
+                    lon: parseFloat(nomData[0].lon),
+                    name: nomData[0].display_name.split(',')[0]
+                };
+            }
+            return null;
+        }
+
+        // ==========================================
+        //  3. 分頁一：主航拍地圖邏輯
+        // ==========================================
         function evaluateFlightSafety(windGround, wind80m, gust, rainAmount, rainProb, kpIndex, hasActiveWarning) {
             const now = new Date();
             const currentHour = now.getHours() + now.getMinutes() / 60;
@@ -272,7 +358,6 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             return { emoji: "🟢", color: "#10b981", text: "環境、時間與地磁良好，適合飛行。" };
         }
 
-        // 解析香港天文台警告
         function parseHKOWarnings(warningData) {
             if (!warningData || Object.keys(warningData).length === 0) {
                 return { hasWarning: false, html: `<div style="color: #10b981; font-weight: bold; font-size: 13px; margin-bottom: 10px;">🟢 天文台提示：目前無生效警告</div>` };
@@ -287,7 +372,6 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             return { hasWarning: true, html: html };
         }
 
-        // 獲取&顯示即時氣象報告
         function fetchAndShowWeather(lat, lon, latlng) {
             const loadingPopup = L.popup()
                 .setLatLng(latlng)
@@ -392,30 +476,26 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             );
         }
 
-        function searchLocation() {
-            const query = document.getElementById('search-input').value;
+        async function searchLocation() {
+            const query = document.getElementById('search-input').value.trim();
             if (!query) return;
 
             const btn = document.querySelector('.search-btn');
             btn.innerText = "🔍...";
 
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`)
-                .then(res => res.json())
-                .then(results => {
-                    if (results.length > 0) {
-                        const lat = parseFloat(results[0].lat);
-                        const lon = parseFloat(results[0].lon);
-                        map.flyTo([lat, lon], 16);
-                        fetchAndShowWeather(lat, lon, L.latLng(lat, lon));
-                    } else {
-                        alert("搵唔到呢個地方，請嘗試其他關鍵字。");
-                    }
-                    btn.innerText = "搜尋";
-                })
-                .catch(() => {
-                    alert("搜尋出咗少少問題。");
-                    btn.innerText = "搜尋";
-                });
+            try {
+                const res = await geocodePlace(query);
+                if (res) {
+                    map.flyTo([res.lat, res.lon], 16);
+                    fetchAndShowWeather(res.lat, res.lon, L.latLng(res.lat, res.lon));
+                } else {
+                    alert("搵唔到呢個地方，請嘗試其他關鍵字。");
+                }
+            } catch (e) {
+                alert("搜尋出咗少少問題，請檢查網絡連線。");
+            } finally {
+                btn.innerText = "搜尋";
+            }
         }
 
         document.getElementById('search-input').addEventListener('keypress', function (e) {
@@ -423,7 +503,7 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
         });
 
         // ==========================================
-        // 分頁切換邏輯
+        //  4. 分頁切換邏輯
         // ==========================================
         function switchTab(pageId, btnElement) {
             document.querySelectorAll('.tab-content').forEach(page => page.classList.remove('active'));
@@ -440,7 +520,7 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
         }
 
         // ==========================================
-        // 分頁二：各國法例資料庫與顯示
+        //  5. 分頁二：各國法例資料庫與顯示
         // ==========================================
         const droneLawsDatabase = {
             hk: {
@@ -549,13 +629,8 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
         }
 
         // ==========================================
-        // 🗓️ 分頁三：未來航拍行程規劃邏輯 
+        //  6. 分頁三：未來航拍行程規劃邏輯 
         // ==========================================
-        const itineraryMap = L.map('itinerary-map').setView([22.3193, 114.1694], 11);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(itineraryMap);
-
         let itineraryData = [];     
         let mapMarkers = [];        
         let routeLine = null;       
@@ -563,7 +638,6 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
 
         document.getElementById('iti-date-input').value = new Date().toISOString().split('T')[0];
 
-        // 💾 自動儲存至瀏覽器 localStorage
         function saveItineraryToStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(itineraryData));
@@ -578,13 +652,11 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             }
         }
 
-        // 💾 手動儲存按鈕提示
         function saveItineraryManual() {
             saveItineraryToStorage();
             alert("✅ 行程已成功儲存至本機瀏覽器！下次打開網頁會自動載入。");
         }
 
-        // 📂 從瀏覽器載入已儲存行程
         function loadItineraryFromStorage() {
             try {
                 const saved = localStorage.getItem(STORAGE_KEY);
@@ -602,108 +674,212 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             }
         }
 
-        // 📥 匯出行程為 .txt 檔案
-        function exportItineraryTxt() {
+        // 匯出行程為 .pdf 檔案
+        function exportItineraryPdf() {
             if (itineraryData.length === 0) {
                 alert("目前沒有任何行程可以匯出！");
                 return;
             }
 
-            let content = "========================================\n";
-            content += " Drone Weather 航拍行程與天氣預報清單\n";
-            content += `匯出時間：${new Date().toLocaleString('zh-HK')}\n`;
-            content += "========================================\n\n";
+            if (typeof html2pdf === 'undefined') {
+                alert("PDF 產生器仍在載入中，請稍候再試或檢查網絡連線。");
+                return;
+            }
 
+            const exportBtn = document.getElementById('export-pdf-btn');
+            const originalText = exportBtn.innerText;
+            exportBtn.innerText = "⏳ 生成 PDF 中...";
+            exportBtn.disabled = true;
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            const nowStr = new Date().toLocaleString('zh-HK');
+
+            const pdfContainer = document.createElement('div');
+            pdfContainer.style.padding = '20px';
+            pdfContainer.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif';
+            pdfContainer.style.color = '#1e293b';
+            pdfContainer.style.background = '#ffffff';
+
+            let rowsHtml = '';
             itineraryData.forEach((item, idx) => {
                 const w = item.weather;
-                const safety = evaluateFutureSafety(w);
-                let weatherStr = "超出 7 天預報範圍或數據未就緒";
+                const safety = evaluateFutureSafety(w, item.inNoFlyZone);
+                
+                let weatherHtml = '<span style="color:#94a3b8;">超出 7 天預報範圍或數據未就緒</span>';
                 if (w) {
-                    weatherStr = `氣溫 ${w.tempMin}~${w.tempMax}°C | 均風 ≤${w.windMax.toFixed(1)} km/h | 陣風 ≤${w.gustMax.toFixed(1)} km/h | 降雨率 ${w.rainProb}% (${w.rainSum}mm)`;
+                    weatherHtml = `
+                        <div>🌡️ 氣溫：<b>${w.tempMin}~${w.tempMax} °C</b></div>
+                        <div>🍃 均風：≤${w.windMax.toFixed(1)} km/h ｜ 🌪️ 陣風：≤${w.gustMax.toFixed(1)} km/h</div>
+                        <div>🌧️ 降雨率：${w.rainProb}% (${w.rainSum}mm)</div>
+                    `;
                 }
 
-                content += `【第 ${idx + 1} 站】${item.name}\n`;
-                content += `• 預定日期：${item.date}\n`;
-                content += `• 坐標位置：${item.lat.toFixed(4)}, ${item.lon.toFixed(4)}\n`;
-                content += `• 天氣預測：${weatherStr}\n`;
-                content += `• 安全評估：${safety.emoji} ${safety.text}\n`;
-                content += "----------------------------------------\n";
+                const nfzTag = item.inNoFlyZone 
+                    ? `<div style="display:inline-block; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; padding:2px 6px; border-radius:4px; font-size:11px; margin-top:4px; font-weight:bold;">🚫 禁飛區：${item.zoneName || 'eSUA限制區'}</div>` 
+                    : '';
+
+                const rowBg = item.inNoFlyZone ? '#fff5f5' : (idx % 2 === 0 ? '#ffffff' : '#f8fafc');
+
+                rowsHtml += `
+                    <tr style="background-color: ${rowBg}; border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 10px; text-align: center; font-weight: bold; color: #007aff;">${idx + 1}</td>
+                        <td style="padding: 10px; white-space: nowrap; font-weight: 600;">${item.date}</td>
+                        <td style="padding: 10px;">
+                            <div style="font-weight: bold; font-size: 14px;">${item.name}</div>
+                            <div style="font-size: 11px; color: #64748b;">坐標: ${item.lat.toFixed(4)}, ${item.lon.toFixed(4)}</div>
+                            ${nfzTag}
+                        </td>
+                        <td style="padding: 10px; font-size: 12px; line-height: 1.5;">${weatherHtml}</td>
+                        <td style="padding: 10px; font-weight: bold; font-size: 12px; color: ${safety.color};">${safety.emoji} ${safety.text}</td>
+                    </tr>
+                `;
             });
 
-            const blob = new Blob(["\uFEFF" + content], { type: "text/plain;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            const todayStr = new Date().toISOString().split('T')[0];
-            a.href = url;
-            a.download = `航拍行程天氣報告_${todayStr}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            pdfContainer.innerHTML = `
+                <div style="border-bottom: 3px solid #007aff; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h1 style="margin: 0; font-size: 22px; color: #007aff;">Drone Weather 航拍行程與天氣預報報告</h1>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">共計 ${itineraryData.length} 個預定航拍地點 ｜ 匯出時間：${nowStr}</p>
+                    </div>
+                    <div style="font-size: 11px; color: #94a3b8; text-align: right;">
+                        飛行前請務必再次確認實時空域及天文台警告
+                    </div>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+                    <thead>
+                        <tr style="background: #1e293b; color: #ffffff;">
+                            <th style="padding: 10px; text-align: center; width: 50px;">站點</th>
+                            <th style="padding: 10px; width: 105px;">預定日期</th>
+                            <th style="padding: 10px; width: 220px;">航拍地點與空域狀態</th>
+                            <th style="padding: 10px;">當日氣象預報詳情</th>
+                            <th style="padding: 10px; width: 170px;">綜合安全評估</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rowsHtml}
+                    </tbody>
+                </table>
+            `;
+
+            const opt = {
+                margin:       10,
+                filename:     `航拍行程天氣報告_${todayStr}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+
+            html2pdf().set(opt).from(pdfContainer).save().then(() => {
+                exportBtn.innerText = originalText;
+                exportBtn.disabled = false;
+            }).catch(err => {
+                console.error("PDF 匯出失敗:", err);
+                alert("PDF 產生時發生錯誤，請稍後再試。");
+                exportBtn.innerText = originalText;
+                exportBtn.disabled = false;
+            });
         }
 
-        function addItineraryBySearch() {
+        async function addItineraryBySearch() {
             const locName = document.getElementById('iti-search-input').value.trim();
             const targetDate = document.getElementById('iti-date-input').value;
 
             if (!locName) { alert("請先輸入想去嘅航拍地方！"); return; }
             if (!targetDate) { alert("請選擇預定出發日子！"); return; }
 
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locName)}`)
-            .then(res => res.json())
-            .then(results => {
-                if (results.length === 0) {
-                    alert("找不到該地點，請嘗試輸入更通俗的地名（例如：西貢、尖沙咀）。");
+            const addBtn = document.getElementById('iti-add-btn');
+            const originalText = addBtn.innerText;
+            addBtn.innerText = "⏳ 搜尋中...";
+            addBtn.disabled = true;
+
+            try {
+                const res = await geocodePlace(locName);
+                if (!res) {
+                    alert("找不到該地點，請嘗試輸入更具體的地名（例如：香港 西貢、大澳、尖沙咀）。");
                     return;
                 }
-                const bestMatch = results[0];
-                const lat = parseFloat(bestMatch.lat);
-                const lon = parseFloat(bestMatch.lon);
-                const formattedName = bestMatch.display_name.split(',')[0]; 
 
-                fetchAndInsertWaypoint(formattedName, lat, lon, targetDate);
-                document.getElementById('iti-search-input').value = ""; 
-            })
-            .catch(() => alert("網絡繁忙，地方搜尋失敗，請稍後再試！"));
+                itineraryMap.setView([res.lat, res.lon], 14);
+                await handleLocationAddWithNFZCheck(res.name, res.lat, res.lon, targetDate, true);
+            } catch (e) {
+                console.error("加入行程失敗:", e);
+                alert("網絡繁忙，地方搜尋失敗，請稍後再試！");
+            } finally {
+                addBtn.innerText = originalText;
+                addBtn.disabled = false;
+            }
         }
 
         document.getElementById('iti-search-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') addItineraryBySearch();
         });
 
-        function fetchAndInsertWaypoint(name, lat, lon, date) {
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,precipitation_sum,precipitation_probability_max&timezone=auto`;
+        async function handleLocationAddWithNFZCheck(name, lat, lon, date, clearSearchInput = false) {
+            const nfzResult = checkNoFlyZone(lat, lon);
 
-            fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                const dateIdx = data.daily.time.indexOf(date);
-                let parsedWeather = null;
+            if (nfzResult.inNoFlyZone) {
+                const proceed = confirm(
+                    `🚫 禁飛區警告！\n\n` +
+                    `地點「${name}」位於法定禁飛區範圍內：\n` +
+                    `【${nfzResult.zoneName}】\n\n` +
+                    `未經民航處許可嚴禁放飛無人機。\n` +
+                    `• 按「取消」禁止加入此地點（建議）\n` +
+                    `• 按「確定」仍要強制加入行程（僅供天氣參考）`
+                );
 
-                if (dateIdx !== -1) {
-                    parsedWeather = {
-                        tempMax: data.daily.temperature_2m_max[dateIdx],
-                        tempMin: data.daily.temperature_2m_min[dateIdx],
-                        windMax: data.daily.wind_speed_10m_max[dateIdx],
-                        gustMax: data.daily.wind_gusts_10m_max[dateIdx],
-                        rainSum: data.daily.precipitation_sum[dateIdx],
-                        rainProb: data.daily.precipitation_probability_max[dateIdx]
-                    };
+                if (!proceed) {
+                    return;
                 }
+            }
 
-                itineraryData.push({ name, lat, lon, date, weather: parsedWeather });
-                saveItineraryToStorage();
-                updateMapLayers();
-                renderItineraryTable();
-                itineraryMap.setView([lat, lon], 13);
-            })
-            .catch(err => console.error("抓取預報數據失敗:", err));
+            if (clearSearchInput) {
+                document.getElementById('iti-search-input').value = "";
+            }
+            await fetchAndInsertWaypoint(name, lat, lon, date, nfzResult.inNoFlyZone, nfzResult.zoneName);
+        }
+
+        async function fetchAndInsertWaypoint(name, lat, lon, date, inNoFlyZone = false, zoneName = null) {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,precipitation_sum,precipitation_probability_max&timezone=auto`;
+            let parsedWeather = null;
+
+            try {
+                const res = await fetch(url);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.daily && data.daily.time) {
+                        const dateIdx = data.daily.time.indexOf(date);
+                        if (dateIdx !== -1) {
+                            parsedWeather = {
+                                tempMax: data.daily.temperature_2m_max[dateIdx],
+                                tempMin: data.daily.temperature_2m_min[dateIdx],
+                                windMax: data.daily.wind_speed_10m_max[dateIdx],
+                                gustMax: data.daily.wind_gusts_10m_max[dateIdx],
+                                rainSum: data.daily.precipitation_sum[dateIdx],
+                                rainProb: data.daily.precipitation_probability_max[dateIdx]
+                            };
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("抓取預報數據失敗（仍會先加入地點）:", err);
+            }
+
+            // 即使天氣 API 暫時超時或超出 7 日，地點依然會成功加入清單
+            itineraryData.push({ name, lat, lon, date, weather: parsedWeather, inNoFlyZone, zoneName });
+            saveItineraryToStorage();
+            updateMapLayers();
+            renderItineraryTable();
+            itineraryMap.setView([lat, lon], 13);
         }
 
         function refreshAllForecasts() {
             if (itineraryData.length === 0) { alert("現時行程空空如也，不需更新！"); return; }
             
             const promises = itineraryData.map(item => {
+                const nfz = checkNoFlyZone(item.lat, item.lon);
+                item.inNoFlyZone = nfz.inNoFlyZone;
+                item.zoneName = nfz.zoneName;
+
                 const url = `https://api.open-meteo.com/v1/forecast?latitude=${item.lat}&longitude=${item.lon}&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,precipitation_sum,precipitation_probability_max&timezone=auto`;
                 return fetch(url).then(res => res.json()).then(data => {
                     const dateIdx = data.daily.time.indexOf(item.date);
@@ -724,12 +900,16 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
 
             Promise.all(promises).then(() => {
                 saveItineraryToStorage();
+                updateMapLayers();
                 renderItineraryTable();
-                alert("📊 全體行程之氣象預報已完成實時同步更新！");
+                alert("📊 全體行程之氣象預報與空域狀態已完成實時同步更新！");
             });
         }
 
-        function evaluateFutureSafety(w) {
+        function evaluateFutureSafety(w, inNoFlyZone = false) {
+            if (inNoFlyZone) {
+                return { emoji: "🚫", color: "#dc2626", text: "禁飛區範圍！嚴禁放飛" };
+            }
             if (!w) return { emoji: "⚪", color: "#94a3b8", text: "超出7天預報範圍" };
             if (w.windMax > 32 || w.gustMax > 42 || w.rainSum > 0) {
                 return { emoji: "🔴", color: "#ef4444", text: "危險：預測有雨或強風" };
@@ -749,16 +929,18 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             
             itineraryData.forEach((item, idx) => {
                 latlngs.push([item.lat, item.lon]);
+                const markerBg = item.inNoFlyZone ? '#dc2626' : '#007aff';
                 
                 const customIcon = L.divIcon({
-                    html: `<div style="background:#007aff; color:white; border:2px solid white; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.3);">${idx + 1}</div>`,
+                    html: `<div style="background:${markerBg}; color:white; border:2px solid white; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; box-shadow:0 2px 6px rgba(0,0,0,0.3);">${idx + 1}</div>`,
                     className: 'custom-wp-marker',
                     iconSize: [24, 24],
                     iconAnchor: [12, 12]
                 });
                 
+                const nfzPopup = item.inNoFlyZone ? `<br><span style="color:#dc2626; font-weight:bold;">🚫 警告：位於禁飛區 (${item.zoneName || 'eSUA限制區'})</span>` : '';
                 const marker = L.marker([item.lat, item.lon], { icon: customIcon })
-                    .bindPopup(`<b>${idx+1}. ${item.name}</b><br>預定日期: ${item.date}`)
+                    .bindPopup(`<b>${idx+1}. ${item.name}</b><br>預定日期: ${item.date}${nfzPopup}`)
                     .addTo(itineraryMap);
                     
                 mapMarkers.push(marker);
@@ -781,7 +963,7 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             let html = "";
             itineraryData.forEach((item, idx) => {
                 const w = item.weather;
-                const safety = evaluateFutureSafety(w);
+                const safety = evaluateFutureSafety(w, item.inNoFlyZone);
                 
                 let weatherText = "⚠️ 數據未就緒";
                 if (w) {
@@ -793,11 +975,15 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
                     weatherText = "❌ 超出預報極限（僅能預測 7 天內的天氣）";
                 }
 
+                const nfzBadge = item.inNoFlyZone 
+                    ? `<span style="background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:6px; font-weight:bold;">🚫 禁飛區</span>` 
+                    : '';
+
                 html += `
-                    <tr style="border-bottom: 1px solid #f1f5f9;">
-                        <td style="padding: 12px 10px;"><span style="background:#007aff; color:white; padding: 2px 8px; border-radius:50%; font-size:12px; font-weight:bold;">${idx + 1}</span></td>
+                    <tr style="border-bottom: 1px solid #f1f5f9; ${item.inNoFlyZone ? 'background-color: #fff5f5;' : ''}">
+                        <td style="padding: 12px 10px;"><span style="background:${item.inNoFlyZone ? '#dc2626' : '#007aff'}; color:white; padding: 2px 8px; border-radius:50%; font-size:12px; font-weight:bold;">${idx + 1}</span></td>
                         <td style="padding: 12px 10px; font-weight: 500; color: #475569;">📅 ${item.date}</td>
-                        <td style="padding: 12px 10px; font-weight: bold; color: #1e293b;">📍 ${item.name}</td>
+                        <td style="padding: 12px 10px; font-weight: bold; color: #1e293b;">📍 ${item.name}${nfzBadge}</td>
                         <td style="padding: 12px 10px; color: #334155; font-size: 13px;">${weatherText}</td>
                         <td style="padding: 12px 10px; font-weight: bold; color: ${safety.color};"><span style="margin-right:4px;">${safety.emoji}</span>${safety.text}</td>
                         <td style="padding: 12px 10px; text-align: center;">
@@ -825,56 +1011,51 @@ L.control.zoom({ position: 'bottomright' }).addTo(map);
             renderItineraryTable();
         }
 
-        // 行程地圖盲點加入行程功能
-        itineraryMap.on('click', function(e) {
+        itineraryMap.on('click', async function(e) {
             const targetDate = document.getElementById('iti-date-input').value;
             if(!targetDate) { alert("請先在上方選好日子，再點擊地圖！"); return; }
             
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}`)
-            .then(res => res.json())
-            .then(json => {
-                const placeName = json.address.suburb || json.address.district || json.address.village || "地圖指定位置";
-                fetchAndInsertWaypoint(placeName, e.latlng.lat, e.latlng.lng, targetDate);
-            })
-            .catch(() => {
-                fetchAndInsertWaypoint("自訂坐標點", e.latlng.lat, e.latlng.lng, targetDate);
-            });
+            let placeName = "地圖指定位置";
+            try {
+                const res = await fetch(`https://photon.komoot.io/reverse?lon=${e.latlng.lng}&lat=${e.latlng.lat}`);
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.features && json.features.length > 0) {
+                        const p = json.features[0].properties;
+                        placeName = p.name || p.district || p.city || "地圖指定位置";
+                    }
+                }
+            } catch (err) {
+                placeName = "自訂坐標點";
+            }
+            handleLocationAddWithNFZCheck(placeName, e.latlng.lat, e.latlng.lng, targetDate, false);
         });
 
-        // 網頁啟動時自動載入本機已儲存的行程
         loadItineraryFromStorage();
 
         // ==========================================
-        // ⚙️ Service Worker 註冊
+        //  7. Service Worker 註冊
         // ==========================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(() => console.log('✅ Service Worker 註冊成功！'))
-                    .catch(err => console.error('❌ Service Worker 註冊失敗:', err));
-            });
-        }
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').then(reg => {
-            console.log('✅ Service Worker 註冊成功！');
-            
-            // 偵測是否有新版本 Service Worker 正在等待安裝
-            reg.addEventListener('updatefound', () => {
-                const newWorker = reg.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        if (confirm("✨ 偵測到 Drone Weather 有新版本或功能更新，是否立即重新整理載入？")) {
-                            window.location.reload();
-                        }
-                    }
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('✅ Service Worker 註冊成功！');
+                    
+                    reg.addEventListener('updatefound', () => {
+                        const newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                if (confirm("✨ 偵測到 Drone Weather 有新版本或功能更新，是否立即重新整理載入？")) {
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    });
+                }).catch(err => {
+                    console.error('❌ Service Worker 註冊失敗:', err);
                 });
             });
-        }).catch(err => {
-            console.error('❌ Service Worker 註冊失敗:', err);
-        });
-    });
-}
+        }
     </script>
 </body>
 </html>
