@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drone weather - 航拍天氣與法例指南</title>
+    <title>Drone weather - 航拍天氣</title>
     
     <!-- PWA / Favicon 設置 -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
@@ -54,7 +54,7 @@
         #map-page { overflow: hidden; }
         #map { height: 100%; width: 100%; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 1; }
 
-        /* 1. 搜尋容器：固定喺左上角，限制最大闊度，絕不阻擋地圖加減掣 */
+
 .search-container { 
     position: absolute; 
     top: 20px; 
@@ -65,7 +65,7 @@
     padding: 6px; 
     border-radius: 8px; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-    max-width: 240px; /* 限制最大寬度，避免壓到右邊的加減按鈕 */
+    max-width: 240px; 
 }
 
 .search-input { 
@@ -89,7 +89,7 @@
     flex-shrink: 0;
 }
 
-/* 2. 「我的位置」按鈕：固定喺右上角（地圖加減掣下方或旁邊），絕不亂跑 */
+/* 2. 「我的位置」按鈕
 .locate-btn {
     position: absolute;
     top: 20px;
