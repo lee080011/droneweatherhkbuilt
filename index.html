@@ -44,10 +44,10 @@
         }
         
         /* 導航欄 */
-        .navbar { background: #1c1c1e; color: white; display: flex; padding: 10px 20px; align-items: center; z-index: 2000; flex-shrink: 0; }
-        .brand { font-size: 18px; font-weight: bold; margin-right: 30px; }
-        .nav-tabs { display: flex; gap: 10px; }
-        .tab-btn { background: none; border: none; color: #aaa; padding: 8px 16px; font-size: 14px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.2s; }
+        .navbar { background: #1c1c1e; color: white; display: flex; padding: 10px 20px; align-items: center; z-index: 2000; flex-shrink: 0; overflow-x: auto; }
+        .brand { font-size: 18px; font-weight: bold; margin-right: 24px; white-space: nowrap; }
+        .nav-tabs { display: flex; gap: 8px; flex-wrap: nowrap; }
+        .tab-btn { background: none; border: none; color: #aaa; padding: 8px 14px; font-size: 14px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.2s; white-space: nowrap; }
         .tab-btn:hover { color: white; background: #2c2c2e; }
         .tab-btn.active { color: white; background: #007aff; }
 
@@ -112,6 +112,9 @@
         .locate-btn:hover { background: #f0f0f0; }
 
         @media (max-width: 480px) {
+            .navbar { padding: 10px 12px; }
+            .brand { margin-right: 12px; font-size: 16px; }
+            .tab-btn { padding: 6px 10px; font-size: 13px; }
             .search-container {
                 top: 15px;
                 left: 10px;
@@ -132,6 +135,153 @@
         /* 2. 法例頁面選單 */
         #country-select { padding: 12px; font-size: 15px; border-radius: 8px; width: 100%; max-width: 320px; margin-bottom: 20px; outline: none; border: 1px solid #ccc; font-weight: bold; background: #fff; cursor: pointer; }
         #laws-display { background: #ffffff; border-left: 5px solid #007aff; padding: 20px; border-radius: 8px; line-height: 1.7; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+
+        /* 4. 資料來源與免責聲明卡片樣式 */
+        .info-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            line-height: 1.7;
+        }
+        .info-card h3 {
+            margin-top: 0;
+            font-size: 17px;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .source-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .source-list li {
+            padding: 10px 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .source-list li:last-child { margin-bottom: 0; }
+        .source-tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+        }
+        /* 安裝教學彈窗 */
+.install-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+.install-modal-backdrop.show {
+    display: flex;
+}
+.install-modal {
+    background: #ffffff;
+    color: #1e293b;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    animation: modalPop 0.22s ease-out;
+}
+@keyframes modalPop {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.install-modal-header {
+    background: linear-gradient(135deg, #007aff, #0284c7);
+    color: #ffffff;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.install-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+.install-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+}
+.install-modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.65;
+}
+.guide-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+}
+.guide-box:last-child {
+    margin-bottom: 0;
+}
+.guide-box-title {
+    font-weight: bold;
+    color: #0f172a;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+.guide-box ol {
+    margin: 0;
+    padding-left: 20px;
+}
+.guide-box li {
+    margin-bottom: 4px;
+}
+.install-modal-footer {
+    padding: 14px 20px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.install-confirm-btn {
+    background: #007aff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+.install-confirm-btn:hover {
+    background: #0062cc;
+}
     </style>
 </head>
 <body>
@@ -143,6 +293,7 @@
             <button class="tab-btn active" onclick="switchTab('map-page', this)">航拍地圖</button>
             <button class="tab-btn" onclick="switchTab('laws-page', this)">各國法例</button>
             <button class="tab-btn" onclick="switchTab('itinerary-page', this)">行程天氣</button>
+            <button class="tab-btn" onclick="switchTab('about-page', this)">資料來源與免責</button>
         </div>
     </div>
 
@@ -220,6 +371,109 @@
             </div>
         </div>
     </div>
+
+    <!-- 4. 資料來源與免責聲明分頁 -->
+    <div id="about-page" class="tab-content placeholder-page">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="color: #007aff; margin-bottom: 15px; margin-top: 0;">📚 資料來源與免責聲明</h2>
+
+            <!-- 卡片一：氣象、空域及地圖資料來源 -->
+            <div class="info-card" style="border-left: 5px solid #007aff;">
+                <h3 style="color: #007aff; border-bottom: 1px solid #e2e8f0;">📡 實時氣象、空域及地圖資料來源</h3>
+                <ul class="source-list">
+                    <li>
+                        <span class="source-tag">氣象預報</span>
+                        <b>Open-Meteo Weather Forecast API</b> — 提供全球實時氣溫、地面風速 (10m)、高空風速 (80m)、實時陣風、降雨量、降雨機率及未來 7 日每日氣象預報數據。
+                    </li>
+                    <li>
+                        <span class="source-tag">香港天氣警告</span>
+                        <b>香港天文台 (HKO) 開放數據 API</b> — 提供香港本地實時生效之惡劣天氣警告（如熱帶氣旋、暴雨、強烈季候風信號等）。
+                    </li>
+                    <li>
+                        <span class="source-tag">地磁活動</span>
+                        <b>美國國家海洋暨大氣總署太空天氣預報中心 (NOAA SWPC)</b> — 提供全球實時地磁風暴指數（Kp Index），評估衛星定位（GPS/GNSS）受磁暴干擾風險。
+                    </li>
+                    <li>
+                        <span class="source-tag">香港禁飛區圖層</span>
+                        <b>香港民航處 (CAD) eSUA 電子系統空間數據</b> — 整合香港《小型無人機令》下之限制飛行區（No-Fly Zones）地理邊界（GeoJSON），並透過 Turf.js 進行空間坐標檢測。
+                    </li>
+                    <li>
+                        <span class="source-tag">地圖與地理編碼</span>
+                        <b>OpenStreetMap / Komoot Photon / Nominatim</b> — 提供互動式地圖底圖圖磚、地名正向搜尋及點擊坐標反向地理編碼服務。
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 卡片二：各國無人機法例參考出處 -->
+            <div class="info-card" style="border-left: 5px solid #10b981;">
+                <h3 style="color: #059669; border-bottom: 1px solid #e2e8f0;">⚖️ 各國及地區航拍法例參考出處</h3>
+                <ul class="source-list">
+                    <li>
+                        <span class="source-tag" style="background:#dcfce7; color:#15803d;">香港</span>
+                        <b>香港民航處 (Civil Aviation Department, CAD)</b> — 第 448G 章《小型無人機令》及「SUA 一站通 (eSUA)」標準操作規定。
+                    </li>
+                    <li>
+                        <span class="source-tag" style="background:#dcfce7; color:#15803d;">日本</span>
+                        <b>日本國土交通省航空局 (JCAB)</b> — 《航空法》無人機飛行規則及 DIPS 2.0 (Drone/UAS Information Platform System) 註冊與申請指引。
+                    </li>
+                    <li>
+                        <span class="source-tag" style="background:#dcfce7; color:#15803d;">台灣</span>
+                        <b>台灣交通部民用航空局 (CAA)</b> — 《民用航空法》遙控無人機專章及「遙控無人機管理資訊系統 (DroneMap)」空域規範。
+                    </li>
+                    <li>
+                        <span class="source-tag" style="background:#dcfce7; color:#15803d;">英國</span>
+                        <b>英國民航局 (UK Civil Aviation Authority, CAA)</b> — UK Drone and Model Aircraft Code 及 DMARES 註冊與飛行類別（A1/A2/A3）規定。
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 卡片三：免責聲明 -->
+            <div class="info-card" style="border-left: 5px solid #ef4444; background: #fffafb;">
+                <h3 style="color: #dc2626; border-bottom: 1px solid #fecaca;">⚠️ 免責聲明 (Disclaimer)</h3>
+                <div style="font-size: 14px; color: #334155; line-height: 1.8;">
+                    <p style="margin-top: 0;"><b>1. 僅供參考用途：</b>本網站（Drone Weather）所提供之氣象數據、飛行安全評估燈號（🟢/🟡/🔴）、禁飛區邊界及各國航拍法例摘要，均僅作飛行前之一般參考用途，並不構成任何專業航空氣象建議或法律意見。</p>
+                    <p><b>2. 數據延遲與誤差：</b>第三方氣象 API 及本地快取之禁飛區圖層（GeoJSON）可能存在更新延遲、數據誤差或臨時空域管制（如臨時禁飛區 TFR、NOTAM 航行通告、國家公園或私人地方限制）未能即時反映之情況。微氣候（如峽谷陣風、高樓風切變、磁場干擾）亦無法完全由預報模型準確預測。</p>
+                    <p><b>3. 遙控駕駛員之法定責任：</b>無人機操作員（機師）在每次起飛前，必須自行透過當地官方指定平台（如香港民航處 eSUA、日本 DIPS 2.0、台灣 DroneMap、英國 CAA 等）核實最新空域狀態、臨時禁飛令及天氣實況，並嚴格遵守當地法律及無人機製造商之安全操作指引。</p>
+                    <p style="margin-bottom: 0;"><b>4. 責任豁免：</b>對於因使用、依賴或無法使用本網站所載資訊而直接或間接導致之任何財物損失、無人機損毀（炸機）、人身傷亡、法律訴訟或行政罰則，本網站及開發者概不承擔任何法律或賠償責任。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 首次造訪：安裝為 App 教學彈窗 -->
+<div id="install-guide-modal" class="install-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="install-guide-title">
+    <div class="install-modal">
+        <div class="install-modal-header">
+            <h3 id="install-guide-title">📲 將 Drone Weather 加到主畫面</h3>
+            <button type="button" class="install-close-btn" onclick="dismissInstallGuide()" aria-label="關閉">&times;</button>
+        </div>
+        <div class="install-modal-body">
+            <p style="margin-top: 0; color: #475569;">
+                歡迎使用 <b>Drone Weather</b>！你可以將呢個網頁安裝成獨立 App，方便快速查看航拍天氣、禁飛區及離線快取：
+            </p>
+
+            <div class="guide-box">
+                <div class="guide-box-title">🍎 iPhone / iPad（Safari 瀏覽器）</div>
+                <ol>
+                    <li>點擊底部工具列嘅 <b>「分享」圖示</b>（向上箭嘴方框）。</li>
+                    <li>向下滑動並選擇 <b>「加入主畫面」</b>。</li>
+                    <li>按右上角 <b>「新增」</b>，即可喺主畫面開啟 App。</li>
+                </ol>
+            </div>
+
+            <div class="guide-box">
+                <div class="guide-box-title">🤖 Android / 電腦版（Chrome / Edge）</div>
+                <ol>
+                    <li>點擊瀏覽器右上角 <b>「⋮」選單</b> 或網址列右側嘅 <b>安裝圖示</b>。</li>
+                    <li>選擇 <b>「加到主畫面」</b> 或 <b>「安裝 Drone weather」</b>。</li>
+                    <li>按 <b>「安裝」</b> 確認即可。</li>
+                </ol>
+            </div>
+        </div>
+        <div class="install-modal-footer">
+            <button type="button" class="install-confirm-btn" onclick="dismissInstallGuide()">我知道了，以後唔再顯示</button>
+        </div>
+    </div>
+</div>
 
     <!-- JavaScript 邏輯 -->
     <script>
@@ -310,7 +564,6 @@
         // 統一地理搜尋輔助函數（Photon 為主，Nominatim 作備援）
         async function geocodePlace(query) {
             try {
-                // 優先使用 Photon API（對香港地名及中文支援極佳且無 CORS 限制）
                 const photonRes = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=1`);
                 if (photonRes.ok) {
                     const photonData = await photonRes.json();
@@ -325,7 +578,6 @@
                 console.warn("Photon 搜尋切換至備援:", e);
             }
 
-            // 備援：Nominatim API
             const nomRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`);
             const nomData = await nomRes.json();
             if (nomData && nomData.length > 0) {
@@ -674,7 +926,6 @@
             }
         }
 
-        // 匯出行程為 .pdf 檔案
         function exportItineraryPdf() {
             if (itineraryData.length === 0) {
                 alert("目前沒有任何行程可以匯出！");
@@ -864,7 +1115,6 @@
                 console.error("抓取預報數據失敗（仍會先加入地點）:", err);
             }
 
-            // 即使天氣 API 暫時超時或超出 7 日，地點依然會成功加入清單
             itineraryData.push({ name, lat, lon, date, weather: parsedWeather, inNoFlyZone, zoneName });
             saveItineraryToStorage();
             updateMapLayers();
@@ -1056,6 +1306,63 @@
                 });
             });
         }
+        // ==========================================
+//  8. 首次造訪安裝教學彈窗（已安裝或已看過則不再顯示）
+// ==========================================
+const INSTALL_GUIDE_SEEN_KEY = 'dw_install_guide_seen_v1';
+
+function isRunningAsInstalledApp() {
+    const isStandaloneDisplay = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+    const isIosStandalone = window.navigator.standalone === true;
+    return Boolean(isStandaloneDisplay || isIosStandalone);
+}
+
+function dismissInstallGuide() {
+    try {
+        localStorage.setItem(INSTALL_GUIDE_SEEN_KEY, 'true');
+    } catch (e) {
+        console.warn('無法寫入 localStorage:', e);
+    }
+    const modal = document.getElementById('install-guide-modal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+}
+
+function openInstallGuideManually() {
+    const modal = document.getElementById('install-guide-modal');
+    if (modal) {
+        modal.classList.add('show');
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (isRunningAsInstalledApp()) {
+        try {
+            localStorage.setItem(INSTALL_GUIDE_SEEN_KEY, 'true');
+        } catch (e) {}
+        return;
+    }
+
+    let hasSeen = false;
+    try {
+        hasSeen = localStorage.getItem(INSTALL_GUIDE_SEEN_KEY) === 'true';
+    } catch (e) {
+        hasSeen = false;
+    }
+
+    if (!hasSeen) {
+        const modal = document.getElementById('install-guide-modal');
+        if (modal) {
+            modal.classList.add('show');
+        }
+    }
+});
+
+// 當瀏覽器成功安裝 PWA 時，自動標記為已安裝
+window.addEventListener('appinstalled', () => {
+    dismissInstallGuide();
+});
     </script>
 </body>
 </html>
