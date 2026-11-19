@@ -346,13 +346,13 @@
             const currentHour = now.getHours() + now.getMinutes() / 60;
             const isNightRestricted = (currentHour >= 19.0 || currentHour <= 5.5);
 
-            if (windGround > 38 || wind80m > 40 || gust > 42 || rainAmount > 5 || kpIndex >= 5 || hasActiveWarning || isNightRestricted) {
+            if (windGround > 39 || wind80m > 42 || gust > 45 || rainAmount > 5 || kpIndex >= 5 || hasActiveWarning || isNightRestricted) {
                 let reasonText = "危險！惡劣天氣、強風或降雨，嚴禁起飛";
                 if (isNightRestricted) reasonText = "危險！已過夜間限制時間（日落後至日出前），能見度低，嚴禁飛行！";
                 else if (kpIndex >= 5) reasonText = "危險！強烈地磁風暴 (Kp ≥ 5)，強烈干擾 GPS，嚴禁起飛！";
                 
                 return { emoji: "🔴", color: "#ef4444", text: reasonText };
-            } else if (windGround > 28 || wind80m > 35 || gust > 30 || rainProb > 60 || kpIndex >= 4) {
+            } else if (windGround > 28 || wind80m > 37 || gust > 35 || rainProb > 60 || kpIndex >= 4) {
                 return { emoji: "🟡", color: "#f59e0b", text: kpIndex >= 4 ? "警告：地磁活躍 (Kp = 4) 或氣象不穩定，請謹慎飛行。" : "氣象不穩定、高空風大或有雨，請謹慎飛行。" };
             }
             return { emoji: "🟢", color: "#10b981", text: "環境、時間與地磁良好，適合飛行。" };
@@ -911,10 +911,10 @@
                 return { emoji: "🚫", color: "#dc2626", text: "禁飛區範圍！嚴禁放飛" };
             }
             if (!w) return { emoji: "⚪", color: "#94a3b8", text: "超出7天預報範圍" };
-            if (w.windMax > 32 || w.gustMax > 42 || w.rainSum > 0) {
+            if (w.windMax > 35 || w.gustMax > 42 || w.rainSum > 0) {
                 return { emoji: "🔴", color: "#ef4444", text: "危險：預測有雨或強風" };
             }
-            else if (w.windMax > 18 || w.gustMax > 30 || w.rainProb > 45) {
+            else if (w.windMax > 18 || w.gustMax > 32 || w.rainProb > 45) {
                 return { emoji: "🟡", color: "#f59e0b", text: "需謹慎：風力偏大或天色不穩" };
             }
             return { emoji: "🟢", color: "#10b981", text: "天氣良好，適合航拍" };
