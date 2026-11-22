@@ -42,48 +42,71 @@
             color: #1e293b;
         }
 
-        /* 導航列（固定寬度，絕不左右滑動） */
-.navbar {
-    background: #1c1c1e;
-    color: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px;
-    z-index: 2000;
-    flex-shrink: 0;
-    width: 100%;
-    overflow: hidden;
-}
-.nav-left {
-    display: flex;
-    align-items: center;
-    min-width: 0;
-}
-.brand {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 18px;
-    white-space: nowrap;
-}
-.nav-tabs {
-    display: flex;
-    gap: 6px;
-}
-.tab-btn {
-    background: none;
-    border: none;
-    color: #aaa;
-    padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: 0.2s;
-    white-space: nowrap;
-}
-.tab-btn:hover { color: #ffffff; background: #2c2c2e; }
-.tab-btn.active { color: #ffffff; background: #007aff; }
+        /* 導航列（固定寬度） */
+        .navbar {
+            background: #1c1c1e;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            z-index: 2000;
+            flex-shrink: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+        }
+        .brand {
+            font-size: clamp(15px, 1.4vw, 19px);
+            font-weight: bold;
+            margin-right: clamp(10px, 1.4vw, 22px);
+            white-space: nowrap;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: clamp(4px, 0.6vw, 8px);
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            padding: clamp(7px, 0.9vw, 9px) clamp(8px, 1vw, 13px);
+            font-size: clamp(12.5px, 1.05vw, 14px);
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: #ffffff; background: #2c2c2e; }
+        .tab-btn.active { color: #ffffff; background: #007aff; }
+
+        .nav-right-tools {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .lang-select {
+            background: #2c2c2e;
+            color: #ffffff;
+            border: 1px solid #3a3a3c;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+            flex-shrink: 0;
+        }
+        .lang-select:hover, .lang-select:focus {
+            border-color: #007aff;
+        }
 
         /* 分頁內容控制 */
         .tab-content { flex: 1; position: relative; display: none; padding: 0; margin: 0; overflow-y: auto; }
@@ -107,14 +130,14 @@
             padding: 6px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            max-width: 240px;
+            max-width: 260px;
         }
         .search-input {
             border: 1px solid #cbd5e1;
             padding: 8px 10px;
             border-radius: 4px;
-            width: 130px;
-            font-size: 16px;
+            width: 150px;
+            font-size: 15px;
             outline: none;
         }
         .btn {
@@ -162,123 +185,108 @@
         }
         .locate-btn:hover { background: #f0f0f0; }
 
-/* 桌面／大屏預設樣式 */
-.brand {
-    font-size: clamp(16px, 1.5vw, 19px);
-    font-weight: bold;
-    margin-right: clamp(10px, 1.5vw, 24px);
-    white-space: nowrap;
-}
-.nav-tabs {
-    display: flex;
-    gap: clamp(4px, 0.6vw, 8px);
-}
-.tab-btn {
-    background: none;
-    border: none;
-    color: #aaa;
-    padding: clamp(7px, 0.9vw, 9px) clamp(8px, 1.1vw, 14px);
-    font-size: clamp(13px, 1.1vw, 14.5px);
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: 0.2s;
-    white-space: nowrap;
-}
-.tab-btn:hover { color: #ffffff; background: #2c2c2e; }
-.tab-btn.active { color: #ffffff; background: #007aff; }
+        .news-btn {
+            position: relative;
+            background: #2c2c2e;
+            color: #ffffff;
+            border: 1px solid #3a3a3c;
+            padding: 6px 11px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .news-btn:hover { background: #3a3a3c; }
+        .news-badge {
+            background: #ef4444;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 999px;
+            display: none;
+        }
+        .news-badge.show { display: inline-block; }
 
-.news-btn {
-    position: relative;
-    background: #2c2c2e;
-    color: #ffffff;
-    border: 1px solid #3a3a3c;
-    padding: clamp(6px, 0.8vw, 8px) clamp(10px, 1vw, 13px);
-    border-radius: 6px;
-    font-size: clamp(12.5px, 1vw, 13.5px);
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.2s;
-    flex-shrink: 0;
-}
-.news-btn:hover { background: #3a3a3c; }
+        /* 中等螢幕（641px - 920px） */
+        @media (max-width: 920px) and (min-width: 641px) {
+            .navbar { padding: 9px 12px; }
+            .brand { font-size: 15px; margin-right: 8px; }
+            .tab-btn { padding: 7px 8px; font-size: 12.5px; }
+            .lang-select, .news-btn { padding: 6px 8px; font-size: 12px; }
+        }
 
-/* 中等螢幕（641px - 860px，例如橫屏手機、細平板）：保持單行但緊湊，唔會變細 */
-@media (max-width: 860px) and (min-width: 641px) {
-    .navbar {
-        padding: 9px 12px;
-    }
-    .brand {
-        font-size: 16px;
-        margin-right: 10px;
-    }
-    .tab-btn {
-        padding: 7px 9px;
-        font-size: 13px;
-    }
-    .news-btn {
-        padding: 6px 10px;
-        font-size: 12.5px;
-    }
-}
-
-/* 窄螢幕手機（640px 或以下）：雙行排版，掣夠大兼鋪滿，絕不左右滑動 */
-@media (max-width: 640px) {
-    .navbar {
-        flex-wrap: wrap;
-        padding: 8px 10px;
-        gap: 8px;
-    }
-    .nav-left {
-        display: contents;
-    }
-    .brand {
-        order: 1;
-        margin-right: 0;
-        font-size: 16px;
-    }
-    .news-btn {
-        order: 2;
-        margin-left: 0;
-        padding: 6px 11px;
-        font-size: 13px;
-    }
-    .nav-tabs {
-        order: 3;
-        width: 100%;
-        display: flex;
-        gap: 4px;
-        background: #2c2c2e;
-        padding: 3px;
-        border-radius: 8px;
-    }
-    .tab-btn {
-        flex: 1;
-        text-align: center;
-        padding: 8px 4px;
-        font-size: 13.5px;
-    }
-    .search-container {
-        top: 12px;
-        left: 10px;
-        max-width: calc(100% - 105px);
-    }
-    .search-input {
-        width: 100%;
-        min-width: 75px;
-    }
-    .locate-btn {
-        top: 12px;
-        right: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
-    }
-}
+        /* 窄螢幕手機（640px 或以下） */
+        @media (max-width: 640px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 8px 10px;
+                gap: 8px;
+            }
+            .nav-left {
+                display: contents;
+            }
+            .brand {
+                order: 1;
+                margin-right: 0;
+                font-size: 15.5px;
+            }
+            .nav-right-tools {
+                order: 2;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .lang-select {
+                padding: 5px 6px;
+                font-size: 12px;
+            }
+            .news-btn {
+                padding: 6px 9px;
+                font-size: 12px;
+            }
+            .nav-tabs {
+                order: 3;
+                width: 100%;
+                display: flex;
+                gap: 4px;
+                background: #2c2c2e;
+                padding: 3px;
+                border-radius: 8px;
+            }
+            .tab-btn {
+                flex: 1;
+                text-align: center;
+                padding: 8px 4px;
+                font-size: 12.5px;
+            }
+            .search-container {
+                top: 12px;
+                left: 10px;
+                max-width: calc(100% - 115px);
+            }
+            .search-input {
+                width: 100%;
+                min-width: 70px;
+                font-size: 14px;
+            }
+            .locate-btn {
+                top: 12px;
+                right: 10px;
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .aa-popover {
+                top: 86px;
+                right: 10px;
+            }
+        }
 
         /* 2. 法例頁面 */
         #country-select {
@@ -286,7 +294,7 @@
             font-size: 15px;
             border-radius: 8px;
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
             margin-bottom: 20px;
             outline: none;
             border: 1px solid #cbd5e1;
@@ -334,7 +342,7 @@
             padding: 8px 12px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
-            font-size: 16px;
+            font-size: 15px;
         }
         .iti-table {
             width: 100%;
@@ -402,443 +410,370 @@
         }
         .source-tag-law { background: #dcfce7; color: #15803d; }
 
-/* 全畫面防亂撳遮罩（高於 navbar z-index: 2000，低於 tour-card z-index: 10000） */
-.tour-lock-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.52);
-    z-index: 9990;
-    display: none;
-    pointer-events: auto;
-}
-.tour-lock-overlay.show { display: block; }
+        /* 導覽與安裝教學 */
+        .tour-lock-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.52);
+            z-index: 9990;
+            display: none;
+            pointer-events: auto;
+        }
+        .tour-lock-overlay.show { display: block; }
 
-.tour-highlight {
-    position: relative !important;
-    z-index: 9995 !important;
-    pointer-events: none !important;
-    box-shadow: 0 0 0 4px #007aff, 0 0 0 9999px rgba(15, 23, 42, 0.58) !important;
-    border-radius: 8px;
-    transition: box-shadow 0.25s ease;
-}
+        .tour-highlight {
+            position: relative !important;
+            z-index: 9995 !important;
+            pointer-events: none !important;
+            box-shadow: 0 0 0 4px #007aff, 0 0 0 9999px rgba(15, 23, 42, 0.58) !important;
+            border-radius: 8px;
+            transition: box-shadow 0.25s ease;
+        }
 
-.tour-card {
-    position: fixed;
-    left: 50%;
-    bottom: 24px;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
-    max-width: 460px;
-    background: #ffffff;
-    color: #1e293b;
-    border-radius: 16px;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
-    z-index: 10000;
-    overflow: hidden;
-    display: none;
-    pointer-events: auto;
-    animation: modalPop 0.22s ease-out;
-}
-.tour-card.show { display: block; }
+        .tour-card {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 460px;
+            background: #ffffff;
+            color: #1e293b;
+            border-radius: 16px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            z-index: 10000;
+            overflow: hidden;
+            display: none;
+            pointer-events: auto;
+        }
+        .tour-card.show { display: block; }
 
-.tour-header {
-    background: linear-gradient(135deg, #007aff, #0284c7);
-    color: #ffffff;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.tour-step-badge {
-    background: rgba(255, 255, 255, 0.22);
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: bold;
-}
-.tour-body {
-    padding: 16px 18px;
-    font-size: 14px;
-    line-height: 1.65;
-    max-height: 55vh;
-    overflow-y: auto;
-}
-.tour-footer {
-    padding: 12px 18px;
-    background: #f8fafc;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-.tour-prev-btn {
-    background: #e2e8f0;
-    color: #334155;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.tour-prev-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-.tour-next-btn {
-    flex: 1;
-    background: #007aff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
-}
-.tour-next-btn:hover:not(:disabled) { background: #0062cc; }
-.tour-next-btn:disabled {
-    background: #94a3b8;
-    opacity: 0.85;
-    cursor: not-allowed;
-}
-.pwa-install-btn {
-    width: 100%;
-    background: #10b981;
-    color: #ffffff;
-    border: none;
-    padding: 11px 14px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 12px;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-}
-.pwa-install-btn:hover { background: #059669; }
+        .tour-header {
+            background: linear-gradient(135deg, #007aff, #0284c7);
+            color: #ffffff;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .tour-step-badge {
+            background: rgba(255, 255, 255, 0.22);
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .tour-body {
+            padding: 16px 18px;
+            font-size: 14px;
+            line-height: 1.65;
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+        .tour-footer {
+            padding: 12px 18px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .tour-prev-btn {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .tour-prev-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .tour-next-btn {
+            flex: 1;
+            background: #007aff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+        }
+        .tour-next-btn:hover:not(:disabled) { background: #0062cc; }
+        .tour-next-btn:disabled {
+            background: #94a3b8;
+            opacity: 0.85;
+            cursor: not-allowed;
+        }
+        .pwa-install-btn {
+            width: 100%;
+            background: #10b981;
+            color: #ffffff;
+            border: none;
+            padding: 11px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+        .pwa-install-btn:hover { background: #059669; }
+        .guide-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        .guide-box-title { font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+        .guide-box ol { margin: 0; padding-left: 18px; }
 
-/* 最新消息按鈕與紅點 */
-.navbar {
-    justify-content: space-between;
-}
-.nav-left {
-    display: flex;
-    align-items: center;
-}
-.news-btn {
-    position: relative;
-    background: #2c2c2e;
-    color: #ffffff;
-    border: 1px solid #3a3a3c;
-    padding: 7px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-    margin-left: 12px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.2s;
-}
-.news-btn:hover {
-    background: #3a3a3c;
-}
-.news-badge {
-    background: #ef4444;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 1px 5px;
-    border-radius: 999px;
-    display: none;
-}
-.news-badge.show {
-    display: inline-block;
-}
+        /* 幼身可收合公告條 */
+        .news-slim-bar {
+            background: #eff6ff;
+            border-bottom: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 6px 16px;
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            z-index: 1500;
+            flex-shrink: 0;
+        }
+        .news-slim-bar.show { display: flex; }
+        .news-slim-text {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+        .news-slim-close {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0 4px;
+            line-height: 1;
+        }
 
-/* 幼身可收合公告條（唔阻地圖操作） */
-.news-slim-bar {
-    background: #eff6ff;
-    border-bottom: 1px solid #bfdbfe;
-    color: #1e40af;
-    padding: 6px 16px;
-    font-size: 13px;
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    z-index: 1500;
-    flex-shrink: 0;
-}
-.news-slim-bar.show {
-    display: flex;
-}
-.news-slim-text {
-    flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-}
-.news-slim-close {
-    background: none;
-    border: none;
-    color: #64748b;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 0 4px;
-    line-height: 1;
-}
+        /* 最新消息彈窗 */
+        .news-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .news-modal-backdrop.show { display: flex; }
+        .news-modal {
+            background: #ffffff;
+            width: 100%;
+            max-width: 520px;
+            max-height: 80vh;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .news-modal-header {
+            background: #1c1c1e;
+            color: #ffffff;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-modal-body {
+            padding: 16px 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .news-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #007aff;
+            border-radius: 8px;
+            padding: 12px 14px;
+        }
+        .news-item.important {
+            border-left-color: #ef4444;
+            background: #fffafb;
+        }
+        .news-item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        .news-tag {
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-weight: bold;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .news-item.important .news-tag {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .news-item-title {
+            font-weight: bold;
+            font-size: 15px;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .news-item-desc {
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.6;
+            margin: 0;
+        }
 
-/* 最新消息彈窗 */
-.news-modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.5);
-    z-index: 9000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-}
-.news-modal-backdrop.show {
-    display: flex;
-}
-.news-modal {
-    background: #ffffff;
-    width: 100%;
-    max-width: 520px;
-    max-height: 80vh;
-    border-radius: 14px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-.news-modal-header {
-    background: #1c1c1e;
-    color: #ffffff;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.news-modal-body {
-    padding: 16px 18px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.news-item {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-left: 4px solid #007aff;
-    border-radius: 8px;
-    padding: 12px 14px;
-}
-.news-item.important {
-    border-left-color: #ef4444;
-    background: #fffafb;
-}
-.news-item-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: #64748b;
-    margin-bottom: 4px;
-}
-.news-tag {
-    background: #dbeafe;
-    color: #1d4ed8;
-    font-weight: bold;
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-}
-.news-item.important .news-tag {
-    background: #fee2e2;
-    color: #dc2626;
-}
-.news-item-title {
-    font-weight: bold;
-    font-size: 15px;
-    color: #0f172a;
-    margin-bottom: 4px;
-}
-.news-item-desc {
-    font-size: 13.5px;
-    color: #334155;
-    line-height: 1.6;
-    margin: 0;
-}
+        /* 文字大小縮放控制 */
+        :root { --font-scale: 1; }
+        .tab-content, .news-modal, .tour-card, .leaflet-popup-content { zoom: var(--font-scale); }
+        @supports not (zoom: 1) {
+            .tab-content, .news-modal, .tour-card { font-size: calc(14px * var(--font-scale)); }
+        }
 
-/* 文字大小縮放控制 */
-:root {
-    --font-scale: 1;
-}
+        .aa-trigger-btn {
+            background: #2c2c2e;
+            color: #ffffff;
+            border: 1px solid #3a3a3c;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.18s, border-color 0.18s, transform 0.1s;
+        }
+        .aa-trigger-btn:hover, .aa-trigger-btn.open {
+            background: #007aff;
+            border-color: #007aff;
+        }
+        .aa-trigger-btn:active { transform: scale(0.95); }
 
-.tab-content,
-.news-modal,
-.tour-card,
-.leaflet-popup-content {
-    zoom: var(--font-scale);
-}
-
-@supports not (zoom: 1) {
-    .tab-content,
-    .news-modal,
-    .tour-card {
-        font-size: calc(14px * var(--font-scale));
-    }
-}
-
-/* 俐落 Aa 按鈕與彈出式字體調整卡片 */
-.aa-trigger-btn {
-    background: #2c2c2e;
-    color: #ffffff;
-    border: 1px solid #3a3a3c;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: background 0.18s, border-color 0.18s, transform 0.1s;
-}
-.aa-trigger-btn:hover,
-.aa-trigger-btn.open {
-    background: #007aff;
-    border-color: #007aff;
-}
-.aa-trigger-btn:active {
-    transform: scale(0.95);
-}
-
-.aa-popover {
-    position: fixed;
-    top: 56px;
-    right: 14px;
-    width: 244px;
-    background: #ffffff;
-    color: #1e293b;
-    border-radius: 14px;
-    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.24);
-    border: 1px solid #e2e8f0;
-    padding: 14px;
-    z-index: 9500;
-    display: none;
-}
-.aa-popover.show {
-    display: block;
-}
-.aa-popover-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    font-weight: 700;
-    color: #0f172a;
-}
-.aa-reset-link {
-    background: none;
-    border: none;
-    color: #007aff;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 0;
-}
-.aa-reset-link:hover {
-    text-decoration: underline;
-}
-.aa-slider {
-    width: 100%;
-    margin-top: 12px;
-    accent-color: #007aff;
-    cursor: pointer;
-}
-.aa-preset-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    margin-top: 10px;
-}
-.aa-preset-btn {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    color: #334155;
-    padding: 7px 4px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-}
-.aa-preset-btn:hover {
-    background: #f1f5f9;
-}
-.aa-preset-btn.active {
-    background: #eff6ff;
-    border-color: #007aff;
-    color: #007aff;
-    box-shadow: inset 0 0 0 1px #007aff;
-}
-
-@media (max-width: 640px) {
-    .nav-right-tools {
-        order: 2;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .news-btn {
-        margin-left: 0;
-    }
-    .aa-popover {
-        top: 86px;
-        right: 10px;
-    }
-}
+        .aa-popover {
+            position: fixed;
+            top: 56px;
+            right: 14px;
+            width: 244px;
+            background: #ffffff;
+            color: #1e293b;
+            border-radius: 14px;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.24);
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            z-index: 9500;
+            display: none;
+        }
+        .aa-popover.show { display: block; }
+        .aa-popover-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .aa-reset-link {
+            background: none;
+            border: none;
+            color: #007aff;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0;
+        }
+        .aa-reset-link:hover { text-decoration: underline; }
+        .aa-slider {
+            width: 100%;
+            margin-top: 12px;
+            accent-color: #007aff;
+            cursor: pointer;
+        }
+        .aa-preset-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .aa-preset-btn {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            padding: 7px 4px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .aa-preset-btn:hover { background: #f1f5f9; }
+        .aa-preset-btn.active {
+            background: #eff6ff;
+            border-color: #007aff;
+            color: #007aff;
+            box-shadow: inset 0 0 0 1px #007aff;
+        }
     </style>
 </head>
 <body>
 
-   <!-- 導航列 -->
+    <!-- 導航列 -->
     <div class="navbar">
         <div class="nav-left">
-            <div class="brand">航拍Drone</div>
+            <div id="brand-title" class="brand">航拍Drone</div>
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab('map-page', this)">航拍地圖</button>
-                <button class="tab-btn" onclick="switchTab('laws-page', this)">各國法例</button>
-                <button class="tab-btn" onclick="switchTab('itinerary-page', this)">行程天氣</button>
-                <button class="tab-btn" onclick="switchTab('about-page', this)">免責</button>
+                <button class="tab-btn active" data-i18n="tab_map" onclick="switchTab('map-page', this)">航拍地圖</button>
+                <button class="tab-btn" data-i18n="tab_laws" onclick="switchTab('laws-page', this)">各國法例</button>
+                <button class="tab-btn" data-i18n="tab_itinerary" onclick="switchTab('itinerary-page', this)">行程天氣</button>
+                <button class="tab-btn" data-i18n="tab_about" onclick="switchTab('about-page', this)">免責</button>
             </div>
         </div>
-        <div class="nav-right-tools" style="display:flex; align-items:center; gap:6px;">
+        <div class="nav-right-tools">
+            <select id="lang-select" class="lang-select" aria-label="Language" onchange="setLanguage(this.value)">
+                <option value="zh-HK">繁中</option>
+                <option value="en">EN</option>
+                <option value="ja">日本語</option>
+            </select>
             <button type="button" id="aa-trigger-btn" class="aa-trigger-btn" title="調整文字大小" onclick="toggleFontPopover(event)">Aa</button>
             <button type="button" class="news-btn" onclick="openNewsModal()">
-                <span>🔔 最新消息</span>
+                <span id="news-btn-label">🔔 最新消息</span>
                 <span id="news-unread-badge" class="news-badge">NEW</span>
             </button>
         </div>
 
         <div id="aa-popover" class="aa-popover" role="dialog" aria-label="文字大小設定" onclick="event.stopPropagation()">
             <div class="aa-popover-header">
-                <span>文字大小：<span id="aa-pct-text" style="color:#007aff;">100%</span></span>
-                <button type="button" class="aa-reset-link" onclick="setFontScale(1)">重設</button>
+                <span><span data-i18n="font_size_label">文字大小</span>：<span id="aa-pct-text" style="color:#007aff;">100%</span></span>
+                <button type="button" class="aa-reset-link" data-i18n="reset_btn" onclick="setFontScale(1)">重設</button>
             </div>
             <input id="aa-range" class="aa-slider" type="range" min="0.85" max="1.35" step="0.05" value="1" oninput="setFontScale(this.value)">
             <div class="aa-preset-grid">
-                <button type="button" class="aa-preset-btn" data-scale="0.9" onclick="setFontScale(0.9)" style="font-size:11px;">細</button>
-                <button type="button" class="aa-preset-btn active" data-scale="1" onclick="setFontScale(1)" style="font-size:12.5px;">標準</button>
-                <button type="button" class="aa-preset-btn" data-scale="1.15" onclick="setFontScale(1.15)" style="font-size:14px;">大</button>
-                <button type="button" class="aa-preset-btn" data-scale="1.3" onclick="setFontScale(1.3)" style="font-size:15px;">特大</button>
+                <button type="button" class="aa-preset-btn" data-scale="0.9" data-i18n="font_small" onclick="setFontScale(0.9)" style="font-size:11px;">細</button>
+                <button type="button" class="aa-preset-btn active" data-scale="1" data-i18n="font_normal" onclick="setFontScale(1)" style="font-size:12.5px;">標準</button>
+                <button type="button" class="aa-preset-btn" data-scale="1.15" data-i18n="font_large" onclick="setFontScale(1.15)" style="font-size:14px;">大</button>
+                <button type="button" class="aa-preset-btn" data-scale="1.3" data-i18n="font_xlarge" onclick="setFontScale(1.3)" style="font-size:15px;">特大</button>
             </div>
         </div>
     </div>
@@ -846,7 +781,7 @@
     <!-- 頂部幼身公告條 -->
     <div id="news-slim-bar" class="news-slim-bar">
         <div id="news-slim-text" class="news-slim-text" onclick="openNewsModal()"></div>
-        <button type="button" class="news-slim-close" title="收起公告條" onclick="dismissSlimNewsBar()">×</button>
+        <button type="button" class="news-slim-close" title="Close" onclick="dismissSlimNewsBar()">×</button>
     </div>
 
     <!-- 最新消息列表彈窗 -->
@@ -858,7 +793,7 @@
             </div>
             <div id="news-modal-body" class="news-modal-body"></div>
             <div style="padding: 12px 18px; background: #f8fafc; border-top: 1px solid #e2e8f0; text-align: right;">
-                <button type="button" class="btn btn-primary" onclick="closeNewsModal()">知道了</button>
+                <button type="button" id="news-modal-close-btn" class="btn btn-primary" onclick="closeNewsModal()">知道了</button>
             </div>
         </div>
     </div>
@@ -867,20 +802,20 @@
     <div id="map-page" class="tab-content active">
         <div class="search-container">
             <input type="text" id="search-input" class="search-input" placeholder="(國家/地區)地名...">
-            <button class="search-btn" onclick="searchLocation()">搜尋</button>
+            <button id="map-search-btn" class="search-btn" onclick="searchLocation()">搜尋</button>
         </div>
         <div id="map"></div>
-        <div class="locate-btn" onclick="geolocateUser()">我的位置</div>
+        <div id="locate-btn" class="locate-btn" onclick="geolocateUser()">我的位置</div>
     </div>
 
     <!-- 2. 各國法例 -->
     <div id="laws-page" class="tab-content page-container">
         <div class="page-inner-narrow">
-            <h2 class="page-title">📜 各國航拍法例快速對照</h2>
-            <p style="color: #64748b; font-size: 14px;">出發外遊航拍前，請先選擇國家或地區查看當地基本核心法規：</p>
+            <h2 id="laws-page-title" class="page-title">📜 各國航拍法例快速對照</h2>
+            <p id="laws-page-desc" style="color: #64748b; font-size: 14px;">出發外遊航拍前，請先選擇國家或地區查看當地基本核心法規：</p>
 
             <select id="country-select" onchange="showDroneLaws()">
-                <option value="">-- 請選擇國家 / 地區 --</option>
+                <option id="country-opt-default" value="">-- 請選擇國家 / 地區 --</option>
                 <option value="hk">香港 (Hong Kong)</option>
                 <option value="jp">日本 (Japan)</option>
                 <option value="tw">台灣 (Taiwan)</option>
@@ -895,11 +830,13 @@
     <div id="itinerary-page" class="tab-content page-container">
         <div class="page-inner">
             <div id="planner-console" class="panel-card planner-console">
-                <div style="font-weight: bold; color: #007aff; font-size: 15px; margin-right: 10px;">🗓️ 未來行程規劃：</div>
+                <div id="iti-heading" style="font-weight: bold; color: #007aff; font-size: 15px; margin-right: 10px;">🗓️ 未來行程規劃：</div>
                 <input type="text" id="iti-search-input" class="iti-input" placeholder="輸入國家/地區+地名（例如：香港 西貢、大澳、尖沙咀）" style="flex: 1; min-width: 200px;">
                 <input type="date" id="iti-date-input" class="iti-input" style="padding: 7px 12px; font-size: 14px;">
-                <button id="iti-add-btn" class="btn btn-primary" onclick="addItineraryBySearch()">🔍 搜尋並加入行程</button>
-                <button class="btn btn-success" onclick="refreshAllForecasts()">🔄 更新天氣</button>
+                <button type="button" id="iti-add-btn" class="btn btn-primary" style="display:inline-flex; align-items:center; justify-content:center; white-space:nowrap;" onclick="addItineraryBySearch()">
+                    <span id="iti-add-btn-text">🔍 搜尋並加入行程</span>
+                </button>
+                <button id="iti-refresh-btn" class="btn btn-success" onclick="refreshAllForecasts()">🔄 更新天氣</button>
             </div>
 
             <div id="itinerary-map" style="height: 450px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); z-index: 1;"></div>
@@ -907,13 +844,13 @@
             <div id="itinerary-section" class="panel-card" style="margin-top: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 2px solid #007aff; padding-bottom: 10px; margin-bottom: 15px;">
                     <div>
-                        <span style="font-size: 16px; font-weight: bold; color: #1e293b;">📋 已排定航拍清單 (<span id="wp-count">0</span> 個地點)</span>
+                        <span style="font-size: 16px; font-weight: bold; color: #1e293b;"><span id="iti-list-title">📋 已排定航拍清單</span> (<span id="wp-count">0</span> <span id="iti-count-unit">個地點</span>)</span>
                         <span id="save-status" style="font-size: 12px; color: #10b981; margin-left: 8px; font-weight: 500;">💾 已自動儲存於本機</span>
                     </div>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="btn btn-info" onclick="saveItineraryManual()">💾 手動儲存</button>
+                        <button id="iti-save-btn" class="btn btn-info" onclick="saveItineraryManual()">💾 手動儲存</button>
                         <button id="export-pdf-btn" class="btn btn-purple" onclick="exportItineraryPdf()">📥 匯出行程 (.pdf)</button>
-                        <button class="btn btn-danger" onclick="clearItinerary()">🧹 清空行程</button>
+                        <button id="iti-clear-btn" class="btn btn-danger" onclick="clearItinerary()">🧹 清空行程</button>
                     </div>
                 </div>
 
@@ -921,12 +858,12 @@
                     <table class="iti-table">
                         <thead>
                             <tr>
-                                <th>次序</th>
-                                <th>預定日子</th>
-                                <th>航拍地點</th>
-                                <th>該日預測天氣 (氣溫 / 均風 / 陣風 / 降雨率)</th>
-                                <th>評估</th>
-                                <th style="text-align: center;">操作</th>
+                                <th id="th-order">次序</th>
+                                <th id="th-date">預定日子</th>
+                                <th id="th-place">航拍地點</th>
+                                <th id="th-weather">該日預測天氣 (氣溫 / 均風 / 陣風 / 降雨率)</th>
+                                <th id="th-eval">評估</th>
+                                <th id="th-action" style="text-align: center;">操作</th>
                             </tr>
                         </thead>
                         <tbody id="itinerary-list">
@@ -942,91 +879,994 @@
 
     <!-- 4. 資料來源與免責聲明分頁 -->
     <div id="about-page" class="tab-content page-container">
-        <div class="page-inner-narrow">
-            <h2 class="page-title">📚 資料來源與免責聲明</h2>
+        <div id="about-content-container" class="page-inner-narrow"></div>
+    </div>
 
-            <div class="info-card" style="border-left: 5px solid #ef4444; background: #fffafb;">
-                <h3 style="color: #dc2626; border-bottom: 1px solid #fecaca;">⚠️ 免責聲明 (Disclaimer)</h3>
-                <div style="font-size: 14px; color: #334155; line-height: 1.8;">
-                    <p style="margin-top: 0;"><b>1. 僅供參考用途：</b>本網站（Drone Weather）所提供之氣象數據、飛行安全評估燈號（🟢/🟡/🔴）、禁飛區邊界及各國航拍法例摘要，均僅作飛行前之一般參考用途，並不構成任何專業航空氣象建議或法律意見。</p>
-                    <p><b>2. 數據延遲與誤差：</b>第三方氣象 API 及本地快取之禁飛區圖層（GeoJSON）可能存在更新延遲、數據誤差或臨時空域管制（如臨時禁飛區 TFR、NOTAM 航行通告、國家公園或私人地方限制）未能即時反映之情況。微氣候（如峽谷陣風、高樓風切變、磁場干擾）亦無法完全由預報模型準確預測。</p>
-                    <p><b>3. 遙控駕駛員之法定責任：</b>無人機操作員（機師）在每次起飛前，必須自行透過當地官方指定平台（如香港民航處 eSUA、日本 DIPS 2.0、台灣 DroneMap、英國 CAA 等）核實最新空域狀態、臨時禁飛令及天氣實況，並嚴格遵守當地法律及無人機製造商之安全操作指引。</p>
-                    <p style="margin-bottom: 0;"><b>4. 責任豁免：</b>對於因使用、依賴或無法使用本網站所載資訊而直接或間接導致之任何財物損失、無人機損毀、人身傷亡、法律訴訟或行政罰則，本網站及開發者概不承擔任何法律或賠償責任。</p>
-                </div>
-            </div>
-
-            <div class="info-card" style="border-left: 5px solid #007aff;">
-                <h3 style="color: #007aff; border-bottom: 1px solid #e2e8f0;">實時氣象、空域及地圖資料來源</h3>
-                <ul class="source-list">
-                    <li>
-                        <span class="source-tag">氣象預報</span>
-                        <b>Open-Meteo Weather Forecast API</b> — 提供全球實時氣溫、地面風速 (10m)、高空風速 (80m)、實時陣風、降雨量、降雨機率、日出日落及未來多日每日氣象預報數據。
-                    </li>
-                    <li>
-                        <span class="source-tag">香港天氣警告</span>
-                        <b>香港天文台 (HKO) 開放數據 API</b> — 提供香港本地實時生效之惡劣天氣警告（如熱帶氣旋、暴雨、強烈季候風信號等）。
-                    </li>
-                    <li>
-                        <span class="source-tag">地磁活動</span>
-                        <b>美國國家海洋暨大氣總署太空天氣預報中心 (NOAA SWPC)</b> — 提供全球實時地磁風暴指數（Kp Index），評估衛星定位（GPS/GNSS）受磁暴干擾風險。
-                    </li>
-                    <li>
-                        <span class="source-tag">香港禁飛區圖層</span>
-                        <b>香港民航處 (CAD) eSUA 電子系統空間數據</b> — 整合香港《小型無人機令》下之限制飛行區（No-Fly Zones）地理邊界（GeoJSON），並透過 Turf.js 進行空間坐標檢測。
-                    </li>
-                    <li>
-                        <span class="source-tag">地圖與地理編碼</span>
-                        <b>OpenStreetMap / Komoot Photon / Nominatim</b> — 提供互動式地圖底圖圖磚、地名正向搜尋及點擊坐標反向地理編碼服務。
-                    </li>
-                </ul>
-            </div>
-
-            <div class="info-card" style="border-left: 5px solid #10b981;">
-                <h3 style="color: #059669; border-bottom: 1px solid #e2e8f0;">各國及地區航拍法例參考出處</h3>
-                <ul class="source-list">
-                    <li>
-                        <span class="source-tag source-tag-law">香港</span>
-                        <b>香港民航處 (Civil Aviation Department, CAD)</b> — 第 448G 章《小型無人機令》及「SUA 一站通 (eSUA)」標準操作規定。
-                    </li>
-                    <li>
-                        <span class="source-tag source-tag-law">日本</span>
-                        <b>日本國土交通省航空局 (JCAB)</b> — 《航空法》無人機飛行規則及 DIPS 2.0 (Drone/UAS Information Platform System) 註冊與申請指引。
-                    </li>
-                    <li>
-                        <span class="source-tag source-tag-law">台灣</span>
-                        <b>台灣交通部民用航空局 (CAA)</b> — 《民用航空法》遙控無人機專章及「遙控無人機管理資訊系統 (DroneMap)」空域規範。
-                    </li>
-                    <li>
-                        <span class="source-tag source-tag-law">英國</span>
-                        <b>英國民航局 (UK Civil Aviation Authority, CAA)</b> — UK Drone and Model Aircraft Code 及 DMARES 註冊與飛行類別（A1/A2/A3）規定。
-                    </li>
-                </ul>
-            </div>
-
-            <div style="text-align: right; margin-bottom: 10px;">
-                <button type="button" class="btn btn-info" onclick="openInstallGuideManually()">📲 查看安裝為 App 教學</button>
-            </div>
+    <!-- 首次造訪：強制性安裝導覽 -->
+    <div id="tour-lock-overlay" class="tour-lock-overlay" aria-hidden="true"></div>
+    <div id="onboarding-tour-card" class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+        <div class="tour-header">
+            <div id="tour-title" style="font-weight: bold; font-size: 16px;">歡迎使用 Drone Weather</div>
+            <span id="tour-step-indicator" class="tour-step-badge">步驟 1 / 5</span>
+        </div>
+        <div id="tour-body" class="tour-body"></div>
+        <div class="tour-footer">
+            <button type="button" id="tour-prev-btn" class="tour-prev-btn" onclick="prevTourStep()">上一步</button>
+            <button type="button" id="tour-next-btn" class="tour-next-btn" onclick="nextTourStep()" disabled>請先閱讀 (8s)</button>
         </div>
     </div>
 
-<!-- 首次造訪：強制性安裝導覽 -->
-<div id="tour-lock-overlay" class="tour-lock-overlay" aria-hidden="true"></div>
-<div id="onboarding-tour-card" class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title">
-    <div class="tour-header">
-        <div id="tour-title" style="font-weight: bold; font-size: 16px;">歡迎使用 Drone Weather</div>
-        <span id="tour-step-indicator" class="tour-step-badge">步驟 1 / 5</span>
-    </div>
-    <div id="tour-body" class="tour-body"></div>
-    <div class="tour-footer">
-        <button type="button" id="tour-prev-btn" class="tour-prev-btn" onclick="prevTourStep()">上一步</button>
-        <button type="button" id="tour-next-btn" class="tour-next-btn" onclick="nextTourStep()" disabled>請先閱讀 (5s)</button>
-    </div>
-</div>
-
     <script>
+        // ==========================================
+        // 0. 多語言字典與系統語言偵測 (zh-HK / en / ja)
+        // ==========================================
+        const LANG_STORAGE_KEY = 'dw_lang_v1';
+        let currentLang = 'zh-HK';
+
+        function detectSystemLanguage() {
+            const candidates = Array.isArray(navigator.languages) && navigator.languages.length > 0
+                ? navigator.languages
+                : [navigator.language || 'en'];
+
+            for (const raw of candidates) {
+                const lang = String(raw || '').toLowerCase();
+                if (lang.startsWith('ja')) return 'ja';
+                if (lang.startsWith('zh')) return 'zh-HK';
+            }
+            return 'en';
+        }
+
+        function getInitialLanguage() {
+            try {
+                const saved = localStorage.getItem(LANG_STORAGE_KEY);
+                if (saved === 'zh-HK' || saved === 'en' || saved === 'ja') {
+                    return saved;
+                }
+            } catch (e) {
+                console.warn('Cannot read language setting:', e);
+            }
+            return detectSystemLanguage();
+        }
+
+        const I18N = {
+            'zh-HK': {
+                htmlLang: 'zh-HK',
+                pageTitle: 'Drone weather - 航拍天氣及法例',
+                brand: '航拍Drone',
+                tab_map: '航拍地圖',
+                tab_laws: '各國法例',
+                tab_itinerary: '行程天氣',
+                tab_about: '免責',
+                newsBtn: '🔔 最新消息',
+                font_size_label: '文字大小',
+                reset_btn: '重設',
+                font_small: '細',
+                font_normal: '標準',
+                font_large: '大',
+                font_xlarge: '特大',
+                newsModalTitle: '📢 系統公告與最新消息',
+                newsModalClose: '知道了',
+                searchPlaceholder: '(國家/地區)地名...',
+                searchBtn: '搜尋',
+                locateBtn: '我的位置',
+                locating: '定位中...',
+                lawsTitle: '📜 各國航拍法例快速對照',
+                lawsDesc: '出發外遊航拍前，請先選擇國家或地區查看當地基本核心法規：',
+                countryDefault: '-- 請選擇國家 / 地區 --',
+                itiHeading: '🗓️ 未來行程規劃：',
+                itiSearchPlaceholder: '輸入國家/地區+地名（例如：香港 西貢、大澳、尖沙咀）',
+                itiAddBtn: '🔍 搜尋並加入行程',
+                itiSearching: '⏳ 搜尋中...',
+                itiRefreshBtn: '🔄 更新天氣',
+                itiListTitle: '📋 已排定航拍清單',
+                itiCountUnit: '個地點',
+                saveAuto: '💾 已自動儲存於本機',
+                saveTime: (t) => `💾 已自動儲存 (${t})`,
+                saveManualBtn: '💾 手動儲存',
+                saveManualAlert: '✅ 行程已成功儲存至本機瀏覽器！下次打開網頁會自動載入。',
+                exportPdfBtn: '📥 匯出行程 (.pdf)',
+                exportingPdf: '⏳ 生成 PDF 中...',
+                clearBtn: '🧹 清空行程',
+                thOrder: '次序',
+                thDate: '預定日子',
+                thPlace: '航拍地點',
+                thWeather: '該日預測天氣 (氣溫 / 均風 / 陣風 / 降雨率)',
+                thEval: '評估',
+                thAction: '操作',
+                emptyTable: '💡 請於上方輸入未來去的地方與日子（或直接點擊上方地圖），系統將追蹤當日天氣預報。',
+                deleteBtn: '刪除',
+                loadingPopup: '正在檢查空域及航拍數據...',
+                nfzBadge: '🚫 禁飛區',
+                nfzPopupTitle: '🚫 此處為禁飛區（嚴禁起飛）',
+                nfzZoneLabel: '區域',
+                nfzPopupDesc: '未經民航處或相關部門許可，不可在此範圍放飛無人機。',
+                showWeatherRef: '查看當地天氣參考',
+                hideWeatherRef: '隱藏當地天氣參考',
+                nfzSimpleAlert: (zone) => `🚫 此處為禁飛區（${zone}），嚴禁起飛！`,
+                reportTitle: '綜合航拍安全報告',
+                hkoSyncErr: '⚠️ 暫未能同步天文台警告狀態',
+                hkoNone: '🟢 天文台提示：目前無生效警告',
+                hkoActivePrefix: '⚠️ 實時警告：',
+                labelTemp: '當地氣溫',
+                labelWindGround: '地面風速',
+                labelWind80m: '高空風速 (80m)',
+                labelGust: '實時陣風',
+                labelRain: '當前降雨',
+                labelRainProb: '降雨機率',
+                labelKp: '全球地磁指數',
+                labelEval: '評估',
+                reportErr: '❌ 航拍安全報告生成失敗，請稍後再試',
+                safeNight: '危險！現時處於日出前或日落後夜間限制時段，嚴禁飛行！',
+                safeKpHigh: '危險！強烈地磁風暴 (Kp ≥ 5)，強烈干擾 GPS，嚴禁起飛！',
+                safeWarning: '危險！當地有生效天氣警告，請暫停飛行！',
+                safeBadWeather: '危險！惡劣天氣、強風或降雨，嚴禁起飛',
+                safeCautionKp: '警告：地磁活躍 (Kp ≥ 4) 或氣象不穩定，請謹慎飛行。',
+                safeCaution: '氣象不穩定、高空風大或有雨，請謹慎飛行。',
+                safeGood: '環境、時間與地磁良好，適合飛行。',
+                futureNfz: '禁飛區範圍！嚴禁放飛',
+                futureNoData: '超出預報範圍或無數據',
+                futureDanger: '危險：預測有雨或強風',
+                futureCaution: '需謹慎：風力偏大或天色不穩',
+                futureGood: '天氣良好，適合航拍',
+                noForecastRow: '⚠️ 暫無該日預報數據（可能超出可用預報天數）',
+                nfzPopupMarker: (zone) => `<br><span style="color:#dc2626; font-weight:bold;">🚫 警告：位於禁飛區 (${zone || 'eSUA限制區'})</span>`,
+                markerDate: '預定日期',
+                geoNotSupported: '你的瀏覽器不支援地理定位。',
+                geoDenied: '定位權限已被拒絕，請於瀏覽器或系統設定允許定位。',
+                geoTimeout: '定位逾時，請移步至訊號較佳位置再試。',
+                geoFail: '定位失敗，請確保已開啟 GPS 權限。',
+                searchNotFound: '搵唔到呢個地方，請嘗試其他關鍵字。',
+                searchErr: '搜尋出咗少少問題，請檢查網絡連線。',
+                needPlace: '請先輸入想去嘅航拍地方！',
+                needDate: '請選擇預定出發日子！',
+                itiNotFound: '找不到該地點，請嘗試輸入更具體的地名（例如：香港 西貢、大澳、尖沙咀）。',
+                itiAddErr: '網絡繁忙，地方搜尋失敗，請稍後再試！',
+                nfzConfirm: (name, zone) => `🚫 禁飛區警告！\n\n地點「${name}」位於法定禁飛區範圍內：\n【${zone}】\n\n未經許可嚴禁放飛無人機。\n• 按「取消」禁止加入此地點（建議）\n• 按「確定」仍要強制加入行程（僅供天氣參考）`,
+                emptyRefresh: '現時行程空空如也，不需更新！',
+                refreshedAlert: '📊 全體行程之氣象預報與空域狀態已完成實時同步更新！',
+                emptyExport: '目前沒有任何行程可以匯出！',
+                pdfNotReady: 'PDF 產生器仍在載入中，請稍候再試或檢查網絡連線。',
+                pdfErr: 'PDF 產生時發生錯誤，請稍後再試。',
+                clearConfirm: '確定要清空所有已排定的航拍行程嗎？',
+                pickDateFirst: '請先在上方選好日子，再點擊地圖！',
+                mapPickedName: '地圖指定位置',
+                customCoordName: '自訂坐標點',
+                swUpdateConfirm: '✨ 偵測到 Drone Weather 有新版本或功能更新，是否立即重新整理載入？',
+                tourPrev: '上一步',
+                tourWait: (s) => `請先閱讀 (${s}s)`,
+                tourStepBadge: (i, n) => `步驟 ${i} / ${n}`,
+                effectiveLabel: (t) => `⏱️ 生效時間：${t}`,
+                publishedLabel: (d) => `📅 發布：${d}`,
+                moreDetail: '詳情',
+                pdfHeaderTitle: 'Drone Weather 航拍行程及天氣預報報告',
+                pdfSummary: (count, now) => `共計 ${count} 個預定航拍地點 ｜ 匯出時間：${now}`,
+                pdfDisclaimer: '飛行前請務必再次確認實時空域及天氣警告',
+                pdfThStop: '站點',
+                pdfThDate: '預定日期',
+                pdfThPlace: '航拍地點與空域狀態',
+                pdfThWeather: '當日氣象預報詳情',
+                pdfThEval: '綜合安全評估',
+                pdfCoord: (lat, lon) => `坐標: ${lat}, ${lon}`,
+                pdfZone: (z) => `🚫 禁飛區：${z || 'eSUA限制區'}`,
+                pdfNoData: '超出預報範圍或數據未就緒',
+                pdfTemp: (min, max) => `🌡️ 氣溫：<b>${min}~${max} °C</b>`,
+                pdfWind: (w, g) => `🍃 均風：≤${w} km/h ｜ 🌪️ 陣風：≤${g} km/h`,
+                pdfRain: (p, s) => `🌧️ 降雨率：${p}% (${s}mm)`,
+                aboutHtml: `
+                    <h2 class="page-title">📚 資料來源與免責聲明</h2>
+                    <div class="info-card" style="border-left: 5px solid #ef4444; background: #fffafb;">
+                        <h3 style="color: #dc2626; border-bottom: 1px solid #fecaca;">⚠️ 免責聲明 (Disclaimer)</h3>
+                        <div style="font-size: 14px; color: #334155; line-height: 1.8;">
+                            <p style="margin-top: 0;"><b>1. 僅供參考用途：</b>本網站所提供之氣象數據、飛行安全評估燈號（🟢/🟡/🔴）、禁飛區邊界及各國航拍法例摘要，均僅作飛行前一般參考用途，並不構成專業航空氣象建議或法律意見。</p>
+                            <p><b>2. 數據延遲與誤差：</b>第三方氣象 API 及本地快取禁飛區圖層（GeoJSON）可能存在更新延遲、誤差或臨時空域管制（TFR、NOTAM、公園或私人地方限制）未能即時反映之情況。</p>
+                            <p><b>3. 遙控駕駛員之法定責任：</b>每次起飛前，必須自行透過當地官方平台（如香港 CAD eSUA、日本 DIPS 2.0、台灣 DroneMap、英國 CAA 等）核實最新空域狀態、臨時禁飛令及天氣實況。</p>
+                            <p style="margin-bottom: 0;"><b>4. 責任豁免：</b>對於因使用、依賴或無法使用本網站資訊而直接或間接導致之任何財物損失、無人機損毀、人身傷亡或法律罰則，本網站及開發者概不承擔任何責任。</p>
+                        </div>
+                    </div>
+                    <div class="info-card" style="border-left: 5px solid #007aff;">
+                        <h3 style="color: #007aff; border-bottom: 1px solid #e2e8f0;">實時氣象、空域及地圖資料來源</h3>
+                        <ul class="source-list">
+                            <li><span class="source-tag">氣象預報</span><b>Open-Meteo Weather Forecast</b> — 提供全球實時氣溫、地面風速 (10m)、80m 高空風速、陣風、降雨量、降雨機率、日出日落及多日預報。</li>
+                            <li><span class="source-tag">香港天氣警告</span><b>香港天文台 (HKO)</b> — 提供香港本地實時生效之惡劣天氣警告。</li>
+                            <li><span class="source-tag">地磁活動</span><b>NOAA SWPC</b> — 提供全球實時地磁風暴指數（Kp Index），評估 GPS/GNSS 干擾風險。</li>
+                            <li><span class="source-tag">香港禁飛區圖層</span><b>香港民航處 (CAD) eSUA</b> — 整合香港《小型無人機令》限制飛行區地理邊界（GeoJSON），並以 Turf.js 檢測。</li>
+                            <li><span class="source-tag">地圖與地理編碼</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — 提供地圖圖磚、正向搜尋及反向地理編碼。</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left: 5px solid #10b981;">
+                        <h3 style="color: #059669; border-bottom: 1px solid #e2e8f0;">各國及地區航拍法例參考出處</h3>
+                        <ul class="source-list">
+                            <li><span class="source-tag source-tag-law">香港</span><b>香港民航處 (CAD)</b> — 第 448G 章《小型無人機令》及 eSUA 標準操作規定。</li>
+                            <li><span class="source-tag source-tag-law">日本</span><b>日本國土交通省航空局 (JCAB)</b> — 《航空法》無人機飛行規則及 DIPS 2.0 註冊與申請指引。</li>
+                            <li><span class="source-tag source-tag-law">台灣</span><b>台灣交通部民用航空局 (CAA)</b> — 《民用航空法》遙控無人機專章及 DroneMap 空域規範。</li>
+                            <li><span class="source-tag source-tag-law">英國</span><b>英國民航局 (UK CAA)</b> — UK Drone and Model Aircraft Code 及 DMARES 註冊與類別規定。</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: right; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-info" onclick="openInstallGuideManually()">📲 查看安裝為 App 教學</button>
+                    </div>
+                `,
+                tourSteps: [
+                    {
+                        title: '1. 航拍地圖與禁飛區查詢',
+                        tabId: 'map-page',
+                        highlightSelector: '.search-container',
+                        buttonText: '明白，睇下一步 →',
+                        content: `<p style="margin-top:0;">地圖上<b>紅色區域</b>係各國<b>法定禁飛區</b>，起飛前可即時確認空域有冇限制。</p><p style="margin-bottom:0;">你可以喺左上角<b>搜尋列輸入地名</b>，或者直接點擊地圖任何位置查看該處飛行條件。</p>`
+                    },
+                    {
+                        title: '2. 實時氣象與飛行安全評估',
+                        tabId: 'map-page',
+                        highlightSelector: '.locate-btn',
+                        buttonText: '了解安全報告，下一步 →',
+                        content: `<p style="margin-top:0;">點擊地圖或右上角<b>「我的位置」</b>，系統會即時整合多項關鍵數據：</p><ul style="margin:0; padding-left:18px;"><li><b>風速與陣風：</b>地面風速、80m 高空風速及實時陣風</li><li><b>天氣與警告：</b>降雨機率、香港天文台實時警告信號</li><li><b>衛星定位干擾：</b>全球地磁風暴指數（Kp Index）與日出日落時段</li></ul><p style="margin-bottom:0; margin-top:8px;">系統會自動以 🟢 / 🟡 / 🔴 話你知適唔適合起飛。</p>`
+                    },
+                    {
+                        title: '3. 各國航拍法例快速對照',
+                        tabId: 'laws-page',
+                        highlightSelector: '#country-select',
+                        buttonText: '睇埋行程規劃，下一步 →',
+                        content: `<p style="margin-top:0;">外遊航拍前，可以喺<b>「各國法例」</b>分頁選擇目的地（支援香港、日本、台灣、英國）。</p><p style="margin-bottom:0;">入面整理咗當地<b>無人機註冊重量門檻、高度上限、安全距離及最高罰則</b>，避免誤墮法網。</p>`
+                    },
+                    {
+                        title: '4. 多日航拍行程天氣規劃',
+                        tabId: 'itinerary-page',
+                        highlightSelector: '#planner-console',
+                        buttonText: '最後一步：安裝成 App →',
+                        content: `<p style="margin-top:0;">喺<b>「行程天氣」</b>分頁，你可以預先輸入未來幾日想去嘅拍攝地點同日期（或直接點擊地圖加入）。</p><p style="margin-bottom:0;">系統會自動檢查路線有冇處於<b>禁飛區</b>、追蹤當日天氣預報，仲支援<b>一鍵匯出 PDF 行程報告</b>。</p>`
+                    },
+                    {
+                        title: '5. 將網站加到主畫面變成 App',
+                        tabId: 'map-page',
+                        highlightSelector: null,
+                        buttonText: '✅ 完成教學，開始使用',
+                        getContent: (installBtnHtml) => `
+                            <p style="margin-top:0; color:#475569;">最後一步！建議將 <b>Drone Weather</b> 加到手機或電腦主畫面，隨時一撳即開：</p>
+                            ${installBtnHtml}
+                            <div class="guide-box">
+                                <div class="guide-box-title">🍎 iPhone / iPad（Safari 瀏覽器）</div>
+                                <ol>
+                                    <li>點擊底部工具列嘅 <b>「分享」圖示</b>。</li>
+                                    <li>向下滑動並選擇 <b>「加入主畫面」</b>。</li>
+                                    <li>按右上角 <b>「新增」</b>，即可喺主畫面開啟 App。</li>
+                                </ol>
+                            </div>
+                            <div class="guide-box" style="margin-bottom:0;">
+                                <div class="guide-box-title">🤖 Android / 電腦版（Chrome / Edge）</div>
+                                <ol>
+                                    <li>可按上方<b>「一鍵安裝」</b>掣，或點擊瀏覽器右上角 <b>「⋮」選單</b> / 網址列 <b>安裝圖示</b>。</li>
+                                    <li>選擇 <b>「加到主畫面」</b> 或 <b>「安裝 Drone weather」</b> 並確認。</li>
+                                </ol>
+                            </div>
+                        `
+                    }
+                ],
+                installBtnText: '⚡ 一鍵安裝 Drone Weather 到裝置',
+                laws: {
+                    hk: {
+                        title: '香港無人機法例 (民航處 CAD eSUA 標準操作限制)',
+                        sections: [
+                            { heading: '【📊 按重量劃分之飛行限制】', color: '#e74c3c', items: ['<b>甲一類 (250g 或以下 / 如 DJI Mini 系列)：</b>高度上限地面以上 <b>100 呎 (約 30 米)</b>、速度上限 <b>20 km/h</b>；免無人機及操作員註冊，但仍須遵守禁飛區限制。', '<b>甲二類 (250g 以上至 7kg / 如 DJI Air, Mavic 系列)：</b>高度上限地面以上 <b>300 呎 (約 90 米)</b>、速度上限 <b>50 km/h</b>；機身須貼註冊標籤，操作員須年滿 14 歲並實名註冊。'] },
+                            { heading: '【👁️ 核心安全紅線】', color: '#f39c12', items: ['<b>視線範圍 (VLOS)：</b>必須保持肉眼可見，嚴禁盲飛。', '<b>安全距離：</b>與未參與操作的人員、車輛或建築物保持至少 <b>30 米</b> 橫向距離。', '<b>保險要求：</b>乙類（7kg 以上）或進階操作須按規定購買足夠第三者責任保險。'] },
+                            { heading: '【⚠️ 違例最高罰則】', color: '#64748b', items: ['根據《小型無人機令》，一經定罪，最高可處<b>監禁 2 年</b>及<b>罰款港幣 10 萬元</b>。'] }
+                        ]
+                    },
+                    jp: {
+                        title: '日本無人機法例 (國土交通省 JCAB 航空法)',
+                        sections: [
+                            { heading: '【🚨 100g 註冊門檻與 Remote ID】', color: '#e74c3c', items: ['日本門檻為 <b>100g</b>，外遊常見的 249g 機型亦須於 DIPS 2.0 系統實名註冊。', '須符合 <b>Remote ID</b> 規定，起飛前發射廣播身份訊號。'] },
+                            { heading: '【🏙️ DID 人口集中地區與空域高度】', color: '#2980b9', items: ['於 <b>DID (Densely Inhabited Districts)</b> 區域未經事先許可原則上禁飛。', '許可空域高度上限一般為 <b>150 米</b>，並與人、車、建築保持 <b>30 米</b> 距離。'] },
+                            { heading: '【❌ 旅客常見地雷】', color: '#f39c12', items: ['未獲特別許可下不得夜航或超出目視範圍（FPV 盲飛）操作。', '部分都立公園、景點及地方自治體設有額外限制或禁飛規定。'] },
+                            { heading: '【⚠️ 違例最高罰則】', color: '#64748b', items: ['最高可處 <b>50 萬日圓罰款</b>；機場周邊違飛或醉酒操作最高可處 <b>1 年監禁</b> 或 <b>30 萬日圓罰款</b>。'] }
+                        ]
+                    },
+                    tw: {
+                        title: '台灣無人機法例 (交通部民航局 CAA)',
+                        sections: [
+                            { heading: '【📝 個人與法人管理規定】', color: '#e74c3c', items: ['<b>個人操作 (自然人)：</b>250g 以上無人機須實名註冊；綠區操作 2kg 以下無需操作證。', '<b>法人操作：</b>代表公司、媒體、機關或學校操作，須依規定取得操作證、投保責任險並申請核准。'] },
+                            { heading: '【📐 飛行紅線與高度】', color: '#2980b9', items: ['飛行高度上限為 <b>400 呎 (約 120 米)</b>。', '出發前須透過官方「DroneMap」查核紅區（禁飛）、黃區與綠區，並避開人群聚集、集會遊行及交通幹道。'] },
+                            { heading: '【🌃 日間操作限制】', color: '#f39c12', items: ['個人航拍原則上僅限<b>日出至日落之間</b>進行，夜間不得起飛。'] },
+                            { heading: '【⚠️ 違例最高罰則】', color: '#64748b', items: ['於禁飛區或超高違規飛行，罰款可達 <b>新台幣 30 萬元至 150 萬元</b>，情節嚴重者可沒入無人機。'] }
+                        ]
+                    },
+                    uk: {
+                        title: '英國無人機法例 (Civil Aviation Authority CAA)',
+                        sections: [
+                            { heading: '【📸 註冊要求】', color: '#e74c3c', items: ['設有相機的無人機擁有者通常須註冊 <b>Operator ID</b> 並於機身標示。', '250g 或以上機型操作員亦須取得 <b>Flyer ID</b>。'] },
+                            { heading: '【💡 A1 / A2 / A3 飛行類別】', color: '#2980b9', items: ['未持 A2 CofC 證照操作 250g–2kg 機型於 A3 類別時，須遠離住宅、商業、工業或康樂區至少 <b>150 米</b>。', '一般飛行高度上限為地面以上 <b>120 米 (400 呎)</b>。'] },
+                            { heading: '【💂 禁飛與限制空域】', color: '#f39c12', items: ['機場周邊設有 Flight Restriction Zones (FRZ)，倫敦核心區及部分地標亦受嚴格限制。'] },
+                            { heading: '【⚠️ 違例最高罰則】', color: '#64748b', items: ['危及航空安全等嚴重違例，可面臨<b>罰款</b>及最高<b>監禁 5 年</b>。'] }
+                        ]
+                    }
+                },
+                news: [
+                    {
+                        id: 'news-2026-11-20.1',
+                        date: '2026-11-20',
+                        effectiveTime: '即日起生效至 2027年4月30日結束生效,逢星期一至星期五 08:30 至 16:30 隨時啟動',
+                        tag: '臨時禁飛',
+                        important: true,
+                        title: '盧森堡禁飛',
+                        content: '針對 LAS 專案劃設了最新的臨時無人機禁飛區，高度由地面至 200 公尺；水平範圍為指定無人機航線兩側各 400 公尺的帶狀區域。豁免對象：僅限 Luxembourg Air Services S.A. 專案無人機，以及軍警、海關、搜救、醫療、疏散與消防等公共任務飛行，其餘無人機一律禁止進入。'
+                    },
+                    {
+                        id: 'news-2026-11-20.2',
+                        date: '2026-11-20',
+                        effectiveTime: '2026年11月21日（星期六）當地時間16:00 至晚上 23:59',
+                        tag: '臨時禁飛',
+                        important: true,
+                        title: '美國維珍尼亞州諾福克禁飛',
+                        content: '第40屆「大照明巡遊」期間實施無人機臨時飛行限制，諾福克市中心方圓 1 海里（約 1.85 公里）半徑空域內，禁止所有未經授權的無人機及遙控飛行器運作。'
+                    }
+                ]
+            },
+            'en': {
+                htmlLang: 'en',
+                pageTitle: 'Drone weather - Drone Weather & Regulations',
+                brand: 'Drone Weather',
+                tab_map: 'Map',
+                tab_laws: 'Laws',
+                tab_itinerary: 'Itinerary',
+                tab_about: 'Disclaimer',
+                newsBtn: '🔔 News',
+                font_size_label: 'Font Size',
+                reset_btn: 'Reset',
+                font_small: 'S',
+                font_normal: 'M',
+                font_large: 'L',
+                font_xlarge: 'XL',
+                newsModalTitle: '📢 Announcements & Latest News',
+                newsModalClose: 'Got it',
+                searchPlaceholder: 'Place (Country/City)...',
+                searchBtn: 'Search',
+                locateBtn: 'My Location',
+                locating: 'Locating...',
+                lawsTitle: '📜 Drone Regulations Quick Guide',
+                lawsDesc: 'Select a country or region before flying abroad to review key drone rules:',
+                countryDefault: '-- Select Country / Region --',
+                itiHeading: '🗓️ Trip Weather Planner:',
+                itiSearchPlaceholder: 'Enter location (e.g., Sai Kung, Tai O, Tsim Sha Tsui)',
+                itiAddBtn: '🔍 Search & Add',
+                itiSearching: '⏳ Searching...',
+                itiRefreshBtn: '🔄 Refresh Weather',
+                itiListTitle: '📋 Planned Flight Stops',
+                itiCountUnit: 'stops',
+                saveAuto: '💾 Auto-saved locally',
+                saveTime: (t) => `💾 Auto-saved (${t})`,
+                saveManualBtn: '💾 Save',
+                saveManualAlert: '✅ Itinerary saved to your browser! It will load automatically next time.',
+                exportPdfBtn: '📥 Export (.pdf)',
+                exportingPdf: '⏳ Generating PDF...',
+                clearBtn: '🧹 Clear',
+                thOrder: '#',
+                thDate: 'Date',
+                thPlace: 'Location',
+                thWeather: 'Forecast (Temp / Wind / Gust / Rain Prob.)',
+                thEval: 'Status',
+                thAction: 'Action',
+                emptyTable: '💡 Enter a destination and date above (or click the itinerary map) to track daily flight weather.',
+                deleteBtn: 'Delete',
+                loadingPopup: 'Checking airspace & flight conditions...',
+                nfzBadge: '🚫 No-Fly Zone',
+                nfzPopupTitle: '🚫 No-Fly Zone (Takeoff Prohibited)',
+                nfzZoneLabel: 'Zone',
+                nfzPopupDesc: 'Drone operations are prohibited here without official authorization.',
+                showWeatherRef: 'Show Local Weather Ref',
+                hideWeatherRef: 'Hide Local Weather Ref',
+                nfzSimpleAlert: (zone) => `🚫 No-Fly Zone (${zone}) — Takeoff prohibited!`,
+                reportTitle: 'Flight Safety Report',
+                hkoSyncErr: '⚠️ Unable to sync HKO weather warnings',
+                hkoNone: '🟢 HKO: No active weather warnings',
+                hkoActivePrefix: '⚠️ Active Warnings: ',
+                labelTemp: 'Temperature',
+                labelWindGround: 'Surface Wind',
+                labelWind80m: 'Wind (80m)',
+                labelGust: 'Wind Gust',
+                labelRain: 'Precipitation',
+                labelRainProb: 'Rain Chance',
+                labelKp: 'Geomagnetic Index',
+                labelEval: 'Assessment',
+                reportErr: '❌ Failed to generate flight safety report. Please try again.',
+                safeNight: 'DANGER! Nighttime / outside daylight window — flying is restricted!',
+                safeKpHigh: 'DANGER! Strong geomagnetic storm (Kp ≥ 5) — severe GPS risk!',
+                safeWarning: 'DANGER! Active weather warning in effect — pause flight!',
+                safeBadWeather: 'DANGER! Severe weather, strong wind, or rain — do not fly.',
+                safeCautionKp: 'CAUTION: Elevated geomagnetic activity (Kp ≥ 4) or unstable weather.',
+                safeCaution: 'CAUTION: Unstable weather, high winds, or rain risk.',
+                safeGood: 'Conditions, time, and geomagnetic activity look good for flight.',
+                futureNfz: 'No-Fly Zone! Do not fly',
+                futureNoData: 'Out of forecast range / No data',
+                futureDanger: 'DANGER: Rain or strong wind forecast',
+                futureCaution: 'CAUTION: Breezy or unsettled weather',
+                futureGood: 'Good weather for drone flight',
+                noForecastRow: '⚠️ No forecast available for this date (may exceed forecast horizon)',
+                nfzPopupMarker: (zone) => `<br><span style="color:#dc2626; font-weight:bold;">🚫 Warning: Inside No-Fly Zone (${zone || 'eSUA Restricted Zone'})</span>`,
+                markerDate: 'Date',
+                geoNotSupported: 'Geolocation is not supported by your browser.',
+                geoDenied: 'Location permission denied. Please enable it in browser or device settings.',
+                geoTimeout: 'Location request timed out. Try moving to an area with better signal.',
+                geoFail: 'Unable to retrieve your location. Please check GPS settings.',
+                searchNotFound: 'Location not found. Try another keyword.',
+                searchErr: 'Search error occurred. Please check your network connection.',
+                needPlace: 'Please enter a destination first!',
+                needDate: 'Please choose a target date!',
+                itiNotFound: 'Location not found. Try a more specific place name.',
+                itiAddErr: 'Network busy. Failed to search location; please try again.',
+                nfzConfirm: (name, zone) => `🚫 No-Fly Zone Warning!\n\n"${name}" is inside a restricted no-fly zone:\n[${zone}]\n\nUnauthorized drone flights are prohibited.\n• Cancel: Do not add this stop (recommended)\n• OK: Add anyway for weather reference only`,
+                emptyRefresh: 'Your itinerary is empty—nothing to refresh!',
+                refreshedAlert: '📊 Weather forecasts and airspace checks updated for all stops!',
+                emptyExport: 'No itinerary items available to export!',
+                pdfNotReady: 'PDF generator is still loading. Please try again shortly.',
+                pdfErr: 'Failed to generate PDF report. Please try again.',
+                clearConfirm: 'Clear all planned itinerary stops?',
+                pickDateFirst: 'Please pick a date above before clicking the map!',
+                mapPickedName: 'Selected Map Point',
+                customCoordName: 'Custom Coordinates',
+                swUpdateConfirm: '✨ A new version of Drone Weather is available. Reload now?',
+                tourPrev: 'Back',
+                tourWait: (s) => `Read first (${s}s)`,
+                tourStepBadge: (i, n) => `Step ${i} / ${n}`,
+                effectiveLabel: (t) => `⏱️ Effective: ${t}`,
+                publishedLabel: (d) => `📅 Published: ${d}`,
+                moreDetail: 'Details',
+                pdfHeaderTitle: 'Drone Weather Itinerary & Forecast Report',
+                pdfSummary: (count, now) => `${count} planned stop(s) ｜ Exported: ${now}`,
+                pdfDisclaimer: 'Always verify live airspace and weather advisories before takeoff',
+                pdfThStop: '#',
+                pdfThDate: 'Date',
+                pdfThPlace: 'Location & Airspace',
+                pdfThWeather: 'Daily Forecast Details',
+                pdfThEval: 'Safety Assessment',
+                pdfCoord: (lat, lon) => `Coords: ${lat}, ${lon}`,
+                pdfZone: (z) => `🚫 No-Fly Zone: ${z || 'eSUA Restricted Zone'}`,
+                pdfNoData: 'Out of range or data unavailable',
+                pdfTemp: (min, max) => `🌡️ Temp: <b>${min}~${max} °C</b>`,
+                pdfWind: (w, g) => `🍃 Wind: ≤${w} km/h ｜ 🌪️ Gust: ≤${g} km/h`,
+                pdfRain: (p, s) => `🌧️ Rain: ${p}% (${s}mm)`,
+                aboutHtml: `
+                    <h2 class="page-title">📚 Data Sources & Disclaimer</h2>
+                    <div class="info-card" style="border-left: 5px solid #ef4444; background: #fffafb;">
+                        <h3 style="color: #dc2626; border-bottom: 1px solid #fecaca;">⚠️ Disclaimer</h3>
+                        <div style="font-size: 14px; color: #334155; line-height: 1.8;">
+                            <p style="margin-top: 0;"><b>1. Reference Only:</b> Weather data, flight status indicators (🟢/🟡/🔴), no-fly zone boundaries, and drone law summaries on this site are provided for general pre-flight reference only and do not constitute certified aviation meteorology or legal advice.</p>
+                            <p><b>2. Latency & Limitations:</b> Third-party APIs and cached GeoJSON layers may experience delays, inaccuracies, or temporary airspace restrictions (TFRs, NOTAMs, park/private rules) not yet reflected.</p>
+                            <p><b>3. Pilot Responsibility:</b> Remote pilots must verify live airspace, temporary restrictions, and local weather via official authorities (such as HK CAD eSUA, Japan DIPS 2.0, Taiwan DroneMap, UK CAA) before every flight.</p>
+                            <p style="margin-bottom: 0;"><b>4. Limitation of Liability:</b> The site and its developer are not liable for any property loss, drone damage, injury, or legal penalties arising from use or reliance on this site.</p>
+                        </div>
+                    </div>
+                    <div class="info-card" style="border-left: 5px solid #007aff;">
+                        <h3 style="color: #007aff; border-bottom: 1px solid #e2e8f0;">Weather, Airspace & Map Sources</h3>
+                        <ul class="source-list">
+                            <li><span class="source-tag">Weather</span><b>Open-Meteo Weather Forecast</b> — Global temperature, 10m wind, 80m wind, gusts, precipitation, rain probability, sunrise/sunset, and multi-day forecasts.</li>
+                            <li><span class="source-tag">HKO Alerts</span><b>Hong Kong Observatory (HKO)</b> — Active local severe weather warnings for Hong Kong.</li>
+                            <li><span class="source-tag">Geomagnetic</span><b>NOAA SWPC</b> — Real-time planetary Kp index to assess GPS/GNSS disturbance risk.</li>
+                            <li><span class="source-tag">HK No-Fly Zones</span><b>HK Civil Aviation Department (CAD) eSUA</b> — Restricted flying zone polygons (GeoJSON) evaluated via Turf.js.</li>
+                            <li><span class="source-tag">Maps & Geocoding</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — Map tiles, forward geocoding, and reverse geocoding.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left: 5px solid #10b981;">
+                        <h3 style="color: #059669; border-bottom: 1px solid #e2e8f0;">Drone Regulation References</h3>
+                        <ul class="source-list">
+                            <li><span class="source-tag source-tag-law">HK</span><b>Hong Kong CAD</b> — Small Unmanned Aircraft Order (Cap. 448G) & eSUA standard operating limits.</li>
+                            <li><span class="source-tag source-tag-law">JP</span><b>Japan JCAB (MLIT)</b> — Aviation Act drone rules and DIPS 2.0 registration/permit guidelines.</li>
+                            <li><span class="source-tag source-tag-law">TW</span><b>Taiwan CAA</b> — Civil Aviation Act remote unmanned aircraft rules and DroneMap airspace zones.</li>
+                            <li><span class="source-tag source-tag-law">UK</span><b>UK CAA</b> — UK Drone and Model Aircraft Code, DMARES registration, and A1/A2/A3 categories.</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: right; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-info" onclick="openInstallGuideManually()">📲 View App Install Guide</button>
+                    </div>
+                `,
+                tourSteps: [
+                    {
+                        title: '1. Drone Map & No-Fly Zones',
+                        tabId: 'map-page',
+                        highlightSelector: '.search-container',
+                        buttonText: 'Got it, next →',
+                        content: `<p style="margin-top:0;"><b>Red areas</b> highlight restricted <b>No-Fly Zones</b> so you can check airspace before takeoff.</p><p style="margin-bottom:0;">Search a place in the top-left box or tap anywhere on the map to inspect local conditions.</p>`
+                    },
+                    {
+                        title: '2. Live Weather & Flight Safety',
+                        tabId: 'map-page',
+                        highlightSelector: '.locate-btn',
+                        buttonText: 'Next →',
+                        content: `<p style="margin-top:0;">Tap the map or <b>My Location</b> to combine key flight factors:</p><ul style="margin:0; padding-left:18px;"><li><b>Wind & Gusts:</b> Surface wind, 80m altitude wind, and gusts</li><li><b>Rain & Warnings:</b> Rain probability and HKO warnings</li><li><b>Geomagnetic & Daylight:</b> Kp index and sunrise/sunset window</li></ul><p style="margin-bottom:0; margin-top:8px;">Summarized with 🟢 / 🟡 / 🔴 flight guidance.</p>`
+                    },
+                    {
+                        title: '3. Country Drone Laws',
+                        tabId: 'laws-page',
+                        highlightSelector: '#country-select',
+                        buttonText: 'Next →',
+                        content: `<p style="margin-top:0;">Open <b>Laws</b> before traveling to view key rules for Hong Kong, Japan, Taiwan, and the UK.</p><p style="margin-bottom:0;">Check registration thresholds, max altitude, distance limits, and penalties at a glance.</p>`
+                    },
+                    {
+                        title: '4. Multi-Day Trip Planner',
+                        tabId: 'itinerary-page',
+                        highlightSelector: '#planner-console',
+                        buttonText: 'Final step: Install App →',
+                        content: `<p style="margin-top:0;">Add upcoming shooting spots and dates in <b>Itinerary</b> (or tap the itinerary map).</p><p style="margin-bottom:0;">Checks <b>no-fly zones</b>, tracks daily weather forecasts, and exports a <b>PDF report</b>.</p>`
+                    },
+                    {
+                        title: '5. Add to Home Screen / Install App',
+                        tabId: 'map-page',
+                        highlightSelector: null,
+                        buttonText: '✅ Finish Tour',
+                        getContent: (installBtnHtml) => `
+                            <p style="margin-top:0; color:#475569;">Add <b>Drone Weather</b> to your home screen or desktop for quick access:</p>
+                            ${installBtnHtml}
+                            <div class="guide-box">
+                                <div class="guide-box-title">🍎 iPhone / iPad (Safari)</div>
+                                <ol>
+                                    <li>Tap the <b>Share</b> button on the toolbar.</li>
+                                    <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+                                    <li>Tap <b>Add</b> in the top-right corner.</li>
+                                </ol>
+                            </div>
+                            <div class="guide-box" style="margin-bottom:0;">
+                                <div class="guide-box-title">🤖 Android / Desktop (Chrome / Edge)</div>
+                                <ol>
+                                    <li>Tap <b>Install</b> above, or open browser menu <b>⋮</b> / address bar install icon.</li>
+                                    <li>Select <b>Add to Home screen</b> or <b>Install Drone weather</b>.</li>
+                                </ol>
+                            </div>
+                        `
+                    }
+                ],
+                installBtnText: '⚡ Install Drone Weather',
+                laws: {
+                    hk: {
+                        title: 'Hong Kong Drone Rules (CAD eSUA Standard Limits)',
+                        sections: [
+                            { heading: '【📊 Weight Categories & Limits】', color: '#e74c3c', items: ['<b>Category A1 (≤ 250g, e.g., DJI Mini series):</b> Max altitude <b>100 ft (~30 m)</b> AGL, max speed <b>20 km/h</b>; no drone/operator registration required, but no-fly zones still apply.', '<b>Category A2 (> 250g to 7kg, e.g., DJI Air / Mavic):</b> Max altitude <b>300 ft (~90 m)</b> AGL, max speed <b>50 km/h</b>; registration label required on aircraft and operator must be 14+ and registered.'] },
+                            { heading: '【👁️ Core Safety Rules】', color: '#f39c12', items: ['<b>Visual Line of Sight (VLOS):</b> Keep the aircraft clearly visible with unaided eyes at all times.', '<b>Separation Distance:</b> Maintain at least <b>30 m</b> horizontally from uninvolved people, vehicles, and structures.', '<b>Insurance:</b> Category B (> 7kg) or advanced operations require third-party liability insurance as specified.'] },
+                            { heading: '【⚠️ Maximum Penalties】', color: '#64748b', items: ['Under the Small Unmanned Aircraft Order, conviction carries up to <b>2 years imprisonment</b> and a <b>HK$100,000 fine</b>.'] }
+                        ]
+                    },
+                    jp: {
+                        title: 'Japan Drone Rules (JCAB / MLIT Aeronautics Act)',
+                        sections: [
+                            { heading: '【🚨 100g Registration & Remote ID】', color: '#e74c3c', items: ['Japan enforces a <b>100g</b> threshold—even 249g drones must be registered in <b>DIPS 2.0</b>.', '<b>Remote ID</b> broadcast is generally required before takeoff.'] },
+                            { heading: '【🏙️ DID Zones & Altitude】', color: '#2980b9', items: ['Flying in <b>DID (Densely Inhabited Districts)</b> is generally prohibited without prior permission.', 'Standard permitted altitude cap is <b>150 m</b>, keeping at least <b>30 m</b> from people, vehicles, and buildings.'] },
+                            { heading: '【❌ Common Pitfalls】', color: '#f39c12', items: ['Night flights and beyond-visual-line-of-sight flights require special approval.', 'Many municipal parks, tourist sites, and local ordinances impose extra restrictions.'] },
+                            { heading: '【⚠️ Maximum Penalties】', color: '#64748b', items: ['Fines up to <b>¥500,000</b>; flying near airports or operating under the influence carries up to <b>1 year imprisonment</b> or <b>¥300,000 fine</b>.'] }
+                        ]
+                    },
+                    tw: {
+                        title: 'Taiwan Drone Rules (CAA Civil Aviation Act)',
+                        sections: [
+                            { heading: '【📝 Individuals vs. Legal Entities】', color: '#e74c3c', items: ['<b>Individuals:</b> Drones <b>250g+</b> must be registered; under 2kg in Green zones does not require a pilot certificate.', '<b>Legal Entities (companies, media, schools, agencies):</b> Require certified pilots, liability insurance, and flight approval.'] },
+                            { heading: '【📐 Altitude & Airspace】', color: '#2980b9', items: ['Maximum altitude is <b>400 ft (~120 m)</b>.', 'Check official <b>DroneMap</b> for Red (prohibited), Yellow, and Green zones, and avoid crowds, gatherings, and busy roads.'] },
+                            { heading: '【🌃 Daytime Restriction】', color: '#f39c12', items: ['Recreational flights are generally limited to <b>sunrise to sunset</b>.'] },
+                            { heading: '【⚠️ Maximum Penalties】', color: '#64748b', items: ['Violations in no-fly zones or altitude breaches carry fines of <b>NT$300,000 to NT$1,500,000</b>, plus possible confiscation.'] }
+                        ]
+                    },
+                    uk: {
+                        title: 'UK Drone Rules (UK CAA)',
+                        sections: [
+                            { heading: '【📸 Registration】', color: '#e74c3c', items: ['Owners of drones with a camera generally need an <b>Operator ID</b> displayed on the aircraft.', 'Pilots flying drones <b>250g or heavier</b> must pass the test for a <b>Flyer ID</b>.'] },
+                            { heading: '【💡 A1 / A2 / A3 Categories】', color: '#2980b9', items: ['Without an A2 CofC, flying 250g–2kg drones in the <b>A3</b> category requires staying at least <b>150 m</b> away from residential, commercial, industrial, or recreational areas.', 'General maximum height limit is <b>120 m (400 ft)</b> above ground.'] },
+                            { heading: '【💂 Restricted Airspace】', color: '#f39c12', items: ['Airports have Flight Restriction Zones (FRZs), and central London plus specific landmarks have strict rules.'] },
+                            { heading: '【⚠️ Maximum Penalties】', color: '#64748b', items: ['Serious offenses endangering aviation safety can result in <b>fines</b> and up to <b>5 years in prison</b>.'] }
+                        ]
+                    }
+                },
+                news: [
+                    {
+                        id: 'news-2026-11-20.1',
+                        date: '2026-11-20',
+                        effectiveTime: 'Effective immediately through April 30, 2027; active Mon–Fri 08:30–16:30 as needed',
+                        tag: 'Temporary NFZ',
+                        important: true,
+                        title: 'Luxembourg Temporary Drone Restriction',
+                        content: 'A temporary drone no-fly zone has been established for the LAS project from ground level up to 200 m altitude, extending 400 m on each side of designated UAS corridors. Exempt: only Luxembourg Air Services S.A. project drones and public missions (police, customs, search & rescue, medical, evacuation, firefighting). All other drone flights are prohibited.'
+                    },
+                    {
+                        id: 'news-2026-11-20.2',
+                        date: '2026-11-20',
+                        effectiveTime: 'Saturday, Nov 21, 2026, 16:00–23:59 local time',
+                        tag: 'Temporary NFZ',
+                        important: true,
+                        title: 'Norfolk, Virginia (USA) Temporary Restriction',
+                        content: 'Temporary flight restrictions apply during the 40th Grand Illumination Parade within a 1 nautical mile (~1.85 km) radius of downtown Norfolk. Unauthorized drones and RC aircraft are prohibited.'
+                    }
+                ]
+            },
+            'ja': {
+                htmlLang: 'ja',
+                pageTitle: 'Drone weather - ドローン気象・飛行ルール',
+                brand: 'Drone Weather',
+                tab_map: 'マップ',
+                tab_laws: '各国法規',
+                tab_itinerary: '旅程天気',
+                tab_about: '免責事項',
+                newsBtn: '🔔 お知らせ',
+                font_size_label: '文字サイズ',
+                reset_btn: 'リセット',
+                font_small: '小',
+                font_normal: '標準',
+                font_large: '大',
+                font_xlarge: '特大',
+                newsModalTitle: '📢 運営からのお知らせ・最新情報',
+                newsModalClose: '閉じる',
+                searchPlaceholder: '地名・国名で検索...',
+                searchBtn: '検索',
+                locateBtn: '現在地',
+                locating: '測位中...',
+                lawsTitle: '📜 各国ドローン法規クイックガイド',
+                lawsDesc: '海外でドローンを飛ばす前に、国・地域を選択して基本ルールを確認してください：',
+                countryDefault: '-- 国・地域を選択 --',
+                itiHeading: '🗓️ 旅程・飛行天気プランナー：',
+                itiSearchPlaceholder: '目的地を入力（例：香港 西貢、大澳、尖沙咀）',
+                itiAddBtn: '🔍 検索して追加',
+                itiSearching: '⏳ 検索中...',
+                itiRefreshBtn: '🔄 天気更新',
+                itiListTitle: '📋 登録済みフライト地点',
+                itiCountUnit: '件',
+                saveAuto: '💾 自動保存済み',
+                saveTime: (t) => `💾 自動保存済み (${t})`,
+                saveManualBtn: '💾 手動保存',
+                saveManualAlert: '✅ 旅程をブラウザに保存しました。次回以降も自動で読み込まれます。',
+                exportPdfBtn: '📥 PDF出力',
+                exportingPdf: '⏳ PDF作成中...',
+                clearBtn: '🧹 クリア',
+                thOrder: '順',
+                thDate: '予定日',
+                thPlace: '撮影地',
+                thWeather: '当日予報（気温 / 風速 / 突風 / 降水確率）',
+                thEval: '評価',
+                thAction: '操作',
+                emptyTable: '💡 上部から目的地と日付を入力（またはマップをクリック）して当日の飛行天気を追跡できます。',
+                deleteBtn: '削除',
+                loadingPopup: '空域および飛行コンディションを確認中...',
+                nfzBadge: '🚫 飛行禁止区域',
+                nfzPopupTitle: '🚫 飛行禁止区域（離陸厳禁）',
+                nfzZoneLabel: '区域',
+                nfzPopupDesc: '許可なくこのエリアでドローンを飛行させることはできません。',
+                showWeatherRef: '現地の気象参考を表示',
+                hideWeatherRef: '現地の気象参考を隠す',
+                nfzSimpleAlert: (zone) => `🚫 飛行禁止区域（${zone}）のため離陸できません！`,
+                reportTitle: '総合ドローン安全レポート',
+                hkoSyncErr: '⚠️ 香港天文台の警報情報を取得できませんでした',
+                hkoNone: '🟢 香港天文台：現在発令中の警報はありません',
+                hkoActivePrefix: '⚠️ 発令中の警報：',
+                labelTemp: '気温',
+                labelWindGround: '地上風速',
+                labelWind80m: '上空風速 (80m)',
+                labelGust: '最大突風',
+                labelRain: '降水量',
+                labelRainProb: '降水確率',
+                labelKp: '地磁気指数',
+                labelEval: '評価',
+                reportErr: '❌ 安全レポートの取得に失敗しました。時間をおいて再度お試しください。',
+                safeNight: '危険！日の出前・日没後の夜間制限時間帯のため飛行禁止です！',
+                safeKpHigh: '危険！強い地磁気嵐（Kp ≥ 5）が発生中。GPS干渉リスクが高いため離陸厳禁！',
+                safeWarning: '危険！悪天候警報が発令中です。飛行を中止してください！',
+                safeBadWeather: '危険！悪天候・強風または降雨のため離陸厳禁',
+                safeCautionKp: '注意：地磁気活動が活発（Kp ≥ 4）または天候が不安定です。慎重に飛行してください。',
+                safeCaution: '注意：天候が不安定、強風または雨の可能性があります。慎重に飛行してください。',
+                safeGood: '気象・時間帯・地磁気ともに良好で、飛行に適しています。',
+                futureNfz: '飛行禁止区域！飛行厳禁',
+                futureNoData: '予報期間外またはデータなし',
+                futureDanger: '危険：雨または強風の予報',
+                futureCaution: '注意：風が強め、または不安定な天気',
+                futureGood: '飛行に適した天気です',
+                noForecastRow: '⚠️ 指定日の予報データがありません（予報期間外の可能性があります）',
+                nfzPopupMarker: (zone) => `<br><span style="color:#dc2626; font-weight:bold;">🚫 警告：飛行禁止区域内（${zone || 'eSUA制限区域'}）</span>`,
+                markerDate: '予定日',
+                geoNotSupported: 'お使いのブラウザは位置情報に対応していません。',
+                geoDenied: '位置情報の利用が拒否されました。ブラウザや端末の設定をご確認ください。',
+                geoTimeout: '位置情報の取得がタイムアウトしました。電波の良い場所で再試行してください。',
+                geoFail: '現在地を取得できませんでした。GPS設定をご確認ください。',
+                searchNotFound: '該当する場所が見つかりませんでした。別のキーワードをお試しください。',
+                searchErr: '検索中にエラーが発生しました。通信環境をご確認ください。',
+                needPlace: '目的地を入力してください！',
+                needDate: '予定日を選択してください！',
+                itiNotFound: '場所が見つかりませんでした。より具体的な地名を入力してください。',
+                itiAddErr: '通信が混み合っています。場所の検索に失敗しました。',
+                nfzConfirm: (name, zone) => `🚫 飛行禁止区域の警告！\n\n「${name}」は飛行禁止区域内にあります：\n【${zone}】\n\n許可のない飛行は禁止されています。\n・キャンセル：追加しない（推奨）\n・OK：気象参考として追加する`,
+                emptyRefresh: '旅程が空のため更新するものはありません！',
+                refreshedAlert: '📊 全旅程の気象予報と空域情報を最新化しました！',
+                emptyExport: '出力できる旅程がありません！',
+                pdfNotReady: 'PDF生成ライブラリを読み込み中です。少し待ってから再度お試しください。',
+                pdfErr: 'PDFの作成中にエラーが発生しました。',
+                clearConfirm: '登録済みの旅程をすべて削除しますか？',
+                pickDateFirst: 'マップをクリックする前に、上で予定日を選択してください！',
+                mapPickedName: 'マップ指定地点',
+                customCoordName: 'カスタム座標',
+                swUpdateConfirm: '✨ Drone Weather の新しいバージョンが利用可能です。今すぐ再読み込みしますか？',
+                tourPrev: '戻る',
+                tourWait: (s) => `確認してください (${s}s)`,
+                tourStepBadge: (i, n) => `ステップ ${i} / ${n}`,
+                effectiveLabel: (t) => `⏱️ 有効期間：${t}`,
+                publishedLabel: (d) => `📅 掲載日：${d}`,
+                moreDetail: '詳細',
+                pdfHeaderTitle: 'Drone Weather 旅程・飛行天気レポート',
+                pdfSummary: (count, now) => `全 ${count} 地点 ｜ 出力日時：${now}`,
+                pdfDisclaimer: '飛行前には必ず最新の空域制限と気象警報をご確認ください',
+                pdfThStop: '順',
+                pdfThDate: '予定日',
+                pdfThPlace: '撮影地・空域状況',
+                pdfThWeather: '当日気象予報',
+                pdfThEval: '安全評価',
+                pdfCoord: (lat, lon) => `座標: ${lat}, ${lon}`,
+                pdfZone: (z) => `🚫 飛行禁止区域：${z || 'eSUA制限区域'}`,
+                pdfNoData: '予報期間外またはデータなし',
+                pdfTemp: (min, max) => `🌡️ 気温：<b>${min}〜${max} °C</b>`,
+                pdfWind: (w, g) => `🍃 風速：≤${w} km/h ｜ 🌪️ 突風：≤${g} km/h`,
+                pdfRain: (p, s) => `🌧️ 降水確率：${p}% (${s}mm)`,
+                aboutHtml: `
+                    <h2 class="page-title">📚 データ出典と免責事項</h2>
+                    <div class="info-card" style="border-left: 5px solid #ef4444; background: #fffafb;">
+                        <h3 style="color: #dc2626; border-bottom: 1px solid #fecaca;">⚠️ 免責事項 (Disclaimer)</h3>
+                        <div style="font-size: 14px; color: #334155; line-height: 1.8;">
+                            <p style="margin-top: 0;"><b>1. 参考情報としての提供：</b>本サイトが提供する気象データ、安全評価表示（🟢/🟡/🔴）、飛行禁止区域、各国法規の要約はフライト前の参考情報であり、航空気象の公式助言や法的助言を構成するものではありません。</p>
+                            <p><b>2. 遅延や制限の可能性：</b>外部APIやキャッシュされたGeoJSONデータには更新遅延や誤差が生じる場合があり、臨時空域制限（TFR・NOTAM・公園や私有地の制限）が即座に反映されないことがあります。</p>
+                            <p><b>3. 操縦者の責任：</b>離陸前には必ず各国の公式プラットフォーム（香港CAD eSUA、日本DIPS 2.0、台湾DroneMap、英国CAAなど）で最新の空域情報・規制・現地の天候を確認し、法令を遵守してください。</p>
+                            <p style="margin-bottom: 0;"><b>4. 免責：</b>本サイトの利用または依拠によって生じた機体破損、物的損害、人身事故、法的処罰等について、運営者および開発者は一切の責任を負いません。</p>
+                        </div>
+                    </div>
+                    <div class="info-card" style="border-left: 5px solid #007aff;">
+                        <h3 style="color: #007aff; border-bottom: 1px solid #e2e8f0;">気象・空域・地図データ出典</h3>
+                        <ul class="source-list">
+                            <li><span class="source-tag">気象予報</span><b>Open-Meteo Weather Forecast</b> — 気温、地上風速(10m)、上空風速(80m)、突風、降水量、降水確率、日の出・日の入り、複数日予報を提供。</li>
+                            <li><span class="source-tag">香港警報</span><b>香港天文台 (HKO)</b> — 香港の現行の悪天候警報情報を提供。</li>
+                            <li><span class="source-tag">地磁気</span><b>NOAA SWPC</b> — 全球地磁気指数（Kp Index）を提供し、GNSS/GPS干渉リスクを評価。</li>
+                            <li><span class="source-tag">香港禁止区域</span><b>香港民航処 (CAD) eSUA</b> — 制限空域ポリゴン（GeoJSON）を取り込み、Turf.js で判定。</li>
+                            <li><span class="source-tag">地図・ジオコーディング</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — 地図タイルおよび地名検索・逆ジオコーディングを提供。</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left: 5px solid #10b981;">
+                        <h3 style="color: #059669; border-bottom: 1px solid #e2e8f0;">各国ドローン法規の参考出典</h3>
+                        <ul class="source-list">
+                            <li><span class="source-tag source-tag-law">香港</span><b>香港民航処 (CAD)</b> — 小型無人機令（第448G章）および eSUA 標準運航基準。</li>
+                            <li><span class="source-tag source-tag-law">日本</span><b>国土交通省 航空局 (JCAB)</b> — 航空法における無人航空機飛行ルールおよび DIPS 2.0 機体登録・飛行許可承認手続き。</li>
+                            <li><span class="source-tag source-tag-law">台湾</span><b>交通部民用航空局 (CAA)</b> — 民用航空法 遠隔操縦無人機関連規定および DroneMap 空域情報。</li>
+                            <li><span class="source-tag source-tag-law">英国</span><b>英国民間航空局 (UK CAA)</b> — UK Drone and Model Aircraft Code、DMARES登録、A1/A2/A3カテゴリー規定。</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: right; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-info" onclick="openInstallGuideManually()">📲 アプリ追加方法を見る</button>
+                    </div>
+                `,
+                tourSteps: [
+                    {
+                        title: '1. ドローンマップと飛行禁止区域',
+                        tabId: 'map-page',
+                        highlightSelector: '.search-container',
+                        buttonText: '次へ →',
+                        content: `<p style="margin-top:0;">マップ上の<b>赤いエリア</b>は<b>飛行禁止区域</b>を示しています。離陸前に空域制限を確認できます。</p><p style="margin-bottom:0;">左上の<b>検索バー</b>から地名を検索するか、マップ上をクリックして地点の条件を確認できます。</p>`
+                    },
+                    {
+                        title: '2. リアルタイム気象と安全評価',
+                        tabId: 'map-page',
+                        highlightSelector: '.locate-btn',
+                        buttonText: '次へ →',
+                        content: `<p style="margin-top:0;">マップまたは<b>「現在地」</b>をタップすると、以下の情報をまとめて確認できます：</p><ul style="margin:0; padding-left:18px;"><li><b>風速・突風：</b>地上風速、80m上空風速、最大突風</li><li><b>雨・警報：</b>降水確率、香港天文台の警報情報</li><li><b>地磁気・日照：</b>Kp指数および日の出・日の入り時刻</li></ul><p style="margin-bottom:0; margin-top:8px;">🟢 / 🟡 / 🔴 で飛行目安を表示します。</p>`
+                    },
+                    {
+                        title: '3. 各国ドローン法規の比較',
+                        tabId: 'laws-page',
+                        highlightSelector: '#country-select',
+                        buttonText: '次へ →',
+                        content: `<p style="margin-top:0;"><b>「各国法規」</b>タブから香港・日本・台湾・英国の基本ルールを確認できます。</p><p style="margin-bottom:0;">機体登録の重量基準、高度上限、安全距離、罰則などを事前に把握しましょう。</p>`
+                    },
+                    {
+                        title: '4. 複数日の旅程天気プランナー',
+                        tabId: 'itinerary-page',
+                        highlightSelector: '#planner-console',
+                        buttonText: '最後のステップ：アプリ追加 →',
+                        content: `<p style="margin-top:0;"><b>「旅程天気」</b>タブで撮影予定地と日付を追加（またはマップをクリック）できます。</p><p style="margin-bottom:0;"><b>飛行禁止区域</b>の判定や当日の天気予報を追跡し、<b>PDFレポート</b>として出力できます。</p>`
+                    },
+                    {
+                        title: '5. ホーム画面に追加してアプリ化',
+                        tabId: 'map-page',
+                        highlightSelector: null,
+                        buttonText: '✅ ガイドを完了して始める',
+                        getContent: (installBtnHtml) => `
+                            <p style="margin-top:0; color:#475569;"><b>Drone Weather</b> をホーム画面やPCに追加して素早く起動できるようにしましょう：</p>
+                            ${installBtnHtml}
+                            <div class="guide-box">
+                                <div class="guide-box-title">🍎 iPhone / iPad（Safari）</div>
+                                <ol>
+                                    <li>ツールバーの<b>「共有」アイコン</b>をタップします。</li>
+                                    <li>下にスクロールして<b>「ホーム画面に追加」</b>を選択します。</li>
+                                    <li>右上の<b>「追加」</b>をタップするとホーム画面に追加されます。</li>
+                                </ol>
+                            </div>
+                            <div class="guide-box" style="margin-bottom:0;">
+                                <div class="guide-box-title">🤖 Android / PC（Chrome / Edge）</div>
+                                <ol>
+                                    <li>上の<b>「アプリをインストール」</b>ボタン、またはブラウザの<b>「⋮」メニュー</b>／アドレスバーのインストールアイコンから追加できます。</li>
+                                    <li><b>「ホーム画面に追加」</b>または<b>「Drone weather をインストール」</b>を選択してください。</li>
+                                </ol>
+                            </div>
+                        `
+                    }
+                ],
+                installBtnText: '⚡ Drone Weather をインストール',
+                laws: {
+                    hk: {
+                        title: '香港ドローン法規（民航処 CAD eSUA 標準制限）',
+                        sections: [
+                            { heading: '【📊 重量区分と飛行制限】', color: '#e74c3c', items: ['<b>カテゴリーA1（250g以下／DJI Miniシリーズ等）：</b>対地高度上限 <b>100フィート（約30m）</b>、最大速度 <b>20 km/h</b>。機体・操縦者登録は不要ですが、飛行禁止区域は遵守する必要があります。', '<b>カテゴリーA2（250g超〜7kg以下／DJI Air・Mavic等）：</b>対地高度上限 <b>300フィート（約90m）</b>、最大速度 <b>50 km/h</b>。機体への登録ラベル貼付と、14歳以上の操縦者実名登録が必要です。'] },
+                            { heading: '【👁️ 基本安全ルール】', color: '#f39c12', items: ['<b>目視外飛行禁止（VLOS）：</b>肉眼で機体を常時視認できる範囲内で飛行させます。', '<b>安全距離：</b>関係者以外の第三者・車両・建物から水平距離 <b>30m</b> 以上離します。', '<b>保険：</b>カテゴリーB（7kg超）や特定運航では規定の第三者賠償責任保険が必要です。'] },
+                            { heading: '【⚠️ 最高罰則】', color: '#64748b', items: ['小型無人機令違反の場合、有罪判決で最大<b>拘禁2年</b>および<b>10万香港ドルの罰金</b>が科される可能性があります。'] }
+                        ]
+                    },
+                    jp: {
+                        title: '日本ドローン法規（国土交通省 航空法）',
+                        sections: [
+                            { heading: '【🚨 100g登録義務とリモートID】', color: '#e74c3c', items: ['日本は <b>100g以上</b> が対象のため、249g機体でも <b>DIPS 2.0</b> での機体登録が必要です。', '原則として <b>リモートID</b> 機能の搭載・発信が求められます。'] },
+                            { heading: '【🏙️ 人口集中地区（DID）と高度制限】', color: '#2980b9', items: ['<b>人口集中地区（DID）</b>での飛行は原則として事前の飛行許可が必要です。', '許可空域の対地高度上限は原則 <b>150m</b>、人・物件から <b>30m</b> 以上の距離を確保します。'] },
+                            { heading: '【❌ よくある注意点】', color: '#f39c12', items: ['夜間飛行や目視外飛行には別途承認・許可が必要です。', '都立・府県立公園、観光地、自治体条例による独自制限にもご注意ください。'] },
+                            { heading: '【⚠️ 最高罰則】', color: '#64748b', items: ['最大 <b>50万円の罰金</b>。空港周辺での違反や飲酒操縦などは <b>1年以下の懲役または30万円以下の罰金</b> の対象となります。'] }
+                        ]
+                    },
+                    tw: {
+                        title: '台湾ドローン法規（交通部民用航空局 CAA）',
+                        sections: [
+                            { heading: '【📝 個人と法人の規定】', color: '#e74c3c', items: ['<b>個人：</b><b>250g以上</b> の機体は登録が必要。緑色区域で2kg未満の場合は操縦証不要です。', '<b>法人（企業・メディア・学校・機関等）：</b>操縦証の取得、賠償責任保険、飛行申請・承認が必要です。'] },
+                            { heading: '【📐 高度と空域ルール】', color: '#2980b9', items: ['飛行高度上限は <b>400フィート（約120m）</b> です。', '事前に公式 <b>DroneMap</b> で赤色（禁止）・黄色・緑色区域を確認し、人混みやイベント会場、幹線道路を避けてください。'] },
+                            { heading: '【🌃 昼間飛行の原則】', color: '#f39c12', items: ['個人の飛行は原則として<b>日の出から日没まで</b>に限られます。'] },
+                            { heading: '【⚠️ 最高罰則】', color: '#64748b', items: ['禁止区域への進入や高度違反には <b>30万〜150万ニュー台湾ドル</b> の罰金が科され、機体が没収される場合があります。'] }
+                        ]
+                    },
+                    uk: {
+                        title: '英国ドローン法規（UK CAA）',
+                        sections: [
+                            { heading: '【📸 登録要件】', color: '#e74c3c', items: ['カメラ搭載機の所有者は通常 <b>Operator ID</b> を取得し機体に表示する必要があります。', '<b>250g以上</b> の機体を操縦するには <b>Flyer ID</b> の取得が必要です。'] },
+                            { heading: '【💡 A1 / A2 / A3 カテゴリー】', color: '#2980b9', items: ['A2 CofCを保有せずに250g〜2kgの機体を <b>A3</b> カテゴリーで飛ばす場合、住宅・商業・工業・レジャーエリアから <b>150m</b> 以上離す必要があります。', '一般的な高度上限は対地 <b>120m（400フィート）</b> です。'] },
+                            { heading: '【💂 飛行制限空域】', color: '#f39c12', items: ['空港周辺には飛行制限空域（FRZ）があり、ロンドン中心部や主要施設にも厳しい制限があります。'] },
+                            { heading: '【⚠️ 最高罰則】', color: '#64748b', items: ['航空安全を脅かす重大な違反には<b>罰金</b>や最大<b>5年の拘禁刑</b>が科されることがあります。'] }
+                        ]
+                    }
+                },
+                news: [
+                    {
+                        id: 'news-2026-11-20.1',
+                        date: '2026-11-20',
+                        effectiveTime: '発効〜2027年4月30日まで、月〜金 08:30〜16:30 に随時運用',
+                        tag: '臨時禁止区域',
+                        important: true,
+                        title: 'ルクセンブルク 臨時ドローン飛行禁止区域',
+                        content: 'LASプロジェクト向けに地上〜高度200m、指定UAS航路の両側各400mの範囲で臨時の飛行禁止区域が設定されました。対象外：Luxembourg Air Services S.A.のプロジェクト機および警察・税関・捜索救助・医療・避難・消防などの公共任務機のみ。それ以外のドローン飛行は禁止です。'
+                    },
+                    {
+                        id: 'news-2026-11-20.2',
+                        date: '2026-11-20',
+                        effectiveTime: '2026年11月21日（土）現地時間 16:00〜23:59',
+                        tag: '臨時禁止区域',
+                        important: true,
+                        title: '米国バージニア州ノーフォーク 臨時飛行制限',
+                        content: '第40回グランド・イルミネーション・パレードに伴い、ノーフォーク中心部から半径1海里（約1.85km）の空域で臨時の飛行制限が実施されます。無許可のドローン・ラジコン機の飛行は禁止です。'
+                    }
+                ]
+            }
+        };
+
+        function t() {
+            return I18N[currentLang] || I18N['zh-HK'];
+        }
+
+        function applyLanguageUI() {
+            const dict = t();
+            document.documentElement.lang = dict.htmlLang;
+            document.title = dict.pageTitle;
+
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect) langSelect.value = currentLang;
+
+            const brandEl = document.getElementById('brand-title');
+            if (brandEl) brandEl.textContent = dict.brand;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.textContent = dict[key];
+            });
+
+            const newsBtnLabel = document.getElementById('news-btn-label');
+            if (newsBtnLabel) newsBtnLabel.textContent = dict.newsBtn;
+
+            const newsModalTitle = document.getElementById('news-modal-title');
+            if (newsModalTitle) newsModalTitle.textContent = dict.newsModalTitle;
+
+            const newsModalCloseBtn = document.getElementById('news-modal-close-btn');
+            if (newsModalCloseBtn) newsModalCloseBtn.textContent = dict.newsModalClose;
+
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.placeholder = dict.searchPlaceholder;
+
+            const mapSearchBtn = document.getElementById('map-search-btn');
+            if (mapSearchBtn) mapSearchBtn.textContent = dict.searchBtn;
+
+            const locateBtn = document.getElementById('locate-btn');
+            if (locateBtn && locateBtn.textContent !== dict.locating) locateBtn.textContent = dict.locateBtn;
+
+            const lawsTitle = document.getElementById('laws-page-title');
+            if (lawsTitle) lawsTitle.textContent = dict.lawsTitle;
+
+            const lawsDesc = document.getElementById('laws-page-desc');
+            if (lawsDesc) lawsDesc.textContent = dict.lawsDesc;
+
+            const countryDefault = document.getElementById('country-opt-default');
+            if (countryDefault) countryDefault.textContent = dict.countryDefault;
+
+            const itiHeading = document.getElementById('iti-heading');
+            if (itiHeading) itiHeading.textContent = dict.itiHeading;
+
+            const itiSearchInput = document.getElementById('iti-search-input');
+            if (itiSearchInput) itiSearchInput.placeholder = dict.itiSearchPlaceholder;
+
+            const itiAddBtnText = document.getElementById('iti-add-btn-text');
+            if (itiAddBtnText) itiAddBtnText.textContent = dict.itiAddBtn;
+
+            const itiRefreshBtn = document.getElementById('iti-refresh-btn');
+            if (itiRefreshBtn) itiRefreshBtn.textContent = dict.itiRefreshBtn;
+
+            const itiListTitle = document.getElementById('iti-list-title');
+            if (itiListTitle) itiListTitle.textContent = dict.itiListTitle;
+
+            const itiCountUnit = document.getElementById('iti-count-unit');
+            if (itiCountUnit) itiCountUnit.textContent = dict.itiCountUnit;
+
+            const saveStatus = document.getElementById('save-status');
+            if (saveStatus) saveStatus.textContent = dict.saveAuto;
+
+            const itiSaveBtn = document.getElementById('iti-save-btn');
+            if (itiSaveBtn) itiSaveBtn.textContent = dict.saveManualBtn;
+
+            const exportPdfBtn = document.getElementById('export-pdf-btn');
+            if (exportPdfBtn && !exportPdfBtn.disabled) exportPdfBtn.textContent = dict.exportPdfBtn;
+
+            const itiClearBtn = document.getElementById('iti-clear-btn');
+            if (itiClearBtn) itiClearBtn.textContent = dict.clearBtn;
+
+            const thMap = {
+                'th-order': dict.thOrder,
+                'th-date': dict.thDate,
+                'th-place': dict.thPlace,
+                'th-weather': dict.thWeather,
+                'th-eval': dict.thEval,
+                'th-action': dict.thAction
+            };
+            Object.entries(thMap).forEach(([id, text]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            });
+
+            const aboutContainer = document.getElementById('about-content-container');
+            if (aboutContainer) aboutContainer.innerHTML = dict.aboutHtml;
+
+            const prevBtn = document.getElementById('tour-prev-btn');
+            if (prevBtn) prevBtn.textContent = dict.tourPrev;
+
+            showDroneLaws();
+            initLatestNews();
+            renderItineraryTable();
+            updateMapLayers();
+
+            if (typeof isTourActive !== 'undefined' && isTourActive) {
+                renderTourStep(currentTourStep, false);
+            }
+        }
+
+        function setLanguage(lang, save = true) {
+            currentLang = (lang === 'zh-HK' || lang === 'en' || lang === 'ja') ? lang : 'en';
+            if (save) {
+                try {
+                    localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+                } catch (e) {
+                    console.warn('Cannot save language setting:', e);
+                }
+            }
+            applyLanguageUI();
+        }
+
+        // ==========================================
+        // 1. 初始化兩個地圖實例
+        // ==========================================
         let esuaGeoJsonData = null;
 
-        // 通用帶超時 Fetch
         async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
             const controller = new AbortController();
             const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -1037,9 +1877,6 @@
             }
         }
 
-        // ==========================================
-        // 1. 初始化兩個地圖實例
-        // ==========================================
         const map = L.map('map', { zoomControl: false }).setView([22.3193, 114.1694], 11);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1061,30 +1898,30 @@
         function loadESUANoFlyZones() {
             fetchWithTimeout('GeoJSON/map.geojson')
                 .then(response => {
-                    if (!response.ok) throw new Error("GeoJSON 載入失敗");
+                    if (!response.ok) throw new Error('GeoJSON load failed');
                     return response.json();
                 })
                 .then(geojsonData => {
                     esuaGeoJsonData = geojsonData;
 
                     L.geoJSON(geojsonData, {
-                        style: () => ({ color: "#ff0000", weight: 2, fillColor: "#ff0000", fillOpacity: 0.50 }),
+                        style: () => ({ color: '#ff0000', weight: 2, fillColor: '#ff0000', fillOpacity: 0.50 }),
                         onEachFeature: (feature, layer) => {
-                            const name = (feature.properties && feature.properties.name) || "eSUA 限制飛行區域";
-                            layer.bindPopup(`<b>禁飛區提示：</b><br>${name}`);
+                            const name = (feature.properties && feature.properties.name) || t().nfzBadge;
+                            layer.bindPopup(`<b>${t().nfzBadge}:</b><br>${name}`);
                         }
                     }).addTo(map);
 
                     L.geoJSON(geojsonData, {
-                        style: () => ({ color: "#ff0000", weight: 2, fillColor: "#ff0000", fillOpacity: 0.40 }),
+                        style: () => ({ color: '#ff0000', weight: 2, fillColor: '#ff0000', fillOpacity: 0.40 }),
                         onEachFeature: (feature, layer) => {
-                            const name = (feature.properties && feature.properties.name) || "eSUA 限制飛行區域";
-                            layer.bindPopup(`<b>🚫 禁飛區範圍：</b><br>${name}<br><small style="color:#ef4444;">此區域未經許可嚴禁放飛無人機</small>`);
+                            const name = (feature.properties && feature.properties.name) || t().nfzBadge;
+                            layer.bindPopup(`<b>${t().nfzPopupTitle}</b><br>${name}`);
                         }
                     }).addTo(itineraryMap);
                 })
                 .catch(() => {
-                    console.log("提示：未能讀取本地 GeoJSON/map.geojson 檔案。");
+                    console.log('GeoJSON/map.geojson not loaded.');
                 });
         }
         loadESUANoFlyZones();
@@ -1108,18 +1945,17 @@
                     try {
                         if (turf.booleanPointInPolygon(pt, feature)) {
                             const props = feature.properties || {};
-                            const zoneName = props.name || props.Name || props.TITLE || "eSUA 法定限制飛行區";
+                            const zoneName = props.name || props.Name || props.TITLE || t().nfzBadge;
                             return { inNoFlyZone: true, zoneName };
                         }
                     } catch (e) {
-                        console.warn("幾何判斷略過異常圖徵:", e);
+                        console.warn('Polygon check skipped:', e);
                     }
                 }
             }
             return { inNoFlyZone: false, zoneName: null };
         }
 
-        // 統一地理搜尋（Photon 為主，Nominatim 作備援）
         async function geocodePlace(query) {
             try {
                 const photonRes = await fetchWithTimeout(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=1`);
@@ -1134,7 +1970,7 @@
                     }
                 }
             } catch (e) {
-                console.warn("Photon 搜尋切換至備援:", e);
+                console.warn('Photon fallback to Nominatim:', e);
             }
 
             const nomRes = await fetchWithTimeout(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`);
@@ -1166,87 +2002,91 @@
         }
 
         function evaluateFlightSafety(windGround, wind80m, gust, rainAmount, rainProb, kpIndex, hasActiveWarning, sunriseIso, sunsetIso) {
+            const dict = t();
             const nightRestricted = isNightTimeNow(sunriseIso, sunsetIso);
 
             if (windGround > 39 || wind80m > 42 || gust > 45 || rainAmount > 5 || kpIndex >= 5 || hasActiveWarning || nightRestricted) {
-                let reasonText = "危險！惡劣天氣、強風或降雨，嚴禁起飛";
-                if (nightRestricted) reasonText = "危險！現時處於日出前或日落後夜間限制時段，嚴禁飛行！";
-                else if (kpIndex >= 5) reasonText = "危險！強烈地磁風暴 (Kp ≥ 5)，強烈干擾 GPS，嚴禁起飛！";
-                else if (hasActiveWarning) reasonText = "危險！當地有生效天氣警告，請暫停飛行！";
+                let reasonText = dict.safeBadWeather;
+                if (nightRestricted) reasonText = dict.safeNight;
+                else if (kpIndex >= 5) reasonText = dict.safeKpHigh;
+                else if (hasActiveWarning) reasonText = dict.safeWarning;
 
-                return { emoji: "🔴", color: "#ef4444", text: reasonText };
+                return { emoji: '🔴', color: '#ef4444', text: reasonText };
             }
 
             if (windGround > 28 || wind80m > 37 || gust > 35 || rainProb > 60 || kpIndex >= 4) {
                 return {
-                    emoji: "🟡",
-                    color: "#f59e0b",
-                    text: kpIndex >= 4 ? "警告：地磁活躍 (Kp ≥ 4) 或氣象不穩定，請謹慎飛行。" : "氣象不穩定、高空風大或有雨，請謹慎飛行。"
+                    emoji: '🟡',
+                    color: '#f59e0b',
+                    text: kpIndex >= 4 ? dict.safeCautionKp : dict.safeCaution
                 };
             }
 
-            return { emoji: "🟢", color: "#10b981", text: "環境、時間與地磁良好，適合飛行。" };
+            return { emoji: '🟢', color: '#10b981', text: dict.safeGood };
         }
 
-function parseHKOWarnings(warningData) {
-    if (warningData && warningData.__fetchError) {
-        return {
-            hasWarning: false,
-            html: `<div style="color: #d97706; font-weight: bold; font-size: 12px; margin-bottom: 10px;">⚠️ 暫未能同步天文台警告狀態</div>`
-        };
-    }
-
-    if (!warningData || typeof warningData !== 'object' || Object.keys(warningData).length === 0) {
-        return {
-            hasWarning: false,
-            html: `<div style="color: #10b981; font-weight: bold; font-size: 13px; margin-bottom: 10px;">🟢 天文台提示：目前無生效警告</div>`
-        };
-    }
-
-    const badges = Object.values(warningData)
-        .filter(warn => warn && warn.name)
-        .map(warn => {
-            const sub = warn.type ? ` (${warn.type})` : '';
-            return `<span style="background: #e74c3c; color: #ffffff; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: bold; display: inline-block; margin-right: 4px; margin-top: 2px;">${warn.name}${sub}</span>`;
-        });
-
-    if (badges.length === 0) {
-        return {
-            hasWarning: false,
-            html: `<div style="color: #10b981; font-weight: bold; font-size: 13px; margin-bottom: 10px;">🟢 天文台提示：目前無生效警告</div>`
-        };
-    }
-
-    return {
-        hasWarning: true,
-        html: `<div style="margin-bottom: 10px; font-size: 13px; line-height: 1.4;"><span style="color: #e74c3c; font-weight: bold;">⚠️ 實時警告：</span>${badges.join('')}</div>`
-    };
-}
-
-async function fetchHKOWarningsWithFallback() {
-    const hkoUrl = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=tc';
-    const endpoints = [
-        hkoUrl,
-        'https://corsproxy.io/?' + encodeURIComponent(hkoUrl),
-        'https://api.allorigins.win/raw?url=' + encodeURIComponent(hkoUrl)
-    ];
-
-    for (const url of endpoints) {
-        try {
-            const res = await fetchWithTimeout(url, {}, 5000);
-            if (!res.ok) continue;
-            const text = await res.text();
-            const json = JSON.parse(text);
-            if (json && typeof json === 'object') {
-                return json;
+        function parseHKOWarnings(warningData) {
+            const dict = t();
+            if (warningData && warningData.__fetchError) {
+                return {
+                    hasWarning: false,
+                    html: `<div style="color: #d97706; font-weight: bold; font-size: 12px; margin-bottom: 10px;">${dict.hkoSyncErr}</div>`
+                };
             }
-        } catch (e) {
-            console.warn('HKO 警告來源嘗試失敗:', url, e);
-        }
-    }
 
-    return { __fetchError: true };
-}
+            if (!warningData || typeof warningData !== 'object' || Object.keys(warningData).length === 0) {
+                return {
+                    hasWarning: false,
+                    html: `<div style="color: #10b981; font-weight: bold; font-size: 13px; margin-bottom: 10px;">${dict.hkoNone}</div>`
+                };
+            }
+
+            const badges = Object.values(warningData)
+                .filter(warn => warn && warn.name)
+                .map(warn => {
+                    const sub = warn.type ? ` (${warn.type})` : '';
+                    return `<span style="background: #e74c3c; color: #ffffff; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: bold; display: inline-block; margin-right: 4px; margin-top: 2px;">${warn.name}${sub}</span>`;
+                });
+
+            if (badges.length === 0) {
+                return {
+                    hasWarning: false,
+                    html: `<div style="color: #10b981; font-weight: bold; font-size: 13px; margin-bottom: 10px;">${dict.hkoNone}</div>`
+                };
+            }
+
+            return {
+                hasWarning: true,
+                html: `<div style="margin-bottom: 10px; font-size: 13px; line-height: 1.4;"><span style="color: #e74c3c; font-weight: bold;">${dict.hkoActivePrefix}</span>${badges.join('')}</div>`
+            };
+        }
+
+        async function fetchHKOWarningsWithFallback() {
+            const warnLang = currentLang === 'en' ? 'en' : 'tc';
+            const hkoUrl = `https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=${warnLang}`;
+            const endpoints = [
+                hkoUrl,
+                'https://corsproxy.io/?' + encodeURIComponent(hkoUrl),
+                'https://api.allorigins.win/raw?url=' + encodeURIComponent(hkoUrl)
+            ];
+
+            for (const url of endpoints) {
+                try {
+                    const res = await fetchWithTimeout(url, {}, 5000);
+                    if (!res.ok) continue;
+                    const text = await res.text();
+                    const json = JSON.parse(text);
+                    if (json && typeof json === 'object') {
+                        return json;
+                    }
+                } catch (e) {
+                    console.warn('HKO warning source failed:', url, e);
+                }
+            }
+
+            return { __fetchError: true };
+        }
+
         function extractKpIndex(json) {
             if (!Array.isArray(json) || json.length === 0) return 0;
             const first = json[0];
@@ -1255,16 +2095,17 @@ async function fetchHKOWarningsWithFallback() {
             return Number.isFinite(parsed) ? parsed : 0;
         }
 
-function toggleNfzWeatherRef(btnId, boxId) {
+        function toggleNfzWeatherRef(btnId, boxId) {
             const box = document.getElementById(boxId);
             const btn = document.getElementById(btnId);
             if (!box || !btn) return;
             const isHidden = box.style.display === 'none';
             box.style.display = isHidden ? 'block' : 'none';
-            btn.innerText = isHidden ? '隱藏當地天氣參考' : '查看當地天氣參考';
+            btn.innerText = isHidden ? t().hideWeatherRef : t().showWeatherRef;
         }
 
         function fetchAndShowWeather(lat, lon, latlng) {
+            const dict = t();
             const nfzResult = checkNoFlyZone(lat, lon);
             const uid = 'nfz_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
             const refBoxId = uid + '_box';
@@ -1272,7 +2113,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
 
             const loadingPopup = L.popup()
                 .setLatLng(latlng)
-                .setContent('<div style="padding: 10px; font-size: 13px; color: #555;"><span style="display:inline-block; animation: spin 1s linear infinite; margin-right: 6px;">⏳</span>正在檢查空域及航拍數據...</div>')
+                .setContent(`<div style="padding: 10px; font-size: 13px; color: #555;"><span style="display:inline-block; animation: spin 1s linear infinite; margin-right: 6px;">⏳</span>${dict.loadingPopup}</div>`)
                 .openOn(map);
 
             const isHongKong = (lat >= 22.14 && lat <= 22.57 && lon >= 113.80 && lon <= 114.44);
@@ -1292,6 +2133,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
 
             Promise.all([weatherPromise, warningPromise, geoMagneticPromise])
                 .then(([weatherData, warningData, kpIndex]) => {
+                    const d = t();
                     const temp = Number(weatherData.current.temperature_2m).toFixed(1);
                     const windGround = Number(weatherData.current.wind_speed_10m).toFixed(1);
                     const wind80m = Number(weatherData.hourly.wind_speed_80m[0]).toFixed(1);
@@ -1302,26 +2144,25 @@ function toggleNfzWeatherRef(btnId, boxId) {
                     const sunriseIso = weatherData.daily && weatherData.daily.sunrise ? weatherData.daily.sunrise[0] : null;
                     const sunsetIso = weatherData.daily && weatherData.daily.sunset ? weatherData.daily.sunset[0] : null;
 
-                    const hkoResult = isHongKong ? parseHKOWarnings(warningData) : { hasWarning: false, html: "" };
+                    const hkoResult = isHongKong ? parseHKOWarnings(warningData) : { hasWarning: false, html: '' };
 
-                    // ✅ 位於禁飛區：直接宣告禁飛，唔俾起飛評估
                     if (nfzResult.inNoFlyZone) {
-                        const zoneLabel = nfzResult.zoneName || "eSUA 法定限制飛行區";
+                        const zoneLabel = nfzResult.zoneName || d.nfzBadge;
                         const nfzPopupContent = `
                             <div style="font-family: inherit; min-width: 245px; padding: 6px 8px; line-height: 1.65; color: #1e293b;">
                                 <div style="background: #fef2f2; border: 1.5px solid #ef4444; border-radius: 8px; padding: 10px 12px;">
-                                    <div style="color: #dc2626; font-weight: 800; font-size: 16px; margin-bottom: 4px;">🚫 此處為禁飛區（嚴禁起飛）</div>
-                                    <div style="font-size: 13px; color: #7f1d1d; font-weight: 600;">區域：${zoneLabel}</div>
-                                    <div style="font-size: 12px; color: #991b1b; margin-top: 4px;">未經民航處或相關部門許可，不可在此範圍放飛無人機。</div>
+                                    <div style="color: #dc2626; font-weight: 800; font-size: 15px; margin-bottom: 4px;">${d.nfzPopupTitle}</div>
+                                    <div style="font-size: 13px; color: #7f1d1d; font-weight: 600;">${d.nfzZoneLabel}：${zoneLabel}</div>
+                                    <div style="font-size: 12px; color: #991b1b; margin-top: 4px;">${d.nfzPopupDesc}</div>
                                 </div>
                                 <div style="margin-top: 8px; text-align: center;">
-                                    <button type="button" id="${refBtnId}" onclick="toggleNfzWeatherRef('${refBtnId}', '${refBoxId}')" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; border-radius:6px; padding:4px 10px; font-size:12px; cursor:pointer; font-weight:600;">查看當地天氣參考</button>
+                                    <button type="button" id="${refBtnId}" onclick="toggleNfzWeatherRef('${refBtnId}', '${refBoxId}')" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; border-radius:6px; padding:4px 10px; font-size:12px; cursor:pointer; font-weight:600;">${d.showWeatherRef}</button>
                                 </div>
                                 <div id="${refBoxId}" style="display:none; margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1; font-size:13px; line-height:1.7;">
                                     ${hkoResult.html}
-                                    <div>🌡️ 氣溫：${temp} °C ｜ 🍃 均風：${windGround} km/h</div>
-                                    <div>💨 80m 高空風：${wind80m} km/h ｜ 🌪️ 陣風：${gust} km/h</div>
-                                    <div>🌧️ 降雨：${rainAmount} mm (${rainProb}%) ｜ 🛰️ Kp ${kpIndex}</div>
+                                    <div>🌡️ ${d.labelTemp}：${temp} °C ｜ 🍃 ${d.labelWindGround}：${windGround} km/h</div>
+                                    <div>💨 ${d.labelWind80m}：${wind80m} km/h ｜ 🌪️ ${d.labelGust}：${gust} km/h</div>
+                                    <div>🌧️ ${d.labelRain}：${rainAmount} mm (${rainProb}%) ｜ 🛰️ Kp ${kpIndex}</div>
                                 </div>
                             </div>
                         `;
@@ -1329,7 +2170,6 @@ function toggleNfzWeatherRef(btnId, boxId) {
                         return;
                     }
 
-                    // 非禁飛區：正常顯示綜合航拍安全報告
                     const safety = evaluateFlightSafety(
                         Number(windGround),
                         Number(wind80m),
@@ -1346,33 +2186,34 @@ function toggleNfzWeatherRef(btnId, boxId) {
                         <div style="font-family: inherit; min-width: 250px; padding: 5px 8px; line-height: 1.8; color: #333;">
                             <div style="display: flex; align-items: center; margin-bottom: 5px;">
                                 <span style="font-size: 16px; margin-right: 6px;">📊</span>
-                                <span style="color: #007aff; font-weight: bold; font-size: 15px;">綜合航拍安全報告</span>
+                                <span style="color: #007aff; font-weight: bold; font-size: 15px;">${d.reportTitle}</span>
                             </div>
                             <div style="height: 2px; background-color: #007aff; margin-bottom: 10px;"></div>
                             ${hkoResult.html}
                             <div style="font-size: 14px;">
-                                <div>🌡️ <b>當地氣溫：</b>${temp} °C</div>
-                                <div>🍃 <b>地面風速：</b>${windGround} km/h</div>
-                                <div style="color: #1a73e8; font-weight: bold;">💨 高空風速 (80m)：${wind80m} km/h</div>
-                                <div style="color: #d97706; font-weight: bold;">🌪️ 實時陣風：${gust} km/h</div>
-                                <div style="color: #2563eb;">🌧️ <b>當前降雨：</b><b>${rainAmount} mm</b></div>
-                                <div style="color: #2563eb;">🎲 <b>降雨機率：</b><b>${rainProb} %</b></div>
-                                <div style="color: #7c3aed; font-weight: bold;">🛰️ 全球地磁指數：<span style="font-weight: normal; color: #555;">Kp ${kpIndex}</span></div>
+                                <div>🌡️ <b>${d.labelTemp}：</b>${temp} °C</div>
+                                <div>🍃 <b>${d.labelWindGround}：</b>${windGround} km/h</div>
+                                <div style="color: #1a73e8; font-weight: bold;">💨 ${d.labelWind80m}：${wind80m} km/h</div>
+                                <div style="color: #d97706; font-weight: bold;">🌪️ ${d.labelGust}：${gust} km/h</div>
+                                <div style="color: #2563eb;">🌧️ <b>${d.labelRain}：</b><b>${rainAmount} mm</b></div>
+                                <div style="color: #2563eb;">🎲 <b>${d.labelRainProb}：</b><b>${rainProb} %</b></div>
+                                <div style="color: #7c3aed; font-weight: bold;">🛰️ ${d.labelKp}：<span style="font-weight: normal; color: #555;">Kp ${kpIndex}</span></div>
                             </div>
                             <div style="margin-top: 8px; font-size: 14px; font-weight: bold; color: ${safety.color};">
-                                ${safety.emoji} 評估：${safety.text}
+                                ${safety.emoji} ${d.labelEval}：${safety.text}
                             </div>
                         </div>
                     `;
                     loadingPopup.setContent(popupContent);
                 })
                 .catch(err => {
-                    console.error("數據獲取失敗:", err);
+                    const d = t();
+                    console.error('Weather fetch failed:', err);
                     if (nfzResult.inNoFlyZone) {
-                        const zoneLabel = nfzResult.zoneName || "eSUA 法定限制飛行區";
-                        loadingPopup.setContent(`<div style="padding:10px; color:#dc2626; font-weight:bold; font-size:14px;">🚫 此處為禁飛區（${zoneLabel}），嚴禁起飛！</div>`);
+                        const zoneLabel = nfzResult.zoneName || d.nfzBadge;
+                        loadingPopup.setContent(`<div style="padding:10px; color:#dc2626; font-weight:bold; font-size:14px;">${d.nfzSimpleAlert(zoneLabel)}</div>`);
                     } else {
-                        loadingPopup.setContent('<div style="padding:10px; color:#ef4444; font-weight:bold; font-size:13px;">❌ 航拍安全報告生成失敗，請稍後再試</div>');
+                        loadingPopup.setContent(`<div style="padding:10px; color:#ef4444; font-weight:bold; font-size:13px;">${d.reportErr}</div>`);
                     }
                 });
         }
@@ -1382,12 +2223,13 @@ function toggleNfzWeatherRef(btnId, boxId) {
         });
 
         function geolocateUser() {
+            const dict = t();
             if (!navigator.geolocation) {
-                alert("你的瀏覽器不支援地理定位。");
+                alert(dict.geoNotSupported);
                 return;
             }
             const locateBtn = document.querySelector('.locate-btn');
-            locateBtn.innerText = "定位中...";
+            locateBtn.innerText = dict.locating;
 
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -1407,29 +2249,28 @@ function toggleNfzWeatherRef(btnId, boxId) {
                         });
                         userMarker = L.marker([lat, lng], { icon: blueDotIcon }).addTo(map);
                     }
-                    locateBtn.innerText = "我的位置";
+                    locateBtn.innerText = t().locateBtn;
                     fetchAndShowWeather(lat, lng, L.latLng(lat, lng));
                 },
                 (err) => {
-                    let msg = "定位失敗，請確保已開啟 GPS 權限。";
-                    if (err && err.code === err.PERMISSION_DENIED) {
-                        msg = "定位權限已被拒絕，請於瀏覽器或系統設定允許定位。";
-                    } else if (err && err.code === err.TIMEOUT) {
-                        msg = "定位逾時，請移步至訊號較佳位置再試。";
-                    }
+                    const d = t();
+                    let msg = d.geoFail;
+                    if (err && err.code === err.PERMISSION_DENIED) msg = d.geoDenied;
+                    else if (err && err.code === err.TIMEOUT) msg = d.geoTimeout;
                     alert(msg);
-                    locateBtn.innerText = "我的位置";
+                    locateBtn.innerText = d.locateBtn;
                 },
                 { enableHighAccuracy: true, timeout: 7000 }
             );
         }
 
         async function searchLocation() {
+            const dict = t();
             const query = document.getElementById('search-input').value.trim();
             if (!query) return;
 
             const btn = document.querySelector('.search-btn');
-            btn.innerText = "🔍...";
+            btn.innerText = '🔍...';
 
             try {
                 const res = await geocodePlace(query);
@@ -1437,12 +2278,12 @@ function toggleNfzWeatherRef(btnId, boxId) {
                     map.flyTo([res.lat, res.lon], 16);
                     fetchAndShowWeather(res.lat, res.lon, L.latLng(res.lat, res.lon));
                 } else {
-                    alert("搵唔到呢個地方，請嘗試其他關鍵字。");
+                    alert(dict.searchNotFound);
                 }
             } catch (e) {
-                alert("搜尋出咗少少問題，請檢查網絡連線。");
+                alert(dict.searchErr);
             } finally {
-                btn.innerText = "搜尋";
+                btn.innerText = t().searchBtn;
             }
         }
 
@@ -1470,155 +2311,18 @@ function toggleNfzWeatherRef(btnId, boxId) {
         // ==========================================
         // 5. 分頁二：各國法例資料庫與顯示
         // ==========================================
-        const droneLawsDatabase = {
-            hk: {
-                title: "香港無人機法例 (民航處 CAD eSUA 標準操作限制)",
-                sections: [
-                    {
-                        heading: "【📊 按重量劃分之飛行限制】",
-                        color: "#e74c3c",
-                        items: [
-                            "<b>甲一類 (250g 或以下 / 如 DJI Mini 系列)：</b>高度上限地面以上 <b>100 呎 (約 30 米)</b>、速度上限 <b>20 km/h</b>；免無人機及操作員註冊，但仍須遵守禁飛區限制。",
-                            "<b>甲二類 (250g 以上至 7kg / 如 DJI Air, Mavic 系列)：</b>高度上限地面以上 <b>300 呎 (約 90 米)</b>、速度上限 <b>50 km/h</b>；機身須貼註冊標籤，操作員須年滿 14 歲並實名註冊。"
-                        ]
-                    },
-                    {
-                        heading: "【👁️ 核心安全紅線】",
-                        color: "#f39c12",
-                        items: [
-                            "<b>視線範圍 (VLOS)：</b>必須保持肉眼可見，嚴禁盲飛。",
-                            "<b>安全距離：</b>與未參與操作的人員、車輛或建築物保持至少 <b>30 米</b> 橫向距離。",
-                            "<b>保險要求：</b>乙類（7kg 以上）或進階操作須按規定購買足夠第三者責任保險。"
-                        ]
-                    },
-                    {
-                        heading: "【⚠️ 違例最高罰則】",
-                        color: "#64748b",
-                        items: [
-                            "根據《小型無人機令》，一經定罪，最高可處<b>監禁 2 年</b>及<b>罰款港幣 10 萬元</b>。"
-                        ]
-                    }
-                ]
-            },
-            jp: {
-                title: "日本無人機法例 (國土交通省 JCAB 航空法)",
-                sections: [
-                    {
-                        heading: "【🚨 100g 註冊門檻與 Remote ID】",
-                        color: "#e74c3c",
-                        items: [
-                            "日本門檻為 <b>100g</b>，外遊常見的 249g 機型亦須於 DIPS 2.0 系統實名註冊。",
-                            "須符合 <b>Remote ID</b> 規定，起飛前發射廣播身份訊號。"
-                        ]
-                    },
-                    {
-                        heading: "【🏙️ DID 人口集中地區與空域高度】",
-                        color: "#2980b9",
-                        items: [
-                            "於 <b>DID (Densely Inhabited Districts)</b> 區域未經事先許可原則上禁飛。",
-                            "許可空域高度上限一般為 <b>150 米</b>，並與人、車、建築保持 <b>30 米</b> 距離。"
-                        ]
-                    },
-                    {
-                        heading: "【❌ 旅客常見地雷】",
-                        color: "#f39c12",
-                        items: [
-                            "未獲特別許可下不得夜航或超出目視範圍（FPV 盲飛）操作。",
-                            "部分都立公園、景點及地方自治體設有額外限制或禁飛規定。"
-                        ]
-                    },
-                    {
-                        heading: "【⚠️ 違例最高罰則】",
-                        color: "#64748b",
-                        items: [
-                            "最高可處 <b>50 萬日圓罰款</b>；機場周邊違飛或醉酒操作最高可處 <b>1 年監禁</b> 或 <b>30 萬日圓罰款</b>。"
-                        ]
-                    }
-                ]
-            },
-            tw: {
-                title: "台灣無人機法例 (交通部民航局 CAA)",
-                sections: [
-                    {
-                        heading: "【📝 個人與法人管理規定】",
-                        color: "#e74c3c",
-                        items: [
-                            "<b>個人操作 (自然人)：</b>250g 以上無人機須實名註冊；綠區操作 2kg 以下無需操作證。",
-                            "<b>法人操作：</b>代表公司、媒體、機關或學校操作，須依規定取得操作證、投保責任險並申請核准。"
-                        ]
-                    },
-                    {
-                        heading: "【📐 飛行紅線與高度】",
-                        color: "#2980b9",
-                        items: [
-                            "飛行高度上限為 <b>400 呎 (約 120 米)</b>。",
-                            "出發前須透過官方「DroneMap」查核紅區（禁飛）、黃區與綠區，並避開人群聚集、集會遊行及交通幹道。"
-                        ]
-                    },
-                    {
-                        heading: "【🌃 日間操作限制】",
-                        color: "#f39c12",
-                        items: [
-                            "個人航拍原則上僅限<b>日出至日落之間</b>進行，夜間不得起飛。"
-                        ]
-                    },
-                    {
-                        heading: "【⚠️ 違例最高罰則】",
-                        color: "#64748b",
-                        items: [
-                            "於禁飛區或超高違規飛行，罰款可達 <b>新台幣 30 萬元至 150 萬元</b>，情節嚴重者可沒入無人機。"
-                        ]
-                    }
-                ]
-            },
-            uk: {
-                title: "英國無人機法例 (Civil Aviation Authority CAA)",
-                sections: [
-                    {
-                        heading: "【📸 註冊要求】",
-                        color: "#e74c3c",
-                        items: [
-                            "設有相機的無人機擁有者通常須註冊 <b>Operator ID</b> 並於機身標示。",
-                            "250g 或以上機型操作員亦須取得 <b>Flyer ID</b>。"
-                        ]
-                    },
-                    {
-                        heading: "【💡 A1 / A2 / A3 飛行類別】",
-                        color: "#2980b9",
-                        items: [
-                            "未持 A2 CofC 證照操作 250g–2kg 機型於 A3 類別時，須遠離住宅、商業、工業或康樂區至少 <b>150 米</b>。",
-                            "一般飛行高度上限為地面以上 <b>120 米 (400 呎)</b>。"
-                        ]
-                    },
-                    {
-                        heading: "【💂 禁飛與限制空域】",
-                        color: "#f39c12",
-                        items: [
-                            "機場周邊設有 Flight Restriction Zones (FRZ)，倫敦核心區及部分地標亦受嚴格限制。"
-                        ]
-                    },
-                    {
-                        heading: "【⚠️ 違例最高罰則】",
-                        color: "#64748b",
-                        items: [
-                            "危及航空安全等嚴重違例，可面臨<b>罰款</b>及最高<b>監禁 5 年</b>。"
-                        ]
-                    }
-                ]
-            }
-        };
-
         function showDroneLaws() {
             const country = document.getElementById('country-select').value;
             const displayDiv = document.getElementById('laws-display');
+            const lawsDb = t().laws;
 
-            if (!country || !droneLawsDatabase[country]) {
+            if (!country || !lawsDb[country]) {
                 displayDiv.style.display = 'none';
                 displayDiv.innerHTML = '';
                 return;
             }
 
-            const data = droneLawsDatabase[country];
+            const data = lawsDb[country];
             displayDiv.style.display = 'block';
 
             const sectionsHtml = data.sections.map(sec => {
@@ -1647,11 +2351,10 @@ function toggleNfzWeatherRef(btnId, boxId) {
 
         document.getElementById('iti-date-input').value = new Date().toISOString().split('T')[0];
 
-        // 共用：抓取指定坐標於指定日期的每日預報
         async function fetchDailyWeatherForDate(lat, lon, date) {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,precipitation_sum,precipitation_probability_max&timezone=auto`;
             const res = await fetchWithTimeout(url);
-            if (!res.ok) throw new Error("天氣 API 回應異常");
+            if (!res.ok) throw new Error('Weather API error');
             const data = await res.json();
 
             if (!data.daily || !Array.isArray(data.daily.time)) {
@@ -1677,16 +2380,16 @@ function toggleNfzWeatherRef(btnId, boxId) {
                 const statusEl = document.getElementById('save-status');
                 if (statusEl) {
                     const timeStr = new Date().toTimeString().slice(0, 5);
-                    statusEl.innerText = `💾 已自動儲存 (${timeStr})`;
+                    statusEl.innerText = t().saveTime(timeStr);
                 }
             } catch (e) {
-                console.error("儲存失敗:", e);
+                console.error('Save failed:', e);
             }
         }
 
         function saveItineraryManual() {
             saveItineraryToStorage();
-            alert("✅ 行程已成功儲存至本機瀏覽器！下次打開網頁會自動載入。");
+            alert(t().saveManualAlert);
         }
 
         function loadItineraryFromStorage() {
@@ -1705,32 +2408,33 @@ function toggleNfzWeatherRef(btnId, boxId) {
                     }
                 }
             } catch (e) {
-                console.error("讀取儲存紀錄失敗:", e);
+                console.error('Load saved itinerary failed:', e);
             }
         }
 
         function exportItineraryPdf() {
+            const dict = t();
             if (itineraryData.length === 0) {
-                alert("目前沒有任何行程可以匯出！");
+                alert(dict.emptyExport);
                 return;
             }
 
             if (typeof html2pdf === 'undefined') {
-                alert("PDF 產生器仍在載入中，請稍候再試或檢查網絡連線。");
+                alert(dict.pdfNotReady);
                 return;
             }
 
             const exportBtn = document.getElementById('export-pdf-btn');
-            const originalText = exportBtn.innerText;
-            exportBtn.innerText = "⏳ 生成 PDF 中...";
+            const originalText = dict.exportPdfBtn;
+            exportBtn.innerText = dict.exportingPdf;
             exportBtn.disabled = true;
 
             const todayStr = new Date().toISOString().split('T')[0];
-            const nowStr = new Date().toLocaleString('zh-HK');
+            const nowStr = new Date().toLocaleString(currentLang);
 
             const pdfContainer = document.createElement('div');
             pdfContainer.style.padding = '20px';
-            pdfContainer.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif';
+            pdfContainer.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", "Hiragino Sans", sans-serif';
             pdfContainer.style.color = '#1e293b';
             pdfContainer.style.background = '#ffffff';
 
@@ -1739,13 +2443,13 @@ function toggleNfzWeatherRef(btnId, boxId) {
                 const safety = evaluateFutureSafety(w, item.inNoFlyZone);
 
                 const weatherHtml = w
-                    ? `<div>🌡️ 氣溫：<b>${w.tempMin}~${w.tempMax} °C</b></div>
-                       <div>🍃 均風：≤${Number(w.windMax).toFixed(1)} km/h ｜ 🌪️ 陣風：≤${Number(w.gustMax).toFixed(1)} km/h</div>
-                       <div>🌧️ 降雨率：${w.rainProb}% (${w.rainSum}mm)</div>`
-                    : `<span style="color:#94a3b8;">超出預報範圍或數據未就緒</span>`;
+                    ? `<div>${dict.pdfTemp(w.tempMin, w.tempMax)}</div>
+                       <div>${dict.pdfWind(Number(w.windMax).toFixed(1), Number(w.gustMax).toFixed(1))}</div>
+                       <div>${dict.pdfRain(w.rainProb, w.rainSum)}</div>`
+                    : `<span style="color:#94a3b8;">${dict.pdfNoData}</span>`;
 
                 const nfzTag = item.inNoFlyZone
-                    ? `<div style="display:inline-block; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; padding:2px 6px; border-radius:4px; font-size:11px; margin-top:4px; font-weight:bold;">🚫 禁飛區：${item.zoneName || 'eSUA限制區'}</div>`
+                    ? `<div style="display:inline-block; background:#fee2e2; color:#dc2626; border:1px solid #fca5a5; padding:2px 6px; border-radius:4px; font-size:11px; margin-top:4px; font-weight:bold;">${dict.pdfZone(item.zoneName)}</div>`
                     : '';
 
                 const rowBg = item.inNoFlyZone ? '#fff5f5' : (idx % 2 === 0 ? '#ffffff' : '#f8fafc');
@@ -1756,7 +2460,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
                         <td style="padding: 10px; white-space: nowrap; font-weight: 600;">${item.date}</td>
                         <td style="padding: 10px;">
                             <div style="font-weight: bold; font-size: 14px;">${item.name}</div>
-                            <div style="font-size: 11px; color: #64748b;">坐標: ${Number(item.lat).toFixed(4)}, ${Number(item.lon).toFixed(4)}</div>
+                            <div style="font-size: 11px; color: #64748b;">${dict.pdfCoord(Number(item.lat).toFixed(4), Number(item.lon).toFixed(4))}</div>
                             ${nfzTag}
                         </td>
                         <td style="padding: 10px; font-size: 12px; line-height: 1.5;">${weatherHtml}</td>
@@ -1768,21 +2472,21 @@ function toggleNfzWeatherRef(btnId, boxId) {
             pdfContainer.innerHTML = `
                 <div style="border-bottom: 3px solid #007aff; padding-bottom: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end;">
                     <div>
-                        <h1 style="margin: 0; font-size: 22px; color: #007aff;">Drone Weather 航拍行程及天氣預報報告</h1>
-                        <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">共計 ${itineraryData.length} 個預定航拍地點 ｜ 匯出時間：${nowStr}</p>
+                        <h1 style="margin: 0; font-size: 22px; color: #007aff;">${dict.pdfHeaderTitle}</h1>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: #64748b;">${dict.pdfSummary(itineraryData.length, nowStr)}</p>
                     </div>
                     <div style="font-size: 11px; color: #94a3b8; text-align: right;">
-                        飛行前請務必再次確認實時空域及天氣警告
+                        ${dict.pdfDisclaimer}
                     </div>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
                     <thead>
                         <tr style="background: #1e293b; color: #ffffff;">
-                            <th style="padding: 10px; text-align: center; width: 50px;">站點</th>
-                            <th style="padding: 10px; width: 105px;">預定日期</th>
-                            <th style="padding: 10px; width: 220px;">航拍地點與空域狀態</th>
-                            <th style="padding: 10px;">當日氣象預報詳情</th>
-                            <th style="padding: 10px; width: 170px;">綜合安全評估</th>
+                            <th style="padding: 10px; text-align: center; width: 50px;">${dict.pdfThStop}</th>
+                            <th style="padding: 10px; width: 105px;">${dict.pdfThDate}</th>
+                            <th style="padding: 10px; width: 220px;">${dict.pdfThPlace}</th>
+                            <th style="padding: 10px;">${dict.pdfThWeather}</th>
+                            <th style="padding: 10px; width: 170px;">${dict.pdfThEval}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1793,7 +2497,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
 
             const opt = {
                 margin: 10,
-                filename: `航拍行程天氣報告_${todayStr}.pdf`,
+                filename: `drone_weather_${todayStr}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
@@ -1801,41 +2505,47 @@ function toggleNfzWeatherRef(btnId, boxId) {
 
             html2pdf().set(opt).from(pdfContainer).save()
                 .catch(err => {
-                    console.error("PDF 匯出失敗:", err);
-                    alert("PDF 產生時發生錯誤，請稍後再試。");
+                    console.error('PDF export failed:', err);
+                    alert(t().pdfErr);
                 })
                 .finally(() => {
-                    exportBtn.innerText = originalText;
+                    exportBtn.innerText = t().exportPdfBtn;
                     exportBtn.disabled = false;
                 });
         }
 
         async function addItineraryBySearch() {
-            const locName = document.getElementById('iti-search-input').value.trim();
+            const dict = t();
+            const inputEl = document.getElementById('iti-search-input');
+            const locName = inputEl.value.trim();
             const targetDate = document.getElementById('iti-date-input').value;
 
-            if (!locName) { alert("請先輸入想去嘅航拍地方！"); return; }
-            if (!targetDate) { alert("請選擇預定出發日子！"); return; }
+            if (!locName) { alert(dict.needPlace); return; }
+            if (!targetDate) { alert(dict.needDate); return; }
 
             const addBtn = document.getElementById('iti-add-btn');
-            const originalText = addBtn.innerText;
-            addBtn.innerText = "⏳ 搜尋中...";
+            const labelEl = document.getElementById('iti-add-btn-text');
+            const originalText = dict.itiAddBtn;
+
+            if (labelEl) labelEl.textContent = dict.itiSearching;
+            else addBtn.textContent = dict.itiSearching;
             addBtn.disabled = true;
 
             try {
                 const res = await geocodePlace(locName);
                 if (!res) {
-                    alert("找不到該地點，請嘗試輸入更具體的地名（例如：香港 西貢、大澳、尖沙咀）。");
+                    alert(t().itiNotFound);
                     return;
                 }
 
                 itineraryMap.setView([res.lat, res.lon], 14);
                 await handleLocationAddWithNFZCheck(res.name, res.lat, res.lon, targetDate, true);
             } catch (e) {
-                console.error("加入行程失敗:", e);
-                alert("網絡繁忙，地方搜尋失敗，請稍後再試！");
+                console.error('Add itinerary failed:', e);
+                alert(t().itiAddErr);
             } finally {
-                addBtn.innerText = originalText;
+                if (labelEl) labelEl.textContent = t().itiAddBtn;
+                else addBtn.textContent = originalText;
                 addBtn.disabled = false;
             }
         }
@@ -1848,20 +2558,12 @@ function toggleNfzWeatherRef(btnId, boxId) {
             const nfzResult = checkNoFlyZone(lat, lon);
 
             if (nfzResult.inNoFlyZone) {
-                const proceed = confirm(
-                    `🚫 禁飛區警告！\n\n` +
-                    `地點「${name}」位於法定禁飛區範圍內：\n` +
-                    `【${nfzResult.zoneName}】\n\n` +
-                    `未經許可嚴禁放飛無人機。\n` +
-                    `• 按「取消」禁止加入此地點（建議）\n` +
-                    `• 按「確定」仍要強制加入行程（僅供天氣參考）`
-                );
-
+                const proceed = confirm(t().nfzConfirm(name, nfzResult.zoneName));
                 if (!proceed) return;
             }
 
             if (clearSearchInput) {
-                document.getElementById('iti-search-input').value = "";
+                document.getElementById('iti-search-input').value = '';
             }
             await fetchAndInsertWaypoint(name, lat, lon, date, nfzResult.inNoFlyZone, nfzResult.zoneName);
         }
@@ -1871,7 +2573,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
             try {
                 parsedWeather = await fetchDailyWeatherForDate(lat, lon, date);
             } catch (err) {
-                console.error("抓取預報數據失敗（仍會先加入地點）:", err);
+                console.error('Forecast fetch failed:', err);
             }
 
             itineraryData.push({ name, lat, lon, date, weather: parsedWeather, inNoFlyZone, zoneName });
@@ -1882,8 +2584,9 @@ function toggleNfzWeatherRef(btnId, boxId) {
         }
 
         function refreshAllForecasts() {
+            const dict = t();
             if (itineraryData.length === 0) {
-                alert("現時行程空空如也，不需更新！");
+                alert(dict.emptyRefresh);
                 return;
             }
 
@@ -1905,25 +2608,27 @@ function toggleNfzWeatherRef(btnId, boxId) {
                 saveItineraryToStorage();
                 updateMapLayers();
                 renderItineraryTable();
-                alert("📊 全體行程之氣象預報與空域狀態已完成實時同步更新！");
+                alert(t().refreshedAlert);
             });
         }
 
         function evaluateFutureSafety(w, inNoFlyZone = false) {
+            const dict = t();
             if (inNoFlyZone) {
-                return { emoji: "🚫", color: "#dc2626", text: "禁飛區範圍！嚴禁放飛" };
+                return { emoji: '🚫', color: '#dc2626', text: dict.futureNfz };
             }
-            if (!w) return { emoji: "⚪", color: "#94a3b8", text: "超出預報範圍或無數據" };
+            if (!w) return { emoji: '⚪', color: '#94a3b8', text: dict.futureNoData };
             if (w.windMax > 35 || w.gustMax > 42 || w.rainSum > 0) {
-                return { emoji: "🔴", color: "#ef4444", text: "危險：預測有雨或強風" };
+                return { emoji: '🔴', color: '#ef4444', text: dict.futureDanger };
             }
             if (w.windMax > 18 || w.gustMax > 32 || w.rainProb > 45) {
-                return { emoji: "🟡", color: "#f59e0b", text: "需謹慎：風力偏大或天色不穩" };
+                return { emoji: '🟡', color: '#f59e0b', text: dict.futureCaution };
             }
-            return { emoji: "🟢", color: "#10b981", text: "天氣良好，適合航拍" };
+            return { emoji: '🟢', color: '#10b981', text: dict.futureGood };
         }
 
         function updateMapLayers() {
+            const dict = t();
             mapMarkers.forEach(m => itineraryMap.removeLayer(m));
             mapMarkers = [];
             if (routeLine) {
@@ -1944,12 +2649,10 @@ function toggleNfzWeatherRef(btnId, boxId) {
                     iconAnchor: [12, 12]
                 });
 
-                const nfzPopup = item.inNoFlyZone
-                    ? `<br><span style="color:#dc2626; font-weight:bold;">🚫 警告：位於禁飛區 (${item.zoneName || 'eSUA限制區'})</span>`
-                    : '';
+                const nfzPopup = item.inNoFlyZone ? dict.nfzPopupMarker(item.zoneName) : '';
 
                 const marker = L.marker([item.lat, item.lon], { icon: customIcon })
-                    .bindPopup(`<b>${idx + 1}. ${item.name}</b><br>預定日期: ${item.date}${nfzPopup}`)
+                    .bindPopup(`<b>${idx + 1}. ${item.name}</b><br>${dict.markerDate}: ${item.date}${nfzPopup}`)
                     .addTo(itineraryMap);
 
                 mapMarkers.push(marker);
@@ -1961,11 +2664,13 @@ function toggleNfzWeatherRef(btnId, boxId) {
         }
 
         function renderItineraryTable() {
+            const dict = t();
             const tbody = document.getElementById('itinerary-list');
-            document.getElementById('wp-count').innerText = itineraryData.length;
+            const countEl = document.getElementById('wp-count');
+            if (countEl) countEl.innerText = itineraryData.length;
 
             if (itineraryData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">💡 請於上方輸入未來去的地方與日子（或直接點擊上方地圖），系統將動態追蹤當日天氣預報。</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="padding: 20px; text-align: center; color: #94a3b8;">${dict.emptyTable}</td></tr>`;
                 return;
             }
 
@@ -1974,12 +2679,10 @@ function toggleNfzWeatherRef(btnId, boxId) {
                 const safety = evaluateFutureSafety(w, item.inNoFlyZone);
 
                 const weatherText = w
-                    ? `🌡️ ${w.tempMin}~${w.tempMax} °C | 🍃 均風 ≤${Number(w.windMax).toFixed(1)} km/h | 🌪️ 陣風 ≤${Number(w.gustMax).toFixed(1)} km/h | 🌧️ 降雨率: ${w.rainProb}% (${w.rainSum}mm)`
-                    : `⚠️ 暫無該日預報數據（可能超出可用預報天數）`;
+                    ? `🌡️ ${w.tempMin}~${w.tempMax} °C | 🍃 ≤${Number(w.windMax).toFixed(1)} km/h | 🌪️ ≤${Number(w.gustMax).toFixed(1)} km/h | 🌧️ ${w.rainProb}% (${w.rainSum}mm)`
+                    : dict.noForecastRow;
 
-                const nfzBadge = item.inNoFlyZone
-                    ? `<span class="nfz-badge">🚫 禁飛區</span>`
-                    : '';
+                const nfzBadge = item.inNoFlyZone ? `<span class="nfz-badge">${dict.nfzBadge}</span>` : '';
 
                 return `
                     <tr class="${item.inNoFlyZone ? 'nfz-row' : ''}">
@@ -1989,7 +2692,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
                         <td style="color: #334155; font-size: 13px;">${weatherText}</td>
                         <td style="font-weight: bold; color: ${safety.color};"><span style="margin-right:4px;">${safety.emoji}</span>${safety.text}</td>
                         <td style="text-align: center;">
-                            <button onclick="removeWaypoint(${idx})" style="background: #fee2e2; color: #ef4444; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;">刪除</button>
+                            <button onclick="removeWaypoint(${idx})" style="background: #fee2e2; color: #ef4444; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer;">${dict.deleteBtn}</button>
                         </td>
                     </tr>
                 `;
@@ -2005,7 +2708,7 @@ function toggleNfzWeatherRef(btnId, boxId) {
 
         function clearItinerary() {
             if (itineraryData.length === 0) return;
-            if (!confirm("確定要清空所有已排定的航拍行程嗎？")) return;
+            if (!confirm(t().clearConfirm)) return;
             itineraryData = [];
             saveItineraryToStorage();
             updateMapLayers();
@@ -2013,24 +2716,25 @@ function toggleNfzWeatherRef(btnId, boxId) {
         }
 
         itineraryMap.on('click', async function(e) {
+            const dict = t();
             const targetDate = document.getElementById('iti-date-input').value;
             if (!targetDate) {
-                alert("請先在上方選好日子，再點擊地圖！");
+                alert(dict.pickDateFirst);
                 return;
             }
 
-            let placeName = "地圖指定位置";
+            let placeName = dict.mapPickedName;
             try {
                 const res = await fetchWithTimeout(`https://photon.komoot.io/reverse?lon=${e.latlng.lng}&lat=${e.latlng.lat}`);
                 if (res.ok) {
                     const json = await res.json();
                     if (json.features && json.features.length > 0) {
                         const p = json.features[0].properties || {};
-                        placeName = p.name || p.district || p.city || "地圖指定位置";
+                        placeName = p.name || p.district || p.city || dict.mapPickedName;
                     }
                 }
             } catch (err) {
-                placeName = "自訂坐標點";
+                placeName = dict.customCoordName;
             }
             handleLocationAddWithNFZCheck(placeName, e.latlng.lat, e.latlng.lng, targetDate, false);
         });
@@ -2048,343 +2752,229 @@ function toggleNfzWeatherRef(btnId, boxId) {
                         if (!newWorker) return;
                         newWorker.addEventListener('statechange', () => {
                             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                if (confirm("✨ 偵測到 Drone Weather 有新版本或功能更新，是否立即重新整理載入？")) {
+                                if (confirm(t().swUpdateConfirm)) {
                                     window.location.reload();
                                 }
                             }
                         });
                     });
                 }).catch(err => {
-                    console.error('❌ Service Worker 註冊失敗:', err);
+                    console.error('Service Worker registration failed:', err);
                 });
             });
         }
 
-// ==========================================
-// 8. 強制性導覽
-// ==========================================
-const ONBOARDING_COMPLETED_KEY = 'dw_onboarding_completed_v1';
-const STEP_MIN_SECONDS = 8;
+        // ==========================================
+        // 8. 首次造訪導覽
+        // ==========================================
+        const ONBOARDING_COMPLETED_KEY = 'dw_onboarding_completed_v1';
+        const STEP_MIN_SECONDS = 8;
 
-let currentTourStep = 0;
-let stepCountdownTimer = null;
-let remainingStepSeconds = STEP_MIN_SECONDS;
-let isTourActive = false;
-let deferredInstallPrompt = null;
+        let currentTourStep = 0;
+        let stepCountdownTimer = null;
+        let remainingStepSeconds = STEP_MIN_SECONDS;
+        let isTourActive = false;
+        let deferredInstallPrompt = null;
 
-// 捕捉 Chrome / Edge 支援嘅原生安裝提示事件
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredInstallPrompt = e;
-    if (isTourActive && currentTourStep === tourSteps.length - 1) {
-        renderTourStep(currentTourStep, false);
-    }
-});
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            if (isTourActive && currentTourStep === t().tourSteps.length - 1) {
+                renderTourStep(currentTourStep, false);
+            }
+        });
 
-const tourSteps = [
-    {
-        title: "1. 航拍地圖與禁飛區查詢",
-        tabId: "map-page",
-        highlightSelector: ".search-container",
-        buttonText: "明白，睇下一步 →",
-        content: `
-            <p style="margin-top:0;">地圖上嘅<b>紅色區域</b>係各國<b>eSUA 法定禁飛區</b>，起飛前可即時確認空域有冇限制。</p>
-            <p style="margin-bottom:0;">你可以喺左上角<b>搜尋列輸入地名</b>，或者直接點擊地圖任何位置查看該處飛行條件。</p>
-        `
-    },
-    {
-        title: " 2. 實時氣象與飛行安全評估",
-        tabId: "map-page",
-        highlightSelector: ".locate-btn",
-        buttonText: "了解安全報告，下一步 →",
-        content: `
-            <p style="margin-top:0;">點擊地圖或右上角<b>「我的位置」</b>，系統會即時整合多項關鍵數據：</p>
-            <ul style="margin:0; padding-left:18px;">
-                <li><b>風速與陣風：</b>地面風速、80m 高空風速及實時陣風</li>
-                <li><b>天氣與警告：</b>降雨機率、香港天文台實時警告信號</li>
-                <li><b>衛星定位干擾：</b>全球地磁風暴指數（Kp Index）與日出日落時段</li>
-            </ul>
-            <p style="margin-bottom:0; margin-top:8px;">系統會自動以 🟢 / 🟡 / 🔴 話你知適唔適合起飛。</p>
-        `
-    },
-    {
-        title: "3. 各國航拍法例快速對照",
-        tabId: "laws-page",
-        highlightSelector: "#country-select",
-        buttonText: "睇埋行程規劃，下一步 →",
-        content: `
-            <p style="margin-top:0;">外遊航拍前，可以喺<b>「各國法例」</b>分頁選擇目的地（支援香港、日本、台灣、英國）。</p>
-            <p style="margin-bottom:0;">入面整理咗當地<b>無人機註冊重量門檻、高度上限、安全距離及最高罰則</b>，避免誤墮法網。</p>
-        `
-    },
-    {
-        title: "4. 多日航拍行程天氣規劃",
-        tabId: "itinerary-page",
-        highlightSelector: "#planner-console",
-        buttonText: "最後一步：安裝成 App →",
-        content: `
-            <p style="margin-top:0;">喺<b>「行程天氣」</b>分頁，你可以預先輸入未來幾日想去嘅拍攝地點同日期（或直接點擊地圖加入）。</p>
-            <p style="margin-bottom:0;">系統會自動檢查路線有冇撞正<b>禁飛區</b>、追蹤當日天氣預報，仲支援<b>一鍵匯出 PDF 行程報告</b>。</p>
-        `
-    },
-    {
-        title: " 5. 將網站加到主畫面變成 App",
-        tabId: "map-page",
-        highlightSelector: null,
-        buttonText: "✅ 完成教學，開始使用",
-        getContent: () => {
-            const installActionHtml = deferredInstallPrompt
-                ? `<button type="button" class="pwa-install-btn" onclick="triggerNativeInstallPrompt()">⚡ 一鍵安裝 Drone Weather 到裝置</button>`
+        async function triggerNativeInstallPrompt() {
+            if (!deferredInstallPrompt) return;
+            try {
+                deferredInstallPrompt.prompt();
+                await deferredInstallPrompt.userChoice;
+            } catch (e) {
+                console.warn('Install prompt failed:', e);
+            } finally {
+                deferredInstallPrompt = null;
+                if (isTourActive && currentTourStep === t().tourSteps.length - 1) {
+                    renderTourStep(currentTourStep, false);
+                }
+            }
+        }
+
+        function blockBackgroundInteractions(event) {
+            if (!isTourActive) return;
+            const tourCard = document.getElementById('onboarding-tour-card');
+            if (tourCard && tourCard.contains(event.target)) {
+                return;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        ['click', 'mousedown', 'touchstart', 'pointerdown', 'keydown'].forEach(evtName => {
+            document.addEventListener(evtName, blockBackgroundInteractions, { capture: true });
+        });
+
+        function isRunningAsInstalledApp() {
+            const isStandaloneDisplay = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
+            const isIosStandalone = window.navigator.standalone === true;
+            return Boolean(isStandaloneDisplay || isIosStandalone);
+        }
+
+        function clearTourHighlights() {
+            document.querySelectorAll('.tour-highlight').forEach(el => {
+                el.classList.remove('tour-highlight');
+            });
+        }
+
+        function startStepCountdown(defaultLabel) {
+            if (stepCountdownTimer) {
+                clearInterval(stepCountdownTimer);
+                stepCountdownTimer = null;
+            }
+
+            const nextBtn = document.getElementById('tour-next-btn');
+            remainingStepSeconds = STEP_MIN_SECONDS;
+            nextBtn.disabled = true;
+            nextBtn.innerText = t().tourWait(remainingStepSeconds);
+
+            stepCountdownTimer = setInterval(() => {
+                remainingStepSeconds -= 1;
+                if (remainingStepSeconds > 0) {
+                    nextBtn.innerText = t().tourWait(remainingStepSeconds);
+                } else {
+                    clearInterval(stepCountdownTimer);
+                    stepCountdownTimer = null;
+                    nextBtn.disabled = false;
+                    nextBtn.innerText = defaultLabel;
+                }
+            }, 1000);
+        }
+
+        function renderTourStep(stepIndex, resetCountdown = true) {
+            const dict = t();
+            const steps = dict.tourSteps;
+            const step = steps[stepIndex];
+            if (!step) return;
+
+            isTourActive = true;
+            currentTourStep = stepIndex;
+
+            const targetTabBtn = document.querySelector(`.tab-btn[onclick*="'${step.tabId}'"]`);
+            if (targetTabBtn) {
+                switchTab(step.tabId, targetTabBtn);
+            }
+
+            clearTourHighlights();
+            const overlay = document.getElementById('tour-lock-overlay');
+            if (step.highlightSelector) {
+                overlay.classList.remove('show');
+                setTimeout(() => {
+                    const targetEl = document.querySelector(step.highlightSelector);
+                    if (targetEl) {
+                        targetEl.classList.add('tour-highlight');
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 120);
+            } else {
+                overlay.classList.add('show');
+            }
+
+            const installBtnHtml = deferredInstallPrompt
+                ? `<button type="button" class="pwa-install-btn" onclick="triggerNativeInstallPrompt()">${dict.installBtnText}</button>`
                 : '';
 
-            return `
-                <p style="margin-top:0; color:#475569;">最後一步！建議將 <b>Drone Weather</b> 加到手機或電腦主畫面，隨時一撳即開：</p>
-                ${installActionHtml}
-                <div class="guide-box">
-                    <div class="guide-box-title">🍎 iPhone / iPad（Safari 瀏覽器）</div>
-                    <ol>
-                        <li>點擊底部工具列嘅 <b>「分享」圖示</b>（向上箭嘴方框）。</li>
-                        <li>向下滑動並選擇 <b>「加入主畫面」</b>。</li>
-                        <li>按右上角 <b>「新增」</b>，即可喺主畫面開啟 App。</li>
-                    </ol>
-                </div>
-                <div class="guide-box" style="margin-bottom:0;">
-                    <div class="guide-box-title">🤖 Android / 電腦版（Chrome / Edge）</div>
-                    <ol>
-                        <li>可按上方<b>「一鍵安裝」</b>掣，或點擊瀏覽器右上角 <b>「⋮」選單</b> / 網址列右側 <b>安裝圖示</b>。</li>
-                        <li>選擇 <b>「加到主畫面」</b> 或 <b>「安裝 Drone weather」</b> 並確認。</li>
-                    </ol>
-                </div>
-            `;
-        }
-    }
-];
+            const bodyHtml = typeof step.getContent === 'function' ? step.getContent(installBtnHtml) : step.content;
 
-async function triggerNativeInstallPrompt() {
-    if (!deferredInstallPrompt) return;
-    try {
-        deferredInstallPrompt.prompt();
-        await deferredInstallPrompt.userChoice;
-    } catch (e) {
-        console.warn('安裝提示觸發失敗:', e);
-    } finally {
-        deferredInstallPrompt = null;
-        if (isTourActive && currentTourStep === tourSteps.length - 1) {
-            renderTourStep(currentTourStep, false);
-        }
-    }
-}
+            document.getElementById('tour-title').innerText = step.title;
+            document.getElementById('tour-step-indicator').innerText = dict.tourStepBadge(stepIndex + 1, steps.length);
+            document.getElementById('tour-body').innerHTML = bodyHtml;
+            document.getElementById('tour-prev-btn').disabled = (stepIndex === 0);
+            document.getElementById('onboarding-tour-card').classList.add('show');
 
-// 在 Capture 階段攔截導覽卡片以外嘅所有點擊、按鍵與觸控事件，防止亂撳
-function blockBackgroundInteractions(event) {
-    if (!isTourActive) return;
-    const tourCard = document.getElementById('onboarding-tour-card');
-    if (tourCard && tourCard.contains(event.target)) {
-        return;
-    }
-    event.preventDefault();
-    event.stopPropagation();
-}
-
-['click', 'mousedown', 'touchstart', 'pointerdown', 'keydown'].forEach(evtName => {
-    document.addEventListener(evtName, blockBackgroundInteractions, { capture: true });
-});
-
-function isRunningAsInstalledApp() {
-    const isStandaloneDisplay = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches;
-    const isIosStandalone = window.navigator.standalone === true;
-    return Boolean(isStandaloneDisplay || isIosStandalone);
-}
-
-function clearTourHighlights() {
-    document.querySelectorAll('.tour-highlight').forEach(el => {
-        el.classList.remove('tour-highlight');
-    });
-}
-
-function startStepCountdown(defaultLabel) {
-    if (stepCountdownTimer) {
-        clearInterval(stepCountdownTimer);
-        stepCountdownTimer = null;
-    }
-
-    const nextBtn = document.getElementById('tour-next-btn');
-    remainingStepSeconds = STEP_MIN_SECONDS;
-    nextBtn.disabled = true;
-    nextBtn.innerText = `請先閱讀 (${remainingStepSeconds}s)`;
-
-    stepCountdownTimer = setInterval(() => {
-        remainingStepSeconds -= 1;
-        if (remainingStepSeconds > 0) {
-            nextBtn.innerText = `請先閱讀 (${remainingStepSeconds}s)`;
-        } else {
-            clearInterval(stepCountdownTimer);
-            stepCountdownTimer = null;
-            nextBtn.disabled = false;
-            nextBtn.innerText = defaultLabel;
-        }
-    }, 1000);
-}
-
-function renderTourStep(stepIndex, resetCountdown = true) {
-    const step = tourSteps[stepIndex];
-    if (!step) return;
-
-    isTourActive = true;
-    currentTourStep = stepIndex;
-
-    const targetTabBtn = document.querySelector(`.tab-btn[onclick*="'${step.tabId}'"]`);
-    if (targetTabBtn) {
-        switchTab(step.tabId, targetTabBtn);
-    }
-
-    clearTourHighlights();
-    const overlay = document.getElementById('tour-lock-overlay');
-    if (step.highlightSelector) {
-        overlay.classList.remove('show');
-        setTimeout(() => {
-            const targetEl = document.querySelector(step.highlightSelector);
-            if (targetEl) {
-                targetEl.classList.add('tour-highlight');
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (resetCountdown) {
+                startStepCountdown(step.buttonText);
+            } else {
+                const nextBtn = document.getElementById('tour-next-btn');
+                if (remainingStepSeconds <= 0) {
+                    nextBtn.disabled = false;
+                    nextBtn.innerText = step.buttonText;
+                } else {
+                    nextBtn.disabled = true;
+                    nextBtn.innerText = dict.tourWait(remainingStepSeconds);
+                }
             }
-        }, 120);
-    } else {
-        overlay.classList.add('show');
-    }
-
-    const bodyHtml = typeof step.getContent === 'function' ? step.getContent() : step.content;
-
-    document.getElementById('tour-title').innerText = step.title;
-    document.getElementById('tour-step-indicator').innerText = `步驟 ${stepIndex + 1} / ${tourSteps.length}`;
-    document.getElementById('tour-body').innerHTML = bodyHtml;
-    document.getElementById('tour-prev-btn').disabled = (stepIndex === 0);
-    document.getElementById('onboarding-tour-card').classList.add('show');
-
-    if (resetCountdown) {
-        startStepCountdown(step.buttonText);
-    } else {
-        const nextBtn = document.getElementById('tour-next-btn');
-        if (remainingStepSeconds <= 0) {
-            nextBtn.disabled = false;
-            nextBtn.innerText = step.buttonText;
-        } else {
-            nextBtn.disabled = true;
-            nextBtn.innerText = `請先閱讀 (${remainingStepSeconds}s)`;
         }
-    }
-}
 
-function nextTourStep() {
-    if (remainingStepSeconds > 0) return;
-    if (currentTourStep < tourSteps.length - 1) {
-        renderTourStep(currentTourStep + 1, true);
-    } else {
-        finishOnboardingTour();
-    }
-}
+        function nextTourStep() {
+            if (remainingStepSeconds > 0) return;
+            if (currentTourStep < t().tourSteps.length - 1) {
+                renderTourStep(currentTourStep + 1, true);
+            } else {
+                finishOnboardingTour();
+            }
+        }
 
-function prevTourStep() {
-    if (currentTourStep > 0) {
-        renderTourStep(currentTourStep - 1, true);
-    }
-}
+        function prevTourStep() {
+            if (currentTourStep > 0) {
+                renderTourStep(currentTourStep - 1, true);
+            }
+        }
 
-function finishOnboardingTour() {
-    if (stepCountdownTimer) {
-        clearInterval(stepCountdownTimer);
-        stepCountdownTimer = null;
-    }
-    isTourActive = false;
-    clearTourHighlights();
-    document.getElementById('tour-lock-overlay').classList.remove('show');
-    document.getElementById('onboarding-tour-card').classList.remove('show');
-    try {
-        localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
-    } catch (e) {
-        console.warn('無法寫入 localStorage:', e);
-    }
-}
+        function finishOnboardingTour() {
+            if (stepCountdownTimer) {
+                clearInterval(stepCountdownTimer);
+                stepCountdownTimer = null;
+            }
+            isTourActive = false;
+            clearTourHighlights();
+            document.getElementById('tour-lock-overlay').classList.remove('show');
+            document.getElementById('onboarding-tour-card').classList.remove('show');
+            try {
+                localStorage.setItem(ONBOARDING_COMPLETED_KEY, 'true');
+            } catch (e) {
+                console.warn('Cannot write localStorage:', e);
+            }
+        }
 
-function openInstallGuideManually() {
-    renderTourStep(0, true);
-}
+        function openInstallGuideManually() {
+            renderTourStep(0, true);
+        }
 
-window.addEventListener('DOMContentLoaded', () => {
-    if (isRunningAsInstalledApp()) {
-        return;
-    }
+        window.addEventListener('appinstalled', () => {
+            deferredInstallPrompt = null;
+            finishOnboardingTour();
+        });
 
-    let isCompleted = false;
-    try {
-        isCompleted = localStorage.getItem(ONBOARDING_COMPLETED_KEY) === 'true';
-    } catch (e) {
-        isCompleted = false;
-    }
-
-    if (!isCompleted) {
-        renderTourStep(0, true);
-    }
-});
-
-window.addEventListener('appinstalled', () => {
-    deferredInstallPrompt = null;
-    finishOnboardingTour();
-});
-
-// ==========================================
+        // ==========================================
         // 9. 最新消息與公告系統
         // ==========================================
-        const LATEST_NEWS_DATA = [
-            {
-                id: "news-2026-11-20.1",
-                date: "2026-11-20",
-                effectiveTime: " 即日起生效至 2027年4月30日結束生效,逢星期一至星期五 08:30 至 16:30 隨時啟動", 
-                tag: "臨時禁飛",
-                important: true,
-                title: "盧森堡禁飛",
-                content: "針對 LAS 專案劃設了最新的臨時無人機禁飛區，高度由地面至 200 公尺；水平範圍為指定無人機航線兩側各 400 公尺的帶狀區域。        豁免對象:僅限 Luxembourg Air Services S.A. 專案無人機，以及軍警、海關、搜救、醫療、疏散與消防等公共任務飛行，其餘無人機一律禁止進入。"
-            },
-            {
-                id: "news-2026-11-20.2",
-                date: "2026-11-20",
-                effectiveTime: " 2026年11月21日（星期六）當地時間16:00 至晚上 23:59", 
-                tag: "臨時禁飛",
-                important: true,
-                title: "美國維珍尼亞州諾福克禁飛",
-                content: "第40屆「大照明巡遊」期間實施無人機臨時飛行限制，諾福克市中心方圓 1 海里（約 1.85 公里）半徑空域內，禁止所有未經授權的無人機及遙控飛行器運作。"
-            }
-        ];
-
         const NEWS_READ_ID_KEY = 'dw_last_read_news_id';
         const NEWS_BAR_DISMISSED_KEY = 'dw_dismissed_bar_news_id';
 
         function formatEffectiveTimeBadge(effectiveTime) {
             if (!effectiveTime || !String(effectiveTime).trim()) return '';
-            return `<span style="display:inline-block; background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:1px 7px; border-radius:4px; font-size:11px; font-weight:600; margin-left:6px;">⏱️ 生效時間：${effectiveTime}</span>`;
+            return `<span style="display:inline-block; background:#fef3c7; color:#92400e; border:1px solid #fde68a; padding:1px 7px; border-radius:4px; font-size:11px; font-weight:600; margin-left:6px;">${t().effectiveLabel(effectiveTime)}</span>`;
         }
 
         function initLatestNews() {
-            if (!Array.isArray(LATEST_NEWS_DATA) || LATEST_NEWS_DATA.length === 0) return;
+            const newsList = t().news;
+            if (!Array.isArray(newsList) || newsList.length === 0) return;
 
-            const latest = LATEST_NEWS_DATA[0];
+            const latest = newsList[0];
             const lastReadId = localStorage.getItem(NEWS_READ_ID_KEY);
             const dismissedBarId = localStorage.getItem(NEWS_BAR_DISMISSED_KEY);
 
-            // 若有未讀最新消息，導航列按鈕亮起 NEW 紅點
             const badge = document.getElementById('news-unread-badge');
             if (badge && lastReadId !== latest.id) {
                 badge.classList.add('show');
             }
 
-            // 頂部幼身公告條顯示最新消息 + 獨立生效時間
             const slimBar = document.getElementById('news-slim-bar');
             const slimText = document.getElementById('news-slim-text');
             if (slimBar && slimText && dismissedBarId !== latest.id) {
                 const effText = latest.effectiveTime && latest.effectiveTime.trim()
-                    ? ` <span style="background:#dbeafe; color:#1e3a8a; padding:1px 6px; border-radius:4px; font-size:11px; font-weight:bold; margin-left:4px;"> ${latest.effectiveTime}</span>`
+                    ? ` <span style="background:#dbeafe; color:#1e3a8a; padding:1px 6px; border-radius:4px; font-size:11px; font-weight:bold; margin-left:4px;">${latest.effectiveTime}</span>`
                     : '';
-                slimText.innerHTML = `<b>[${latest.tag}] ${latest.title}</b>${effText} — ${latest.content} <span style="text-decoration:underline; margin-left:4px;">詳情</span>`;
+                slimText.innerHTML = `<b>[${latest.tag}] ${latest.title}</b>${effText} — ${latest.content} <span style="text-decoration:underline; margin-left:4px;">${t().moreDetail}</span>`;
                 slimBar.classList.add('show');
                 setTimeout(() => {
                     if (typeof map !== 'undefined') map.invalidateSize();
@@ -2398,14 +2988,14 @@ window.addEventListener('appinstalled', () => {
             const container = document.getElementById('news-modal-body');
             if (!container) return;
 
-            container.innerHTML = LATEST_NEWS_DATA.map(item => `
+            container.innerHTML = t().news.map(item => `
                 <div class="news-item ${item.important ? 'important' : ''}">
                     <div class="news-item-meta">
                         <div style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
                             <span class="news-tag">${item.tag}</span>
                             ${formatEffectiveTimeBadge(item.effectiveTime)}
                         </div>
-                        <span>📅 發布：${item.date}</span>
+                        <span>${t().publishedLabel(item.date)}</span>
                     </div>
                     <div class="news-item-title">${item.title}</div>
                     <p class="news-item-desc">${item.content}</p>
@@ -2418,8 +3008,9 @@ window.addEventListener('appinstalled', () => {
             if (!modal) return;
             modal.classList.add('show');
 
-            if (LATEST_NEWS_DATA.length > 0) {
-                localStorage.setItem(NEWS_READ_ID_KEY, LATEST_NEWS_DATA[0].id);
+            const latest = t().news[0];
+            if (latest) {
+                localStorage.setItem(NEWS_READ_ID_KEY, latest.id);
             }
             const badge = document.getElementById('news-unread-badge');
             if (badge) badge.classList.remove('show');
@@ -2434,9 +3025,10 @@ window.addEventListener('appinstalled', () => {
             const slimBar = document.getElementById('news-slim-bar');
             if (slimBar) slimBar.classList.remove('show');
 
-            if (LATEST_NEWS_DATA.length > 0) {
-                localStorage.setItem(NEWS_BAR_DISMISSED_KEY, LATEST_NEWS_DATA[0].id);
-                localStorage.setItem(NEWS_READ_ID_KEY, LATEST_NEWS_DATA[0].id);
+            const latest = t().news[0];
+            if (latest) {
+                localStorage.setItem(NEWS_BAR_DISMISSED_KEY, latest.id);
+                localStorage.setItem(NEWS_READ_ID_KEY, latest.id);
             }
             const badge = document.getElementById('news-unread-badge');
             if (badge) badge.classList.remove('show');
@@ -2446,10 +3038,8 @@ window.addEventListener('appinstalled', () => {
             }, 100);
         }
 
-        window.addEventListener('DOMContentLoaded', initLatestNews);
-
         // ==========================================
-        // 10. 用戶自訂文字大小（Aa 彈出卡片 + 自動記憶）
+        // 10. 用戶自訂文字大小與初始化
         // ==========================================
         const FONT_SCALE_KEY = 'dw_font_scale_v1';
 
@@ -2477,7 +3067,7 @@ window.addEventListener('appinstalled', () => {
                 try {
                     localStorage.setItem(FONT_SCALE_KEY, String(numericScale));
                 } catch (e) {
-                    console.warn('無法儲存字體大小設定:', e);
+                    console.warn('Cannot save font scale:', e);
                 }
             }
 
@@ -2504,7 +3094,10 @@ window.addEventListener('appinstalled', () => {
             if (btn) btn.classList.remove('open');
         });
 
-        function initFontScale() {
+        window.addEventListener('DOMContentLoaded', () => {
+            currentLang = getInitialLanguage();
+            applyLanguageUI();
+
             let savedScale = 1;
             try {
                 const raw = localStorage.getItem(FONT_SCALE_KEY);
@@ -2513,9 +3106,19 @@ window.addEventListener('appinstalled', () => {
                 savedScale = 1;
             }
             setFontScale(savedScale, false);
-        }
 
-        window.addEventListener('DOMContentLoaded', initFontScale);
+            if (!isRunningAsInstalledApp()) {
+                let isCompleted = false;
+                try {
+                    isCompleted = localStorage.getItem(ONBOARDING_COMPLETED_KEY) === 'true';
+                } catch (e) {
+                    isCompleted = false;
+                }
+                if (!isCompleted) {
+                    renderTourStep(0, true);
+                }
+            }
+        });
     </script>
 </body>
 </html>
