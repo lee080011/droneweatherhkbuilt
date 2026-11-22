@@ -677,6 +677,134 @@
     line-height: 1.6;
     margin: 0;
 }
+
+/* 文字大小縮放控制 */
+:root {
+    --font-scale: 1;
+}
+
+.tab-content,
+.news-modal,
+.tour-card,
+.leaflet-popup-content {
+    zoom: var(--font-scale);
+}
+
+@supports not (zoom: 1) {
+    .tab-content,
+    .news-modal,
+    .tour-card {
+        font-size: calc(14px * var(--font-scale));
+    }
+}
+
+/* 俐落 Aa 按鈕與彈出式字體調整卡片 */
+.aa-trigger-btn {
+    background: #2c2c2e;
+    color: #ffffff;
+    border: 1px solid #3a3a3c;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.18s, border-color 0.18s, transform 0.1s;
+}
+.aa-trigger-btn:hover,
+.aa-trigger-btn.open {
+    background: #007aff;
+    border-color: #007aff;
+}
+.aa-trigger-btn:active {
+    transform: scale(0.95);
+}
+
+.aa-popover {
+    position: fixed;
+    top: 56px;
+    right: 14px;
+    width: 244px;
+    background: #ffffff;
+    color: #1e293b;
+    border-radius: 14px;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.24);
+    border: 1px solid #e2e8f0;
+    padding: 14px;
+    z-index: 9500;
+    display: none;
+}
+.aa-popover.show {
+    display: block;
+}
+.aa-popover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+}
+.aa-reset-link {
+    background: none;
+    border: none;
+    color: #007aff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+}
+.aa-reset-link:hover {
+    text-decoration: underline;
+}
+.aa-slider {
+    width: 100%;
+    margin-top: 12px;
+    accent-color: #007aff;
+    cursor: pointer;
+}
+.aa-preset-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 10px;
+}
+.aa-preset-btn {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    padding: 7px 4px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.aa-preset-btn:hover {
+    background: #f1f5f9;
+}
+.aa-preset-btn.active {
+    background: #eff6ff;
+    border-color: #007aff;
+    color: #007aff;
+    box-shadow: inset 0 0 0 1px #007aff;
+}
+
+@media (max-width: 640px) {
+    .nav-right-tools {
+        order: 2;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .news-btn {
+        margin-left: 0;
+    }
+    .aa-popover {
+        top: 86px;
+        right: 10px;
+    }
+}
     </style>
 </head>
 <body>
@@ -692,10 +820,27 @@
                 <button class="tab-btn" onclick="switchTab('about-page', this)">免責</button>
             </div>
         </div>
-        <button type="button" class="news-btn" onclick="openNewsModal()">
-            <span>🔔 最新消息</span>
-            <span id="news-unread-badge" class="news-badge">NEW</span>
-        </button>
+        <div class="nav-right-tools" style="display:flex; align-items:center; gap:6px;">
+            <button type="button" id="aa-trigger-btn" class="aa-trigger-btn" title="調整文字大小" onclick="toggleFontPopover(event)">Aa</button>
+            <button type="button" class="news-btn" onclick="openNewsModal()">
+                <span>🔔 最新消息</span>
+                <span id="news-unread-badge" class="news-badge">NEW</span>
+            </button>
+        </div>
+
+        <div id="aa-popover" class="aa-popover" role="dialog" aria-label="文字大小設定" onclick="event.stopPropagation()">
+            <div class="aa-popover-header">
+                <span>文字大小：<span id="aa-pct-text" style="color:#007aff;">100%</span></span>
+                <button type="button" class="aa-reset-link" onclick="setFontScale(1)">重設</button>
+            </div>
+            <input id="aa-range" class="aa-slider" type="range" min="0.85" max="1.35" step="0.05" value="1" oninput="setFontScale(this.value)">
+            <div class="aa-preset-grid">
+                <button type="button" class="aa-preset-btn" data-scale="0.9" onclick="setFontScale(0.9)" style="font-size:11px;">細</button>
+                <button type="button" class="aa-preset-btn active" data-scale="1" onclick="setFontScale(1)" style="font-size:12.5px;">標準</button>
+                <button type="button" class="aa-preset-btn" data-scale="1.15" onclick="setFontScale(1.15)" style="font-size:14px;">大</button>
+                <button type="button" class="aa-preset-btn" data-scale="1.3" onclick="setFontScale(1.3)" style="font-size:15px;">特大</button>
+            </div>
+        </div>
     </div>
 
     <!-- 頂部幼身公告條 -->
@@ -1110,10 +1255,24 @@ async function fetchHKOWarningsWithFallback() {
             return Number.isFinite(parsed) ? parsed : 0;
         }
 
+function toggleNfzWeatherRef(btnId, boxId) {
+            const box = document.getElementById(boxId);
+            const btn = document.getElementById(btnId);
+            if (!box || !btn) return;
+            const isHidden = box.style.display === 'none';
+            box.style.display = isHidden ? 'block' : 'none';
+            btn.innerText = isHidden ? '隱藏當地天氣參考' : '查看當地天氣參考';
+        }
+
         function fetchAndShowWeather(lat, lon, latlng) {
+            const nfzResult = checkNoFlyZone(lat, lon);
+            const uid = 'nfz_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+            const refBoxId = uid + '_box';
+            const refBtnId = uid + '_btn';
+
             const loadingPopup = L.popup()
                 .setLatLng(latlng)
-                .setContent('<div style="padding: 10px; font-size: 13px; color: #555;"><span style="display:inline-block; animation: spin 1s linear infinite; margin-right: 6px;">⏳</span>正在分析航拍氣象與地磁數據...</div>')
+                .setContent('<div style="padding: 10px; font-size: 13px; color: #555;"><span style="display:inline-block; animation: spin 1s linear infinite; margin-right: 6px;">⏳</span>正在檢查空域及航拍數據...</div>')
                 .openOn(map);
 
             const isHongKong = (lat >= 22.14 && lat <= 22.57 && lon >= 113.80 && lon <= 114.44);
@@ -1127,11 +1286,10 @@ async function fetchHKOWarningsWithFallback() {
                 .then(extractKpIndex)
                 .catch(() => 0);
 
-            const hkoUrl = 'https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=tc';
-            const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(hkoUrl);
             const warningPromise = isHongKong
-            ? fetchHKOWarningsWithFallback()
-            : Promise.resolve({});
+                ? fetchHKOWarningsWithFallback()
+                : Promise.resolve({});
+
             Promise.all([weatherPromise, warningPromise, geoMagneticPromise])
                 .then(([weatherData, warningData, kpIndex]) => {
                     const temp = Number(weatherData.current.temperature_2m).toFixed(1);
@@ -1145,6 +1303,33 @@ async function fetchHKOWarningsWithFallback() {
                     const sunsetIso = weatherData.daily && weatherData.daily.sunset ? weatherData.daily.sunset[0] : null;
 
                     const hkoResult = isHongKong ? parseHKOWarnings(warningData) : { hasWarning: false, html: "" };
+
+                    // ✅ 位於禁飛區：直接宣告禁飛，唔俾起飛評估
+                    if (nfzResult.inNoFlyZone) {
+                        const zoneLabel = nfzResult.zoneName || "eSUA 法定限制飛行區";
+                        const nfzPopupContent = `
+                            <div style="font-family: inherit; min-width: 245px; padding: 6px 8px; line-height: 1.65; color: #1e293b;">
+                                <div style="background: #fef2f2; border: 1.5px solid #ef4444; border-radius: 8px; padding: 10px 12px;">
+                                    <div style="color: #dc2626; font-weight: 800; font-size: 16px; margin-bottom: 4px;">🚫 此處為禁飛區（嚴禁起飛）</div>
+                                    <div style="font-size: 13px; color: #7f1d1d; font-weight: 600;">區域：${zoneLabel}</div>
+                                    <div style="font-size: 12px; color: #991b1b; margin-top: 4px;">未經民航處或相關部門許可，不可在此範圍放飛無人機。</div>
+                                </div>
+                                <div style="margin-top: 8px; text-align: center;">
+                                    <button type="button" id="${refBtnId}" onclick="toggleNfzWeatherRef('${refBtnId}', '${refBoxId}')" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; border-radius:6px; padding:4px 10px; font-size:12px; cursor:pointer; font-weight:600;">查看當地天氣參考</button>
+                                </div>
+                                <div id="${refBoxId}" style="display:none; margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1; font-size:13px; line-height:1.7;">
+                                    ${hkoResult.html}
+                                    <div>🌡️ 氣溫：${temp} °C ｜ 🍃 均風：${windGround} km/h</div>
+                                    <div>💨 80m 高空風：${wind80m} km/h ｜ 🌪️ 陣風：${gust} km/h</div>
+                                    <div>🌧️ 降雨：${rainAmount} mm (${rainProb}%) ｜ 🛰️ Kp ${kpIndex}</div>
+                                </div>
+                            </div>
+                        `;
+                        loadingPopup.setContent(nfzPopupContent);
+                        return;
+                    }
+
+                    // 非禁飛區：正常顯示綜合航拍安全報告
                     const safety = evaluateFlightSafety(
                         Number(windGround),
                         Number(wind80m),
@@ -1183,7 +1368,12 @@ async function fetchHKOWarningsWithFallback() {
                 })
                 .catch(err => {
                     console.error("數據獲取失敗:", err);
-                    loadingPopup.setContent('<div style="padding:10px; color:#ef4444; font-weight:bold; font-size:13px;">❌ 航拍安全報告生成失敗，請稍後再試</div>');
+                    if (nfzResult.inNoFlyZone) {
+                        const zoneLabel = nfzResult.zoneName || "eSUA 法定限制飛行區";
+                        loadingPopup.setContent(`<div style="padding:10px; color:#dc2626; font-weight:bold; font-size:14px;">🚫 此處為禁飛區（${zoneLabel}），嚴禁起飛！</div>`);
+                    } else {
+                        loadingPopup.setContent('<div style="padding:10px; color:#ef4444; font-weight:bold; font-size:13px;">❌ 航拍安全報告生成失敗，請稍後再試</div>');
+                    }
                 });
         }
 
@@ -2257,6 +2447,75 @@ window.addEventListener('appinstalled', () => {
         }
 
         window.addEventListener('DOMContentLoaded', initLatestNews);
+
+        // ==========================================
+        // 10. 用戶自訂文字大小（Aa 彈出卡片 + 自動記憶）
+        // ==========================================
+        const FONT_SCALE_KEY = 'dw_font_scale_v1';
+
+        function syncFontPopoverUI(numericScale) {
+            const pctText = document.getElementById('aa-pct-text');
+            const rangeInput = document.getElementById('aa-range');
+
+            if (pctText) pctText.innerText = `${Math.round(numericScale * 100)}%`;
+            if (rangeInput) rangeInput.value = numericScale;
+
+            document.querySelectorAll('.aa-preset-btn').forEach(btn => {
+                const btnScale = parseFloat(btn.getAttribute('data-scale'));
+                btn.classList.toggle('active', Math.abs(btnScale - numericScale) < 0.015);
+            });
+        }
+
+        function setFontScale(scale, save = true) {
+            const parsed = parseFloat(scale);
+            const numericScale = Number.isFinite(parsed) ? Math.min(1.35, Math.max(0.85, parsed)) : 1;
+
+            document.documentElement.style.setProperty('--font-scale', numericScale);
+            syncFontPopoverUI(numericScale);
+
+            if (save) {
+                try {
+                    localStorage.setItem(FONT_SCALE_KEY, String(numericScale));
+                } catch (e) {
+                    console.warn('無法儲存字體大小設定:', e);
+                }
+            }
+
+            setTimeout(() => {
+                if (typeof map !== 'undefined') map.invalidateSize();
+                if (typeof itineraryMap !== 'undefined') itineraryMap.invalidateSize();
+            }, 80);
+        }
+
+        function toggleFontPopover(e) {
+            e.stopPropagation();
+            const pop = document.getElementById('aa-popover');
+            const btn = document.getElementById('aa-trigger-btn');
+            if (!pop || !btn) return;
+            const willShow = !pop.classList.contains('show');
+            pop.classList.toggle('show', willShow);
+            btn.classList.toggle('open', willShow);
+        }
+
+        document.addEventListener('click', () => {
+            const pop = document.getElementById('aa-popover');
+            const btn = document.getElementById('aa-trigger-btn');
+            if (pop) pop.classList.remove('show');
+            if (btn) btn.classList.remove('open');
+        });
+
+        function initFontScale() {
+            let savedScale = 1;
+            try {
+                const raw = localStorage.getItem(FONT_SCALE_KEY);
+                if (raw) savedScale = parseFloat(raw) || 1;
+            } catch (e) {
+                savedScale = 1;
+            }
+            setFontScale(savedScale, false);
+        }
+
+        window.addEventListener('DOMContentLoaded', initFontScale);
     </script>
 </body>
 </html>
