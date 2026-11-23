@@ -1068,9 +1068,9 @@
                         <ul class="source-list">
                             <li><span class="source-tag">氣象預報</span><b>Open-Meteo Weather Forecast</b> — 提供全球實時氣溫、地面風速 (10m)、80m 高空風速、陣風、降雨量、降雨機率、日出日落及多日預報。</li>
                             <li><span class="source-tag">香港天氣警告</span><b>香港天文台 (HKO)</b> — 提供香港本地實時生效之惡劣天氣警告。</li>
-                            <li><span class="source-tag">地磁活動</span><b>NOAA SWPC</b> — 提供全球實時地磁風暴指數（Kp Index），評估 GPS/GNSS 干擾風險。</li>
-                            <li><span class="source-tag">香港禁飛區圖層</span><b>香港民航處 (CAD) eSUA</b> — 整合香港《小型無人機令》限制飛行區地理邊界（GeoJSON），並以 Turf.js 檢測。</li>
-                            <li><span class="source-tag">地圖與地理編碼</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — 提供地圖圖磚、正向搜尋及反向地理編碼。</li>
+                            <li><span class="source-tag">地磁活動</span><b>NOAA SWPC</b> — 提供全球實時地磁風暴指數，評估 GPS/GNSS 干擾風險。</li>
+                            <li><span class="source-tag">香港禁飛區圖層</span><b>香港民航處 (CAD) eSUA</b> — 整合香港《小型無人機令》限制飛行區地理邊界。</li>
+                            <li><span class="source-tag">地圖與地理編碼</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — 提供地圖、正向搜尋及反向地理編碼。</li>
                         </ul>
                     </div>
                     <div class="info-card" style="border-left: 5px solid #10b981;">
@@ -1340,7 +1340,7 @@
                             <li><span class="source-tag">Weather</span><b>Open-Meteo Weather Forecast</b> — Global temperature, 10m wind, 80m wind, gusts, precipitation, rain probability, sunrise/sunset, and multi-day forecasts.</li>
                             <li><span class="source-tag">HKO Alerts</span><b>Hong Kong Observatory (HKO)</b> — Active local severe weather warnings for Hong Kong.</li>
                             <li><span class="source-tag">Geomagnetic</span><b>NOAA SWPC</b> — Real-time planetary Kp index to assess GPS/GNSS disturbance risk.</li>
-                            <li><span class="source-tag">HK No-Fly Zones</span><b>HK Civil Aviation Department (CAD) eSUA</b> — Restricted flying zone polygons (GeoJSON) evaluated via Turf.js.</li>
+                            <li><span class="source-tag">HK No-Fly Zones</span><b>HK Civil Aviation Department (CAD) eSUA</b> — Restricted flying zone polygons evaluated</li>
                             <li><span class="source-tag">Maps & Geocoding</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — Map tiles, forward geocoding, and reverse geocoding.</li>
                         </ul>
                     </div>
@@ -1611,7 +1611,7 @@
                             <li><span class="source-tag">気象予報</span><b>Open-Meteo Weather Forecast</b> — 気温、地上風速(10m)、上空風速(80m)、突風、降水量、降水確率、日の出・日の入り、複数日予報を提供。</li>
                             <li><span class="source-tag">香港警報</span><b>香港天文台 (HKO)</b> — 香港の現行の悪天候警報情報を提供。</li>
                             <li><span class="source-tag">地磁気</span><b>NOAA SWPC</b> — 全球地磁気指数（Kp Index）を提供し、GNSS/GPS干渉リスクを評価。</li>
-                            <li><span class="source-tag">香港禁止区域</span><b>香港民航処 (CAD) eSUA</b> — 制限空域ポリゴン（GeoJSON）を取り込み、Turf.js で判定。</li>
+                            <li><span class="source-tag">香港禁止区域</span><b>香港民航処 (CAD) eSUA</b> — 制限空域ポリゴンを取り込み。</li>
                             <li><span class="source-tag">地図・ジオコーディング</span><b>OpenStreetMap / Komoot Photon / Nominatim</b> — 地図タイルおよび地名検索・逆ジオコーディングを提供。</li>
                         </ul>
                     </div>
@@ -2768,7 +2768,7 @@
         // 8. 首次造訪導覽
         // ==========================================
         const ONBOARDING_COMPLETED_KEY = 'dw_onboarding_completed_v1';
-        const STEP_MIN_SECONDS = 8;
+        const STEP_MIN_SECONDS = 3;
 
         let currentTourStep = 0;
         let stepCountdownTimer = null;
